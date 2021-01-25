@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://state/GameplayController.gd" type="Script" id=1]
+[ext_resource path="res://configuration/DefaultMemeGameConfiguration.tscn" type="PackedScene" id=2]
+
+[node name="GameplayController" type="Node"]
+script = ExtResource( 1 )
+_game_configuration_scene = ExtResource( 2 )

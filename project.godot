@@ -1,0 +1,72 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node",
+"class": "GameConfiguration",
+"language": "GDScript",
+"path": "res://configuration/GameConfiguration.gd"
+}, {
+"base": "Node",
+"class": "GameplayController",
+"language": "GDScript",
+"path": "res://state/GameplayController.gd"
+}, {
+"base": "Reference",
+"class": "Message",
+"language": "GDScript",
+"path": "res://comms/Message.gd"
+}, {
+"base": "Object",
+"class": "Player",
+"language": "GDScript",
+"path": "res://player/Player.gd"
+}, {
+"base": "Node2D",
+"class": "PlayerIcon",
+"language": "GDScript",
+"path": "res://player/PlayerIcon.gd"
+}, {
+"base": "Node2D",
+"class": "PlayerIconDisplay",
+"language": "GDScript",
+"path": "res://game_states/common/PlayerIconDisplay.gd"
+} ]
+_global_script_class_icons={
+"GameConfiguration": "",
+"GameplayController": "",
+"Message": "",
+"Player": "",
+"PlayerIcon": "",
+"PlayerIconDisplay": ""
+}
+
+[application]
+
+config/name="party-games"
+run/main_scene="res://Memes.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Events="*res://events/Events.gd"
+NetworkInterface="*res://comms/NetworkInterface.tscn"
+Room="*res://state/Room.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
