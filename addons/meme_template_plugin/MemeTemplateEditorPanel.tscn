@@ -1,0 +1,99 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/meme_template_plugin/MemeTemplateCaptionControl.tscn" type="PackedScene" id=1]
+[ext_resource path="res://memes/meme/textures/Change-My-Mind.jpg" type="Texture" id=2]
+[ext_resource path="res://addons/meme_template_plugin/MemeTemplateEditorPanel.gd" type="Script" id=3]
+[ext_resource path="res://addons/meme_template_plugin/MemeTemplateCaptionVisualisation.tscn" type="PackedScene" id=4]
+
+[node name="MemeTemplateEditorPanel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -618.0
+margin_bottom = -622.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+caption_control = ExtResource( 1 )
+caption_visualisation_control = ExtResource( 4 )
+item_colors = [ Color( 1, 0, 0, 1 ), Color( 0, 1, 0, 1 ), Color( 0, 0, 1, 1 ), Color( 1, 1, 0, 1 ), Color( 0.63, 0.13, 0.94, 1 ), Color( 0.25, 0.88, 0.82, 1 ), Color( 1, 0.65, 0, 1 ), Color( 1, 0.75, 0.8, 1 ) ]
+
+[node name="HBoxContainer" type="HSplitContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VisualisationContainer" type="ScrollContainer" parent="HBoxContainer"]
+margin_right = 775.0
+margin_bottom = 458.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Preview" type="PanelContainer" parent="HBoxContainer/VisualisationContainer"]
+margin_right = 496.0
+margin_bottom = 375.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VisualisationContainer/Preview"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 489.0
+margin_bottom = 368.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+stretch_mode = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MemeCaptionVisualisation" type="Control" parent="HBoxContainer/VisualisationContainer/Preview"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 489.0
+margin_bottom = 368.0
+
+[node name="ItemEditContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 787.0
+margin_right = 1302.0
+margin_bottom = 458.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+
+[node name="SaveButton" type="Button" parent="HBoxContainer/ItemEditContainer"]
+margin_right = 515.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Save Template"
+
+[node name="AddButton" type="Button" parent="HBoxContainer/ItemEditContainer"]
+margin_top = 24.0
+margin_right = 515.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+text = "Add Text Item"
+
+[node name="ItemsScrollContainer" type="ScrollContainer" parent="HBoxContainer/ItemEditContainer"]
+margin_top = 48.0
+margin_right = 515.0
+margin_bottom = 458.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+
+[node name="MemeCaptions" type="VBoxContainer" parent="HBoxContainer/ItemEditContainer/ItemsScrollContainer"]
+margin_right = 515.0
+margin_bottom = 410.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+[connection signal="pressed" from="HBoxContainer/ItemEditContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ItemEditContainer/AddButton" to="." method="_on_add_button_pressed"]

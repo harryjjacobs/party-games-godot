@@ -10,55 +10,122 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "GameBuilder",
+"language": "GDScript",
+"path": "res://core/configuration/GameBuilder.gd"
+}, {
+"base": "Node",
 "class": "GameConfiguration",
 "language": "GDScript",
-"path": "res://configuration/GameConfiguration.gd"
+"path": "res://core/configuration/GameConfiguration.gd"
 }, {
 "base": "Node",
 "class": "GameplayController",
 "language": "GDScript",
-"path": "res://state/GameplayController.gd"
+"path": "res://core/core_controllers/GameplayController.gd"
+}, {
+"base": "Resource",
+"class": "MemeCaption",
+"language": "GDScript",
+"path": "res://memes/meme/MemeCaption.gd"
+}, {
+"base": "PanelContainer",
+"class": "MemeCaptionControl",
+"language": "GDScript",
+"path": "res://addons/meme_template_plugin/MemeTemplateCaptionControl.gd"
+}, {
+"base": "ReferenceRect",
+"class": "MemeCaptionVisualisation",
+"language": "GDScript",
+"path": "res://addons/meme_template_plugin/MemeTemplateCaptionVisualisation.gd"
+}, {
+"base": "Resource",
+"class": "MemeContest",
+"language": "GDScript",
+"path": "res://memes/contest/MemeContest.gd"
+}, {
+"base": "Node2D",
+"class": "MemeContestBuilder",
+"language": "GDScript",
+"path": "res://memes/contest/MemeContestBuilder.gd"
+}, {
+"base": "Object",
+"class": "MemeContestResponse",
+"language": "GDScript",
+"path": "res://memes/contest/MemeContestResponse.gd"
+}, {
+"base": "Object",
+"class": "MemeContestVote",
+"language": "GDScript",
+"path": "res://memes/contest/MemeContestVote.gd"
+}, {
+"base": "Resource",
+"class": "MemeTemplate",
+"language": "GDScript",
+"path": "res://memes/meme/MemeTemplate.gd"
 }, {
 "base": "Reference",
 "class": "Message",
 "language": "GDScript",
-"path": "res://comms/Message.gd"
+"path": "res://core/comms/Message.gd"
 }, {
 "base": "Object",
 "class": "Player",
 "language": "GDScript",
-"path": "res://player/Player.gd"
+"path": "res://core/player/Player.gd"
 }, {
 "base": "Node2D",
 "class": "PlayerIcon",
 "language": "GDScript",
-"path": "res://player/PlayerIcon.gd"
+"path": "res://memes/player/PlayerIcon.gd"
 }, {
 "base": "Node2D",
 "class": "PlayerIconDisplay",
 "language": "GDScript",
-"path": "res://game_states/common/PlayerIconDisplay.gd"
+"path": "res://core/game_stages/common/PlayerIconDisplay.gd"
+}, {
+"base": "Object",
+"class": "Round",
+"language": "GDScript",
+"path": "res://memes/round/Round.gd"
+}, {
+"base": "Object",
+"class": "RoundGenerator",
+"language": "GDScript",
+"path": "res://memes/round/RoundGenerator.gd"
 } ]
 _global_script_class_icons={
+"GameBuilder": "",
 "GameConfiguration": "",
 "GameplayController": "",
+"MemeCaption": "",
+"MemeCaptionControl": "",
+"MemeCaptionVisualisation": "",
+"MemeContest": "",
+"MemeContestBuilder": "",
+"MemeContestResponse": "",
+"MemeContestVote": "",
+"MemeTemplate": "",
 "Message": "",
 "Player": "",
 "PlayerIcon": "",
-"PlayerIconDisplay": ""
+"PlayerIconDisplay": "",
+"Round": "",
+"RoundGenerator": ""
 }
 
 [application]
 
 config/name="party-games"
-run/main_scene="res://Memes.tscn"
+run/main_scene="res://memes/Memes.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Events="*res://events/Events.gd"
-NetworkInterface="*res://comms/NetworkInterface.tscn"
-Room="*res://state/Room.gd"
+Events="*res://core/events/Events.gd"
+NetworkInterface="*res://core/comms/NetworkInterface.tscn"
+Room="*res://core/core_controllers/Room.gd"
+PersistentData="*res://core/data/PersistentData.gd"
 
 [display]
 
@@ -66,6 +133,25 @@ window/size/width=1920
 window/size/height=1080
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "meme_template_plugin" )
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=8192
+limits/debugger_stdout/max_messages_per_frame=100
+limits/debugger_stdout/max_errors_per_second=200
+limits/debugger_stdout/max_warnings_per_second=200
+limits/websocket_client/max_in_buffer_kb=2048
+limits/websocket_client/max_in_packets=4096
+limits/websocket_client/max_out_buffer_kb=2048
+limits/websocket_client/max_out_packets=4096
+limits/websocket_server/max_in_buffer_kb=2048
+limits/websocket_server/max_in_packets=4096
+limits/websocket_server/max_out_buffer_kb=2048
+limits/websocket_server/max_out_packets=4096
 
 [rendering]
 

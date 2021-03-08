@@ -1,0 +1,30 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://core/configuration/GameConfiguration.gd" type="Script" id=1]
+[ext_resource path="res://core/game_stages/LobbyStage.tscn" type="PackedScene" id=2]
+[ext_resource path="res://core/game_stages/RoundBeginStage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://memes/game_stages/GameBeginStage.tscn" type="PackedScene" id=4]
+[ext_resource path="res://memes/game_stages/MemePromptRequestsStage.tscn" type="PackedScene" id=5]
+[ext_resource path="res://memes/game_stages/MemeContestStage.tscn" type="PackedScene" id=6]
+[ext_resource path="res://memes/game_stages/RoundEndStage.tscn" type="PackedScene" id=7]
+[ext_resource path="res://core/game_stages/RoundBeginStage.gd" type="Script" id=8]
+
+
+
+
+[node name="DefaultMemeGameConfiguration" type="Node"]
+script = ExtResource( 1 )
+_stage_stack = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("RoundBeginStage"), NodePath("PromptRequestsStage"), NodePath("PlayerResponseContestStage"), NodePath("RoundEndStage"), NodePath("RoundBeginStage"), NodePath("PromptRequestsStage"), NodePath("PlayerResponseContestStage"), NodePath("RoundEndStage"), NodePath("RoundBeginStage"), NodePath("PromptRequestsStage"), NodePath("PlayerResponseContestStage"), NodePath("RoundEndStage") ]
+
+[node name="LobbyStage" parent="." instance=ExtResource( 2 )]
+
+[node name="GameBeginStage" parent="." instance=ExtResource( 4 )]
+
+[node name="RoundBeginStage" parent="." instance=ExtResource( 3 )]
+
+[node name="PromptRequestsStage" parent="." instance=ExtResource( 5 )]
+
+[node name="PlayerResponseContestStage" parent="." instance=ExtResource( 6 )]
+
+[node name="RoundEndStage" parent="." instance=ExtResource( 7 )]
+script = ExtResource( 8 )
