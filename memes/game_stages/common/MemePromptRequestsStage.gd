@@ -11,7 +11,9 @@ func enter(params):
 	.enter(params)
 	_current_round = params.current_round
 	assert(_current_round.contests)
-	set_timeout(time_per_contest * len(_current_round.contests), params)
+	var stage_duration = time_per_contest * len(_current_round.contests)
+	assert(stage_duration > 0)
+	set_timeout(stage_duration, params)
 	NetworkInterface.on_player(Message.PROMPT_RESPONSE, self, "_on_player_prompt_response")
 	for contest in _current_round.contests:
 		for player in contest.players:

@@ -1,9 +1,10 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=1]
-[ext_resource path="res://memes/game_stages/MemeContestStage.gd" type="Script" id=2]
+[ext_resource path="res://memes/game_stages/common/MemeContestStage.gd" type="Script" id=2]
 [ext_resource path="res://memes/contest/PlayerContestResponseBubble.tscn" type="PackedScene" id=3]
 [ext_resource path="res://core/game_stages/common/CountdownDisplay.tscn" type="PackedScene" id=4]
+
 
 [node name="MemeContestStage" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -14,8 +15,13 @@ contest_response_display_paths = [ NodePath("ResponseBubbleLeft"), NodePath("Res
 [node name="CountdownDisplay" parent="." index="3" instance=ExtResource( 4 )]
 
 [node name="ResponseBubbleLeft" parent="." index="4" instance=ExtResource( 3 )]
+flip_h = false
+disable_inspector_tool = false
+speech_bubble_position = Vector2( -400, 0 )
 emphasis_scale = Vector2( 1.03, 1.03 )
 
 [node name="ResponseBubbleRight" parent="." index="5" instance=ExtResource( 3 )]
 flip_h = true
+disable_inspector_tool = false
+speech_bubble_position = Vector2( -400, 0 )
 emphasis_scale = Vector2( 1.03, 1.03 )

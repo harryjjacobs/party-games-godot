@@ -1,7 +1,5 @@
 extends "res://core/game_stages/common/GameStage.gd"
 
-export(Array) var rounds
-
 onready var _meme_contest_builder = $MemeContestBuilder
 
 func enter(params):

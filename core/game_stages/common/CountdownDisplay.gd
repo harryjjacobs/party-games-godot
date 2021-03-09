@@ -36,6 +36,6 @@ func _update_text():
 func _tween_entry():
 	pass
 
-func on_Timer_timeout():
+func _on_Timer_timeout():
 	timer.stop()
 	_hide()

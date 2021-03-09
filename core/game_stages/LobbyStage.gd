@@ -15,10 +15,10 @@ func enter(params):
 	.enter(params)
 	_begin_game_prompt_id = ""
 	_sent_begin_game_prompt = false
+	NetworkInterface.connect_to_server()
 	var _err = Events.connect("room_created", self, "_on_room_created")
 	Room.init(max_players)
 	Room.unlock()
-	NetworkInterface.connect_to_server()
 
 func exit():
 	.exit()
@@ -31,12 +31,12 @@ func _on_room_created(code):
 	var _err = Events.connect("player_joined_room", self, "_on_player_joined_room")
 
 func _on_player_joined_room(player):
-	print("Player %s joined lobby" % player.username)
+	print("Player %s joined the lobby" % player.username)
 	player_icon_display.add_player(player)
 	if not _sent_begin_game_prompt and len(Room.players) >= min_players:
 		_begin_game_prompt_id = preload("res://core/util/uuid/uuid.gd").v4()
 		var message = Message.create(Message.REQUEST_INPUT, {
-			"inputType": "button",
+			"promptType": "button",
 			"prompt": "BEGIN GAME",
 			"id": _begin_game_prompt_id
 		})

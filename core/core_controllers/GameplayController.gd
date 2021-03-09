@@ -22,14 +22,16 @@ func _exit_tree():
 func _initialise(game_builder = null):
 	if not game_builder:
 		game_builder = _game_builder_scene.instance()
-	if game_builder:
-		# game_configuration.init(self)
-		for stage in game_builder.build_stages():
-			_stage_stack.push_back(stage)
-			var parent = stage.get_parent()
-			if parent:
-				parent.remove_child(stage)
-				game_builder.queue_free()
+	# game_configuration.init(self)
+	for stage in game_builder.build_stages():
+		_stage_stack.push_back(stage)
+		var parent = stage.get_parent()
+		if parent:
+			parent.remove_child(stage)
+			game_builder.queue_free()
+	print("[%s] Stages initialised. Stage stack: " % name)
+	for stage in _stage_stack:
+		print("- %s" % stage.name)
 
 func _begin():
 	_next_stage({})
@@ -44,9 +46,9 @@ func _next_stage(params):
 	var old_stage = _current_stage
 	_current_stage = _stage_stack.pop_front()
 	var _err = _current_stage.connect("request_exit", self, "_on_stage_request_exit")
+	print("Stage %s entered" % _current_stage.name)
 	add_child(_current_stage)
 	_current_stage.enter(params)
-	print("Stage %s entered" % _current_stage.name)
 	Events.emit_signal("gamestage_changed", old_stage, _current_stage)
 
 func _on_stage_request_exit(params):

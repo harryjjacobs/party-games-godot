@@ -1,25 +1,37 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://memes/configuration/MemeGameBuilder.gd" type="Script" id=1]
-[ext_resource path="res://memes/game_stages/GameBeginStage.tscn" type="PackedScene" id=2]
-[ext_resource path="res://memes/game_stages/MemeRoundBeginStage.tscn" type="PackedScene" id=3]
-[ext_resource path="res://memes/game_stages/MemeContestStage.tscn" type="PackedScene" id=4]
-[ext_resource path="res://memes/game_stages/MemePromptRequestsStage.tscn" type="PackedScene" id=5]
-[ext_resource path="res://memes/game_stages/RoundEndStage.tscn" type="PackedScene" id=6]
+[ext_resource path="res://memes/game_stages/common/GameBeginStage.tscn" type="PackedScene" id=2]
+[ext_resource path="res://memes/game_stages/basic_round/BasicMemeRoundBeginStage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://memes/game_stages/common/MemeContestStage.tscn" type="PackedScene" id=4]
+[ext_resource path="res://memes/game_stages/common/MemePromptRequestsStage.tscn" type="PackedScene" id=5]
+[ext_resource path="res://memes/game_stages/common/RoundEndStage.tscn" type="PackedScene" id=6]
 [ext_resource path="res://core/game_stages/LobbyStage.tscn" type="PackedScene" id=7]
+[ext_resource path="res://core/ui/assets/fonts/Monserrat-Regular.tres" type="DynamicFont" id=8]
 
 [node name="MemeGameBuilder" type="Node"]
 script = ExtResource( 1 )
-_stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("MemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage") ]
+_stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage") ]
 
 [node name="LobbyStage" parent="." instance=ExtResource( 7 )]
 
 [node name="GameBeginStage" parent="." instance=ExtResource( 2 )]
 
-[node name="MemeRoundBeginStage" parent="." instance=ExtResource( 3 )]
+[node name="BasicMemeRoundBeginStage" parent="." instance=ExtResource( 3 )]
+duration = 5.0
+
+[node name="BasicMemeRoundTitle" type="Label" parent="BasicMemeRoundBeginStage"]
+margin_right = 1913.0
+margin_bottom = 827.0
+custom_fonts/font = ExtResource( 8 )
+text = "Round 1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MemePromptRequestsStage" parent="." instance=ExtResource( 5 )]
-time_per_contest = null
 
 [node name="MemeContestStage" parent="." instance=ExtResource( 4 )]
 
