@@ -30,7 +30,7 @@ func _process(_delta):
 		_update_text()
 
 func _update_text():
-	countdown_label.text = "%d" % int(timer.time_left)
+	countdown_label.text = "%d" % (int(timer.time_left) + 1)
 
 #TODO
 func _tween_entry():

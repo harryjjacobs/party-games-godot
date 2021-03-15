@@ -46,7 +46,7 @@ func remove_player(player: Player, animate = true):
 
 func clear():
 	for player in _player_icon_lookup.keys():
-		remove_player(player)
+		remove_player(player, false)
 
 func add_players(players: Array, animate = true):
 	for player in players:

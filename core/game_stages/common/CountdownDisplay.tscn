@@ -3,7 +3,7 @@
 [ext_resource path="res://core/ui/assets/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://core/game_stages/common/CountdownDisplay.gd" type="Script" id=2]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 120
 outline_size = 6
 outline_color = Color( 0, 0, 0, 1 )
@@ -35,9 +35,8 @@ __meta__ = {
 [node name="CountdownLabel" type="Label" parent="."]
 margin_right = 162.0
 margin_bottom = 148.0
-size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 text = "60"
 valign = 2
 

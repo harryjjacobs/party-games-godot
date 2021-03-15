@@ -14,6 +14,7 @@ func to_json():
 				"width": caption.width,
 				"height": caption.height
 			},
+			"rotation": caption.rotation,
 			"color": caption.text_color.to_html(false)
 		})
 	return {

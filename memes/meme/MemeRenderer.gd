@@ -20,6 +20,8 @@ func init(meme_template: MemeTemplate, captions: Array):
 
 func _create_labels():
 	yield(get_tree(), "idle_frame")
+	for child in captions_parent.get_children():
+		child.queue_free()
 	for i in len(_meme_template.captions):
 		var caption = _meme_template.captions[i]
 		var caption_text = _captions[i]

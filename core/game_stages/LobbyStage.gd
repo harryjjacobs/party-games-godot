@@ -37,8 +37,10 @@ func _on_player_joined_room(player):
 		_begin_game_prompt_id = preload("res://core/util/uuid/uuid.gd").v4()
 		var message = Message.create(Message.REQUEST_INPUT, {
 			"promptType": "button",
-			"prompt": "BEGIN GAME",
-			"id": _begin_game_prompt_id
+			"promptData": {
+				"prompt": "BEGIN GAME",
+				"id": _begin_game_prompt_id
+			}
 		})
 		NetworkInterface.send_player(Room.players[0].client_id, message)
 		NetworkInterface.on_player(Message.PROMPT_RESPONSE, self, "_on_prompt_response")
