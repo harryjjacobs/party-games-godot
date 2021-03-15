@@ -7,11 +7,11 @@
 [ext_resource path="res://memes/game_stages/common/MemePromptRequestsStage.tscn" type="PackedScene" id=5]
 [ext_resource path="res://memes/game_stages/common/RoundEndStage.tscn" type="PackedScene" id=6]
 [ext_resource path="res://core/game_stages/LobbyStage.tscn" type="PackedScene" id=7]
-[ext_resource path="res://core/ui/assets/fonts/Monserrat-Regular.tres" type="DynamicFont" id=8]
+[ext_resource path="res://core/game_stages/ContestBeginStage.tscn" type="PackedScene" id=8]
 
 [node name="MemeGameBuilder" type="Node"]
 script = ExtResource( 1 )
-_stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage") ]
+_stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage") ]
 
 [node name="LobbyStage" parent="." instance=ExtResource( 7 )]
 
@@ -20,18 +20,9 @@ _stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicM
 [node name="BasicMemeRoundBeginStage" parent="." instance=ExtResource( 3 )]
 duration = 5.0
 
-[node name="BasicMemeRoundTitle" type="Label" parent="BasicMemeRoundBeginStage"]
-margin_right = 1913.0
-margin_bottom = 827.0
-custom_fonts/font = ExtResource( 8 )
-text = "Round 1"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="MemePromptRequestsStage" parent="." instance=ExtResource( 5 )]
+
+[node name="ContestBeginStage" parent="." instance=ExtResource( 8 )]
 
 [node name="MemeContestStage" parent="." instance=ExtResource( 4 )]
 
