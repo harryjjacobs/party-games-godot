@@ -63,7 +63,6 @@ func _on_player_prompt_response(client_id, message):
 	if not valid:
 		print("Invalid contest response - no matching contest with id %s found" % message.data.contestId)
 		return
-	_player_icon_display.add_player(player)
 	_pending_responses -= 1
 	if _pending_responses <= 0:
 		_pending_responses = 0
@@ -72,3 +71,5 @@ func _on_player_prompt_response(client_id, message):
 	# send next contest for this player
 	if player in _pending_requests and not _pending_requests[player].empty():
 		_send_prompt_to_player(player, _pending_requests[player].pop_front())
+	else:
+		_player_icon_display.add_player(player)

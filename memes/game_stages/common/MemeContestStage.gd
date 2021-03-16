@@ -3,6 +3,7 @@ extends "res://core/game_stages/common/GameStage.gd"
 export(float) var vote_timeout = 15
 export(float) var time_between_contests = 4.0
 export(float) var display_contest_result_duration = 5.0
+export(AudioStreamSample) var vote_prompt_audio
 export(Array, NodePath) var contest_response_display_paths
 
 onready var _countdown_display = $CountdownDisplay
@@ -28,6 +29,7 @@ func enter(params):
 		_show_contest_response_displays(contest)
 		# record votes
 		yield(_voting_process(), "completed")
+		yield(get_tree().create_timer(1.0), "timeout")
 		yield(_show_voting_results(), "completed")
 		yield(get_tree().create_timer(1.0), "timeout")
 		_update_points()
@@ -106,6 +108,7 @@ func _get_winning_responses():
 
 func _voting_process():
 	print("[%s] Voting begin" % name)
+	._play_audio(vote_prompt_audio)
 	NetworkInterface.on_player(Message.PROMPT_RESPONSE, self, "_on_vote_received")
 	_countdown_display.start(vote_timeout)
 	_send_vote_prompts()

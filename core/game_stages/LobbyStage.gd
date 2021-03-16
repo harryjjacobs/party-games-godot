@@ -19,12 +19,14 @@ func enter(params):
 	var _err = Events.connect("room_created", self, "_on_room_created")
 	Room.init(max_players)
 	Room.unlock()
+	BackgroundMusic.play()
 
 func exit():
 	.exit()
 	Room.lock()
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_prompt_response")
 	Events.disconnect("player_joined_room", self, "_on_player_joined_room")
+	BackgroundMusic.skip_track()
 
 func _on_room_created(code):
 	join_info_label.text = "Go to %s\nEnter code %s to join" % ["localhost:3000", code]

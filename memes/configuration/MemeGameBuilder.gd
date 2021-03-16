@@ -1,6 +1,10 @@
 extends GameBuilder
 
 export(Array, NodePath) var _stages 
+export(Array, AudioStreamSample) var _background_music
+
+func build_background_music():
+	return _background_music
 
 func build_stages():
 	var stages = []

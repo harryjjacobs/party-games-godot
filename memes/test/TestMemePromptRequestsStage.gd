@@ -3,6 +3,7 @@ extends Node
 onready var meme_prompts_requests_stage = $MemePromptRequestsStage
 onready var mock_server = $MockMemeGameServer
 
+var _response_delay_time = 2
 var _test_round
 var _default_contest_image: Texture
 var _requests_sent = 0
@@ -30,12 +31,13 @@ func _ready():
 		"round_history": Array(),
 		"round_generator": null
 	})
-	var delay = meme_prompts_requests_stage.time_per_contest * len(_test_round.contests)
-	assert(delay - meme_prompts_requests_stage._timer.time_left < 0.2)
-	yield(get_tree().create_timer(1.0), "timeout")
-	assert(_requests_sent == len(_test_round.contests) * 2)
-	print("delaying for %s s" % delay)
-	yield(get_tree().create_timer(delay), "timeout")
+	var expected_requests = 0
+	for contest in _test_round.contests:
+		expected_requests += len(contest.players)
+		print("delaying for %s s" % _response_delay_time)
+		yield(get_tree().create_timer(_response_delay_time), "timeout")
+		assert(_requests_sent == expected_requests)
+	yield(get_tree().create_timer(5.0), "timeout")
 	assert(_exit_requested == true)
 	for contest in _test_round.contests:
 		assert(len(contest.responses) == len(contest.players))
@@ -49,7 +51,7 @@ func _server_message_handler(conn_id, message):
 		_default_contest_image.get_data().save_png_to_buffer()))
 	_requests_sent += 1
 	# delay before sending responses
-	yield(get_tree().create_timer(2.0), "timeout")
+	yield(get_tree().create_timer(_response_delay_time), "timeout")
 	var captions = Array()
 	for _i in message.data.payload.data.promptData.template.captions:
 		captions.append("example caption")

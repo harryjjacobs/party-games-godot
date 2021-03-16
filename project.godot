@@ -126,6 +126,7 @@ Events="*res://core/events/Events.gd"
 NetworkInterface="*res://core/comms/NetworkInterface.tscn"
 Room="*res://core/core_controllers/Room.gd"
 PersistentData="*res://core/data/PersistentData.gd"
+BackgroundMusic="*res://core/audio/BackgroundMusic.tscn"
 
 [display]
 

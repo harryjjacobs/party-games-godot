@@ -11,3 +11,6 @@ margin_right = 1920.0
 margin_bottom = 1080.0
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = "Stage"

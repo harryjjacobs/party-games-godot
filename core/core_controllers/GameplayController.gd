@@ -22,7 +22,6 @@ func _exit_tree():
 func _initialise(game_builder = null):
 	if not game_builder:
 		game_builder = _game_builder_scene.instance()
-	# game_configuration.init(self)
 	for stage in game_builder.build_stages():
 		_stage_stack.push_back(stage)
 		var parent = stage.get_parent()
@@ -32,6 +31,10 @@ func _initialise(game_builder = null):
 	print("[%s] Stages initialised. Stage stack: " % name)
 	for stage in _stage_stack:
 		print("- %s" % stage.name)
+	var music_tracks = game_builder.build_background_music()
+	BackgroundMusic.clear_tracks()
+	BackgroundMusic.add_tracks(music_tracks)
+	print("[%s] Background music initialised. %d tracks added: " % [name, len(music_tracks)])
 
 func _begin():
 	_next_stage({})

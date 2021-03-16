@@ -3,6 +3,7 @@ extends Node2D
 signal request_exit
 
 onready var _timer = $Timer
+onready var _audio_player = $AudioStreamPlayer
 
 var _parameters
 
@@ -19,3 +20,9 @@ func set_timeout(duration, params):
 func _on_timeout(params):
 	_timer.stop()
 	emit_signal("request_exit", params)
+
+func _play_audio(audio_stream):
+	if not audio_stream:
+		return
+	_audio_player.stream = audio_stream
+	_audio_player.play()

@@ -30,4 +30,6 @@ __meta__ = {
 
 [node name="PlayerIconDisplay" parent="." index="2" instance=ExtResource( 4 )]
 position = Vector2( 960, 540 )
+margin_x = 0.1
 margin_y = 0.3
+type = 0
