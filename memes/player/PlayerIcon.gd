@@ -37,6 +37,7 @@ func tween_entry():
 	var _x = tween.interpolate_property($PlayerSprite, "scale",
 		Vector2.ZERO, orig_scale, 1.0,
 		Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
+	$PlayerSprite.scale = Vector2.ZERO
 	var _err = tween.start()
 
 func tween_exit():

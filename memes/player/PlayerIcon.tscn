@@ -21,7 +21,7 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = SubResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 70
+size = 100
 outline_size = 10
 outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
@@ -31,6 +31,7 @@ font_data = SubResource( 2 )
 [node name="PlayerIcon" type="Node2D"]
 position = Vector2( 104.65, 77.2985 )
 script = ExtResource( 1 )
+animate_entry = true
 
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.7, 0.7 )
