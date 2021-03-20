@@ -4,6 +4,7 @@ class_name PlayerIcon
 const Player = preload("res://core/player/Player.gd")
 
 export var animate_entry = false
+export(float) var position_movement_speed = 2
 
 onready var label: Label = $PlayerNameLabel
 onready var tween: Tween = $Tween
@@ -19,33 +20,24 @@ func _initialise():
 		label.text = player.username
 	point_change_label.visible = false
 	if animate_entry: 
-		tween_entry()
+		_animate_entry()
 
 func init(_player: Player):
 	player = _player
 	if is_inside_tree():
 		_initialise()
 
-func tween_position_to(position: Vector2):
-	var _x = tween.interpolate_property($Node2D, "position",
-		position, position, 0.8,
-		Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
+func tween_position_to(new_position: Vector2):
+	var _x = tween.interpolate_property(self, "position",
+		position, new_position, 1.0 / position_movement_speed,
+		Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	var _err = tween.start()
 
-func tween_entry():
-	var orig_scale = $PlayerSprite.scale
-	var _x = tween.interpolate_property($PlayerSprite, "scale",
-		Vector2.ZERO, orig_scale, 1.0,
-		Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
-	$PlayerSprite.scale = Vector2.ZERO
-	var _err = tween.start()
+func _animate_entry():
+	$AnimationPlayer.play("IconEntrance")
 
-func tween_exit():
-	var orig_scale = $PlayerSprite.scale
-	var _x = tween.interpolate_property($PlayerSprite, "scale",
-	orig_scale, Vector2.ZERO, 1.0,
-		Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
-	var _err = tween.start()
+func _animate_exit():
+	$AnimationPlayer.play("IconExit")
 
 func tween_point_change(amount):
 	var duration = 0.3
