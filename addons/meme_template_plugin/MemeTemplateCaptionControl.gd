@@ -12,6 +12,8 @@ onready var width_field = $Fields/WidthField/SpinBox
 onready var height_field = $Fields/HeightField/SpinBox
 onready var rotation_field = $Fields/RotationField/SpinBox
 onready var text_color_field = $Fields/TextColorField/ColorPickerButton
+onready var center_h = $Fields/HAlignmentField/CheckBox
+onready var center_v = $Fields/VAlignmentField/CheckBox
 
 var caption: MemeCaption
 var color: Color
@@ -24,6 +26,8 @@ func _ready():
 	height_field.connect("value_changed", self, "_on_field_changed")
 	rotation_field.connect("value_changed", self, "_on_field_changed")
 	text_color_field.connect("color_changed", self, "_on_field_changed")
+	center_h.connect("toggled", self, "_on_field_changed")
+	center_v.connect("toggled", self, "_on_field_changed")
 
 func set_caption(_caption: MemeCaption):
 	caption = _caption
@@ -40,6 +44,8 @@ func _update_caption():
 		caption.width = width_field.value
 		caption.height = height_field.value
 		caption.rotation = rotation_field.value
+		caption.center_h = center_h.pressed
+		caption.center_v = center_v.pressed
 		caption.text_color = text_color_field.color
 
 func _update_fields():
@@ -50,6 +56,9 @@ func _update_fields():
 		height_field.value = caption.height
 		rotation_field.value = caption.rotation
 		text_color_field.color = caption.text_color
+		center_h.pressed = caption.center_h
+		center_v.pressed = caption.center_v
+
 		color_rect.color = color
 
 func _on_delete_button_pressed():

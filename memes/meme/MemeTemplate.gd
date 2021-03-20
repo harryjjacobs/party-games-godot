@@ -7,16 +7,7 @@ export(Array, Resource) var captions = Array()
 func to_json():
 	var captions_json = Array()
 	for caption in captions:
-		captions_json.append({
-			"area": {
-				"x": caption.x,
-				"y": caption.y,
-				"width": caption.width,
-				"height": caption.height
-			},
-			"rotation": caption.rotation,
-			"color": caption.text_color.to_html(false)
-		})
+		captions_json.append(caption.to_json())
 	return {
 		"image": _base64_image(),
 		"captions": captions_json

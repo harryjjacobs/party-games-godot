@@ -20,14 +20,14 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 508.0
-margin_bottom = 237.0
+margin_bottom = 307.0
 color = Color( 0.968627, 0.423529, 0.0235294, 1 )
 
 [node name="Fields" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 508.0
-margin_bottom = 237.0
+margin_bottom = 307.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -139,10 +139,50 @@ size_flags_vertical = 3
 min_value = -360.0
 max_value = 360.0
 
-[node name="TextColorField" type="HBoxContainer" parent="Fields"]
+[node name="HAlignmentField" type="HBoxContainer" parent="Fields"]
 margin_top = 175.0
 margin_right = 501.0
 margin_bottom = 206.0
+
+[node name="Label" type="Label" parent="Fields/HAlignmentField"]
+margin_right = 248.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "Center horizontal:"
+
+[node name="CheckBox" type="CheckBox" parent="Fields/HAlignmentField"]
+margin_left = 252.0
+margin_right = 501.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+clip_text = true
+
+[node name="VAlignmentField" type="HBoxContainer" parent="Fields"]
+margin_top = 210.0
+margin_right = 501.0
+margin_bottom = 241.0
+
+[node name="Label" type="Label" parent="Fields/VAlignmentField"]
+margin_right = 248.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "Center vertical:"
+
+[node name="CheckBox" type="CheckBox" parent="Fields/VAlignmentField"]
+margin_left = 252.0
+margin_right = 501.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+clip_text = true
+
+[node name="TextColorField" type="HBoxContainer" parent="Fields"]
+margin_top = 245.0
+margin_right = 501.0
+margin_bottom = 276.0
 
 [node name="Label" type="Label" parent="Fields/TextColorField"]
 margin_right = 248.0
@@ -166,8 +206,8 @@ align = 0
 color = Color( 1, 1, 1, 1 )
 
 [node name="DeleteButton" type="Button" parent="Fields"]
-margin_top = 210.0
+margin_top = 280.0
 margin_right = 501.0
-margin_bottom = 230.0
+margin_bottom = 300.0
 text = "Delete"
 [connection signal="pressed" from="Fields/DeleteButton" to="." method="_on_delete_button_pressed"]
