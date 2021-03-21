@@ -105,6 +105,10 @@ func send_player(target, message):
 	})
 	_message_queue.push_back(host_to_player_message)
 
+func send_players(targets, message):
+	for target in targets:
+		send_player(target, message)
+
 func send_server(message):
 	_message_queue.push_back(message)
 

@@ -34,7 +34,7 @@ func _initialise(game_builder = null):
 	var music_tracks = game_builder.build_background_music()
 	BackgroundMusic.clear_tracks()
 	BackgroundMusic.add_tracks(music_tracks)
-	print("[%s] Background music initialised. %d tracks added: " % [name, len(music_tracks)])
+	print("[%s] Background music initialised. %d tracks added" % [name, len(music_tracks)])
 
 func _begin():
 	_next_stage({})
