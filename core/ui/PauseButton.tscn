@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://core/ui/assets/icons/pause.png" type="Texture" id=1]
+[ext_resource path="res://core/ui/icons/pause.png" type="Texture" id=1]
+
 
 
 [node name="PauseButton" type="TextureButton"]

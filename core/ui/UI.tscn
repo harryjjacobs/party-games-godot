@@ -4,7 +4,8 @@
 [ext_resource path="res://core/ui/dialogs/PauseDialog.tscn" type="PackedScene" id=2]
 [ext_resource path="res://core/ui/PauseButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://core/ui/PauseButton.gd" type="Script" id=4]
-[ext_resource path="res://core/ui/assets/icons/sound_off.png" type="Texture" id=5]
+[ext_resource path="res://core/ui/icons/sound_off.png" type="Texture" id=5]
+
 
 [node name="UI" type="CanvasLayer"]
 pause_mode = 2

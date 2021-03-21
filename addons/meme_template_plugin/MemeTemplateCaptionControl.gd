@@ -12,6 +12,7 @@ onready var width_field = $Fields/WidthField/SpinBox
 onready var height_field = $Fields/HeightField/SpinBox
 onready var rotation_field = $Fields/RotationField/SpinBox
 onready var text_color_field = $Fields/TextColorField/ColorPickerButton
+onready var background_color_field = $Fields/BackgroundColorField/ColorPickerButton
 onready var center_h = $Fields/HAlignmentField/CheckBox
 onready var center_v = $Fields/VAlignmentField/CheckBox
 
@@ -26,6 +27,7 @@ func _ready():
 	height_field.connect("value_changed", self, "_on_field_changed")
 	rotation_field.connect("value_changed", self, "_on_field_changed")
 	text_color_field.connect("color_changed", self, "_on_field_changed")
+	background_color_field.connect("color_changed", self, "_on_field_changed")
 	center_h.connect("toggled", self, "_on_field_changed")
 	center_v.connect("toggled", self, "_on_field_changed")
 
@@ -47,6 +49,7 @@ func _update_caption():
 		caption.center_h = center_h.pressed
 		caption.center_v = center_v.pressed
 		caption.text_color = text_color_field.color
+		caption.background_color = background_color_field.color
 
 func _update_fields():
 	if is_inside_tree():
@@ -58,7 +61,8 @@ func _update_fields():
 		text_color_field.color = caption.text_color
 		center_h.pressed = caption.center_h
 		center_v.pressed = caption.center_v
-
+		background_color_field.color = caption.background_color
+		
 		color_rect.color = color
 
 func _on_delete_button_pressed():

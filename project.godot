@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Object",
+"class": "ColorGenerator",
+"language": "GDScript",
+"path": "res://core/util/ColorGenerator.gd"
+}, {
+"base": "Resource",
+"class": "ColorPalette",
+"language": "GDScript",
+"path": "res://core/util/ColorPalette.gd"
+}, {
 "base": "Node",
 "class": "GameBuilder",
 "language": "GDScript",
@@ -93,8 +103,15 @@ _global_script_classes=[ {
 "class": "RoundGenerator",
 "language": "GDScript",
 "path": "res://memes/round/RoundGenerator.gd"
+}, {
+"base": "Control",
+"class": "WordWrapLabel",
+"language": "GDScript",
+"path": "res://core/ui/WordWrapLabel.gd"
 } ]
 _global_script_class_icons={
+"ColorGenerator": "",
+"ColorPalette": "",
 "GameBuilder": "",
 "GameConfiguration": "",
 "GameplayController": "",
@@ -111,7 +128,8 @@ _global_script_class_icons={
 "PlayerIcon": "",
 "PlayerIconDisplay": "",
 "Round": "",
-"RoundGenerator": ""
+"RoundGenerator": "",
+"WordWrapLabel": ""
 }
 
 [application]
@@ -125,7 +143,6 @@ config/icon="res://icon.png"
 Events="*res://core/events/Events.gd"
 NetworkInterface="*res://core/comms/NetworkInterface.tscn"
 Room="*res://core/core_controllers/Room.gd"
-PersistentData="*res://core/data/PersistentData.gd"
 BackgroundMusic="*res://core/audio/BackgroundMusic.tscn"
 
 [display]

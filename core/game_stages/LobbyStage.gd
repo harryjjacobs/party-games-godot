@@ -4,17 +4,19 @@ const Message = preload("res://core/comms/Message.gd")
 
 export(int) var max_players = 10
 export(int) var min_players = 2
-
+export(Resource) var player_color_palette
 onready var player_icon_display = $PlayerIconDisplay
 onready var join_info_label: Label = $JoinInformationLabel
 
 var _begin_game_prompt_id
 var _sent_begin_game_prompt
+var _player_color_generator
 
 func enter(params):
 	.enter(params)
 	_begin_game_prompt_id = ""
 	_sent_begin_game_prompt = false
+	_player_color_generator = ColorGenerator.new(player_color_palette)
 	NetworkInterface.connect_to_server()
 	var _err = Events.connect("room_created", self, "_on_room_created")
 	Room.init(max_players)
@@ -34,6 +36,9 @@ func _on_room_created(code):
 
 func _on_player_joined_room(player):
 	print("Player %s joined the lobby" % player.username)
+	# assign additional information to the player
+	player.color = _player_color_generator.next()
+	# display the player
 	player_icon_display.add_player(player)
 	if not _sent_begin_game_prompt and len(Room.players) >= min_players:
 		_begin_game_prompt_id = preload("res://core/util/uuid/uuid.gd").v4()

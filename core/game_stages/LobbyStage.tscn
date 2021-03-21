@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://core/game_stages/LobbyStage.gd" type="Script" id=1]
-[ext_resource path="res://core/ui/assets/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=3]
 [ext_resource path="res://core/game_stages/common/PlayerIconDisplay.tscn" type="PackedScene" id=4]
+[ext_resource path="res://memes/player/PlayerIcon.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
@@ -30,6 +31,7 @@ __meta__ = {
 
 [node name="PlayerIconDisplay" parent="." index="2" instance=ExtResource( 4 )]
 position = Vector2( 960, 540 )
+player_icon_scene = ExtResource( 5 )
 margin_x = 0.1
 margin_y = 0.3
 type = 0

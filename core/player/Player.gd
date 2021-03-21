@@ -5,13 +5,16 @@ var client_id = ''
 var username = ''
 var points = 0
 var points_history = []
+var color: Color = Color.aquamarine
 
 class PointChange extends Object:
   var amount: int
   var reason: String
-  func _init(_amount: int, _reason: String = ""):
+  var group
+  func _init(_amount: int, _group, _reason: String = ""):
     amount = _amount
     reason = _reason
+    group = _group
 
 func _init(player_client_id, player_name):
   client_id = player_client_id
@@ -21,15 +24,20 @@ func reset():
   points = 0
   points_history = []
   
-func update_points(amount, reason = ""):
-  points_history.push_front(PointChange.new(amount, reason))
+func update_points(amount, group, reason = ""):
+  points_history.push_front(PointChange.new(amount, group, reason))
   points += amount
 
-func get_points_history_until(historical_points: int):
+func get_points_history_by_group(group):
   var history = []
-  var points_snapshot = points
   for point_change in points_history:
-    if points_snapshot == historical_points:
-      return history
-    history.push_front(point_change)
-    points_snapshot -= point_change.amount
+    if point_change.group == group:
+      history.append(point_change)
+  return history
+
+func get_point_change_by_group(group):
+  var change = 0
+  for point_change in points_history:
+    if point_change.group == group:
+      change += point_change.amount
+  return change
