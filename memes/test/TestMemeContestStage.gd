@@ -70,7 +70,7 @@ func _on_exit_requested(params):
 
 func _build_contest(player_a, player_b):
 	var contest = MemeContest.new()
-	contest.type = MemeContest.ContestType.TWO_PLAYER
+	contest.type = MemeContest.ContestType.BASIC
 	contest.players = [player_a, player_b]
 	contest.meme_template = MemeTemplate.new()
 	assert(_default_contest_image)

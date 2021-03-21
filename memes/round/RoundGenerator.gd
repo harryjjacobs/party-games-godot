@@ -10,8 +10,13 @@ func _init(players, contest_builder: MemeContestBuilder):
 	_players.shuffle()
 	_contest_builder = contest_builder
 
-func next(contest_type = MemeContest.ContestType.TWO_PLAYER):
-	var contests = _generate_two_player_contests(contest_type)
+func next(vote_weight = 1, contest_type = MemeContest.ContestType.BASIC):
+	var contests
+	match contest_type:
+		MemeContest.ContestType.BASIC:
+			contests = _generate_two_player_contests(contest_type, vote_weight)
+		_:
+			printerr("Invalid ContestType: %s" % contest_type)
 	var r = Round.new()
 	r.contests = contests
 	_count += 1
@@ -20,15 +25,13 @@ func next(contest_type = MemeContest.ContestType.TWO_PLAYER):
 # Generate two contests per player per round
 # whereby players are matched against each other
 # in an even manner
-func _generate_two_player_contests(contest_type):
+func _generate_two_player_contests(contest_type, vote_weight):
 	var pairs = _generate_player_pairs()
 	var contests = Array()
 	for pair in pairs:
-		contests.append(_create_two_player_contest(pair.a, pair.b, contest_type))
+		var contest = _contest_builder.build([pair.a, pair.b], vote_weight, contest_type)
+		contests.append(contest)
 	return contests
-
-func _create_two_player_contest(player_a, player_b, contest_type):
-	return _contest_builder.build([player_a, player_b], contest_type)
 
 func _generate_player_pairs():
 	assert(len(_players) > 1)

@@ -4,8 +4,9 @@
 [ext_resource path="res://memes/contest/MemeContestResponseBubble.gd" type="Script" id=2]
 [ext_resource path="res://memes/player/PlayerIcon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://memes/meme/MemeRenderer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://core/ui/assets/icons/help.png" type="Texture" id=5]
+[ext_resource path="res://core/ui/icons/help.png" type="Texture" id=5]
 [ext_resource path="res://memes/contest/VotesContainer.gd" type="Script" id=6]
+
 
 
 [node name="PlayerContestResponseBubble" type="Node2D"]

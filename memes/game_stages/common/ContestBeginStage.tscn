@@ -2,59 +2,72 @@
 
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=1]
 [ext_resource path="res://memes/game_stages/common/ContestBeginStage.gd" type="Script" id=2]
-[ext_resource path="res://core/ui/assets/fonts/AnnieUseYourTelescope-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://memes/game_stages/SimpleSubtitle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://memes/audio/vorte.wav" type="AudioStream" id=4]
+[ext_resource path="res://memes/game_stages/SimpleTitle.tscn" type="PackedScene" id=5]
 
-[sub_resource type="DynamicFont" id=1]
-size = 300
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 70
-font_data = ExtResource( 3 )
+[sub_resource type="Animation" id=1]
+resource_name = "Title Entrance"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Title:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 7.413, -960 ), Vector2( 7.413, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Subtitle:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.266667, 0.968627, 0.505882, 0 ), Color( 0.266667, 0.968627, 0.505882, 0 ), Color( 0.266667, 0.968627, 0.505882, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AudioStreamPlayer:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 4 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AudioStreamPlayer:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 0.133972 ),
+"update": 2,
+"values": [ true ]
+}
 
 [node name="ContestBeginStage" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
-[node name="Title" type="Label" parent="." index="2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 7.4126
-margin_top = 4.23792
-margin_right = 1927.41
-margin_bottom = 978.238
-rect_pivot_offset = Vector2( 960, 487 )
-custom_fonts/font = SubResource( 1 )
-text = "VOTE"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Title" parent="." index="2" instance=ExtResource( 5 )]
 
-[node name="Subtitle" type="Label" parent="." index="3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_top = 679.0
-margin_right = 1920.0
-margin_bottom = 796.0
-rect_pivot_offset = Vector2( 960, 487 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0.266667, 0.968627, 0.505882, 1 )
-text = "Choose your favourite using the prompt on your device"
-align = 1
-valign = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Subtitle" parent="." index="3" instance=ExtResource( 3 )]
 
-[node name="Tween" type="Tween" parent="." index="4"]
-
-[node name="AudioStreamPlayer" parent="." index="5"]
+[node name="AudioStreamPlayer" parent="." index="4"]
 stream = ExtResource( 4 )
-autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+method_call_mode = 1
+"anims/Title Entrance" = SubResource( 1 )

@@ -3,4 +3,17 @@
 [ext_resource path="res://core/game_stages/common/PlayerIconDisplay.gd" type="Script" id=1]
 
 [node name="PlayerIconDisplay" type="Node2D"]
+position = Vector2( 868, 456 )
 script = ExtResource( 1 )
+player_icon_scene = null
+ranking_label_scene = null
+margin_x = 0.0
+margin_y = 0.0
+max_ranking_label_scale = 1.0
+min_ranking_label_scale = 0.5
+type = 1
+max_leaderboard_columns = 4
+
+[node name="RankingLabelContainer" type="Node2D" parent="."]
+
+[node name="PlayerIconContainer" type="Node2D" parent="."]

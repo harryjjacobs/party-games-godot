@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://core/ui/assets/fonts/Monserrat-Black.tres" type="DynamicFont" id=1]
+[ext_resource path="res://core/ui/fonts/Monserrat-Black.tres" type="DynamicFont" id=1]
+
 
 
 [node name="BasicMemeRoundTitle" type="Label"]

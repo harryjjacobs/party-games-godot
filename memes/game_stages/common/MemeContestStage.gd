@@ -1,7 +1,7 @@
 extends "res://core/game_stages/common/GameStage.gd"
 
 export(float) var vote_timeout = 15
-export(float) var time_between_contests = 4.0
+export(float) var time_between_contests = 3.0
 export(float) var display_contest_result_duration = 5.0
 export(AudioStreamSample) var vote_prompt_audio
 export(Array, NodePath) var contest_response_display_paths
@@ -24,6 +24,8 @@ func enter(params):
 	.enter(params)
 	_initialise_response_displays()
 	for contest in params.current_round.contests:
+		if not is_inside_tree():
+			return
 		print("[%s] Contest begin" % name)
 		current_contest = contest
 		_show_contest_response_displays(contest)
@@ -36,9 +38,7 @@ func enter(params):
 		yield(get_tree().create_timer(display_contest_result_duration), "timeout")
 		_hide_all_contest_response_displays()
 		yield(get_tree().create_timer(time_between_contests), "timeout")
-		
-func exit():
-	.exit()
+	emit_signal("request_exit", params)
 
 func _initialise_response_displays():
 	assert(contest_response_display_paths)
@@ -84,7 +84,8 @@ func _update_points():
 			votes_per_player[vote.choice.player] = 0
 		votes_per_player[vote.choice.player] += 1
 	for player in votes_per_player:
-		player.update_points(votes_per_player[player])
+		var points_group = len(_parameters.round_history)
+		player.update_points(votes_per_player[player], points_group)
 	for i in len(current_contest.responses):
 		var display = _contest_response_displays[i]
 		var response = current_contest.responses[i]
@@ -119,6 +120,7 @@ func _voting_process():
 		yield(get_tree(), "idle_frame")
 	_voting_timer.stop()
 	_countdown_display.stop()
+	NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_vote_received")
 	print("[%s] Voting end" % name)
 
@@ -163,7 +165,7 @@ func _check_vote_validity(client_id, message) -> int:
 	if not player:
 		return _VoteValidity.INVALID_PLAYER
 	# a player cannot vote in a two-player contest involving themselves
-	if current_contest.type == MemeContest.ContestType.TWO_PLAYER:
+	if current_contest.type == MemeContest.ContestType.BASIC:
 		for p in current_contest.players:
 			if p.client_id == client_id:
 				return _VoteValidity.INVALID_PLAYER

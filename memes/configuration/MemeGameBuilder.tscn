@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://memes/configuration/MemeGameBuilder.gd" type="Script" id=1]
 [ext_resource path="res://memes/game_stages/common/GameBeginStage.tscn" type="PackedScene" id=2]
 [ext_resource path="res://memes/game_stages/basic_round/BasicMemeRoundBeginStage.tscn" type="PackedScene" id=3]
 [ext_resource path="res://memes/game_stages/common/MemeContestStage.tscn" type="PackedScene" id=4]
 [ext_resource path="res://memes/game_stages/common/MemePromptRequestsStage.tscn" type="PackedScene" id=5]
-[ext_resource path="res://memes/game_stages/common/RoundEndStage.tscn" type="PackedScene" id=6]
+[ext_resource path="res://memes/game_stages/common/MemeRoundEndStage.tscn" type="PackedScene" id=6]
 [ext_resource path="res://core/game_stages/LobbyStage.tscn" type="PackedScene" id=7]
 [ext_resource path="res://memes/game_stages/common/ContestBeginStage.tscn" type="PackedScene" id=8]
 [ext_resource path="res://memes/audio/bensound-jazzcomedy.wav" type="AudioStream" id=9]
+[ext_resource path="res://memes/player/PlayerColorPalette.tres" type="Resource" id=10]
 
 [node name="MemeGameBuilder" type="Node"]
 script = ExtResource( 1 )
@@ -16,6 +17,8 @@ _stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicM
 _background_music = [ ExtResource( 9 ) ]
 
 [node name="LobbyStage" parent="." instance=ExtResource( 7 )]
+min_players = 3
+player_color_palette = ExtResource( 10 )
 
 [node name="GameBeginStage" parent="." instance=ExtResource( 2 )]
 
