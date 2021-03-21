@@ -1,5 +1,5 @@
 tool
-extends Label
+extends "res://core/ui/WordWrapLabel.gd"
 
 export(int) var min_font_size = 10
 export(int) var max_font_size = 80
@@ -9,7 +9,7 @@ var original_size
 var old_text
 
 func _enter_tree():
-	font = get("custom_fonts/font")
+	font = get_font("font")
 	fit_in_rect()
 
 func _process(_delta):
@@ -26,11 +26,16 @@ func fit_in_rect():
 		return
 	font.size = max_font_size;
 	if autowrap:
-		while get_visible_line_count() < get_line_count():
+		visible = false
+		while get_visible_line_count() < get_line_count() or get_longest_line_width() > get_size().x:
 			font.size -= font_size_resolution;
 			if font.size <= min_font_size:
 				font.size = min_font_size
 				break
+			# required to fix problem where get_longest_line_width() returns an outdated value
+			# if called too soon after the font is increased
+			yield(get_tree(), "idle_frame")
+		visible = true
 	else:
 		var text = tr(text)
 		var text_rect_size = font.get_string_size(text)

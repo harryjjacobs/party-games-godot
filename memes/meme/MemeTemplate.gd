@@ -3,6 +3,8 @@ class_name MemeTemplate
 
 export(Texture) var image
 export(Array, Resource) var captions = Array()
+enum MemeTemplateType {EMPTY_CAPTION, BLANK_FILL}
+export(MemeTemplateType) var type = MemeTemplateType.EMPTY_CAPTION
 
 func to_json():
 	var captions_json = Array()

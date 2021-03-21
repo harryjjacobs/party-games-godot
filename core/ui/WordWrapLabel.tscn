@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://core/ui/WordWrapLabel.gd" type="Script" id=1]
+[ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[node name="WordWrapLabel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1416.0
+margin_bottom = -857.0
+mouse_filter = 2
+size_flags_vertical = 4
+theme = SubResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+text = "LLLLLLLL"

@@ -33,6 +33,10 @@ func _create_labels():
 		label.rect_rotation = caption.rotation
 		label.add_color_override("font_color", caption.text_color)
 		label.text = caption_text
+		if caption.center_h:
+			label.align = Label.ALIGN_CENTER
+		if caption.center_v:
+			label.valign = Label.VALIGN_CENTER
 
 func _get_texture_scaling_rect():
 	assert(texture_rect.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
