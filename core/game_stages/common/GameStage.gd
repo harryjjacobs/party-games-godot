@@ -14,7 +14,8 @@ func exit():
 	pass
 
 func set_timeout(duration, params):
-	_timer.connect("timeout", self, "_on_timeout", [params])
+	if not _timer.is_connected("timeout", self, "_on_timeout"):
+		_timer.connect("timeout", self, "_on_timeout", [params])
 	_timer.start(duration)
 
 func _on_timeout(params):
