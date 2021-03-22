@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var stage = $BasicMemeRoundBeginStage
+onready var stage = $ThemedMemeRoundBeginStage
 
 func _ready():
 	var players = [
@@ -17,4 +17,10 @@ func _ready():
 
 func _on_stage_exit(params):
 	assert(len(params.current_round.contests) > 0)
+	assert(params.current_round.contests[0])
+	assert(params.current_round.contests[0].theme)
+	var expected_theme = params.current_round.contests[0].theme
+	print("Generated contests with common theme: ", expected_theme)
+	for contest in params.current_round.contests:
+		assert(contest.theme == expected_theme)
 	print("TEST PASSED")
