@@ -6,13 +6,15 @@ const Player = preload("res://core/player/Player.gd")
 
 enum LayoutType {
 	RING,
-	LEADERBOARD
+	LEADERBOARD,
+	ROW
 }
 
 export(PackedScene) var player_icon_scene
 export(PackedScene) var ranking_label_scene
 export(float, 0.0, 1.0) var margin_x = 0.1
 export(float, 0.0, 1.0) var margin_y = 0.1
+export(float, 0.0, 10.0) var player_icon_scale = 1.0
 export(float, 0.0, 2.0) var max_ranking_label_scale = 1.0
 export(float, 0.0, 1.0) var min_ranking_label_scale = 0.5
 export(LayoutType) var type = LayoutType.RING
@@ -36,6 +38,7 @@ func add_player(player: Player, animate = true):
 		return
 	var player_icon = player_icon_scene.instance()
 	player_icon.animate_entry = animate
+	player_icon.scale = Vector2(player_icon_scale, player_icon_scale)
 	player_icon.init(player)
 	_player_icon_container.add_child(player_icon)
 	_player_icon_lookup[player] = player_icon
@@ -129,6 +132,15 @@ func _calculate_player_position(player_icon: PlayerIcon):
 			var angle_increment = (2 * PI) / _player_icon_container.get_child_count()
 			var x = _screen_size.x / 2 * radius_scale.y * sin(angle_increment * index)
 			var y = _screen_size.y / 2 * radius_scale.x * -cos(angle_increment * index)
+			return Vector2(x, y)
+		LayoutType.ROW:
+			var count = _player_icon_container.get_child_count()
+			var width = _screen_size.x * (1 - margin_x)
+			var separation = 0
+			if count > 1:
+				separation = width / (count - 1)
+			var x = -((count - 1) * separation) / 2 + separation * index
+			var y = 0
 			return Vector2(x, y)
 		LayoutType.LEADERBOARD:
 			var column_count = min(_player_icon_container.get_child_count(), max_leaderboard_columns)
