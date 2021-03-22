@@ -13,4 +13,8 @@ duration = 3.0
 text = "Round x"
 
 [node name="Subtitle" parent="." index="4" instance=ExtResource( 4 )]
+margin_left = 6.04187
+margin_top = 678.139
+margin_right = 1911.04
+margin_bottom = 808.139
 text = "Complete the prompts on your device"

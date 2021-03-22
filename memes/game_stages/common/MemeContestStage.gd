@@ -1,7 +1,7 @@
 extends "res://core/game_stages/common/GameStage.gd"
 
 export(float) var vote_timeout = 15
-export(float) var time_between_contests = 3.0
+export(float) var time_between_contests = 1.0
 export(float) var display_contest_result_duration = 5.0
 export(AudioStreamSample) var vote_prompt_audio
 export(Array, NodePath) var contest_response_display_paths
@@ -37,7 +37,8 @@ func enter(params):
 		_update_points()
 		yield(get_tree().create_timer(display_contest_result_duration), "timeout")
 		_hide_all_contest_response_displays()
-		yield(get_tree().create_timer(time_between_contests), "timeout")
+		if contest != params.current_round.contests.back():	# don't delay on last contest
+			yield(get_tree().create_timer(time_between_contests), "timeout")
 	emit_signal("request_exit", params)
 
 func _initialise_response_displays():

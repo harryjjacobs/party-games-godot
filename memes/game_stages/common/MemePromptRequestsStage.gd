@@ -18,6 +18,16 @@ func enter(params):
 	set_timeout(stage_duration, params)
 	_countdown_display.start(stage_duration)
 	NetworkInterface.on_player(Message.PROMPT_RESPONSE, self, "_on_player_prompt_response")
+	_begin_contest_sending()
+
+func exit():
+	.exit()
+	_countdown_display.stop()
+	NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
+	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_player_prompt_response")
+	_player_icon_display.clear()
+
+func _begin_contest_sending():
 	_pending_responses = 0
 	for contest in _current_round.contests:
 		for player in contest.players:
@@ -28,13 +38,6 @@ func enter(params):
 	for player in _pending_requests:
 		if not _pending_requests[player].empty():
 			_send_prompt_to_player(player, _pending_requests[player].pop_front())
-
-func exit():
-	.exit()
-	_countdown_display.stop()
-	NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
-	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_player_prompt_response")
-	_player_icon_display.clear()
 
 func _send_prompt_to_player(player, contest):
 	NetworkInterface.send_player(player.client_id, Message.create(Message.REQUEST_INPUT, {

@@ -64,6 +64,10 @@ script = ExtResource( 2 )
 [node name="Title" parent="." index="2" instance=ExtResource( 5 )]
 
 [node name="Subtitle" parent="." index="3" instance=ExtResource( 3 )]
+margin_left = 9.79034
+margin_top = 647.424
+margin_right = 1914.79
+margin_bottom = 777.424
 
 [node name="AudioStreamPlayer" parent="." index="4"]
 stream = ExtResource( 4 )

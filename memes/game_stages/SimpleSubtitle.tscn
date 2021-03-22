@@ -3,7 +3,7 @@
 [ext_resource path="res://core/ui/fonts/AnnieUseYourTelescope-Regular.ttf" type="DynamicFontData" id=1]
 
 [sub_resource type="DynamicFont" id=1]
-size = 70
+size = 90
 font_data = ExtResource( 1 )
 
 [node name="Subtitle" type="Label"]
@@ -11,13 +11,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_top = 679.0
-margin_right = 1920.0
-margin_bottom = 780.0
+margin_left = -949.0
+margin_top = 222.0
+margin_right = 956.0
+margin_bottom = 352.0
 rect_pivot_offset = Vector2( 960, 487 )
 rect_clip_content = true
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.968627, 0.505882, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
 text = "Choose your favourite using the prompt on your device"
 align = 1
 valign = 1
