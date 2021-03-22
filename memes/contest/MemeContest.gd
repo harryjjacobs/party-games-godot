@@ -2,15 +2,16 @@ extends Resource
 class_name MemeContest
 
 enum ContestType {
-	BASIC = 1,
-	THEMED = 2,
-	BLANK_FILL = 4
+	BASIC,
+	THEMED,
+	BLANK_FILL
 }
 
 var type
 var id: String
 var players: Array = Array()
 var meme_template: MemeTemplate
+var theme: String
 var responses: Array = Array()
 var votes: Array = Array()
 var vote_weight = 10

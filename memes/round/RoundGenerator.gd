@@ -10,10 +10,10 @@ func _init(players, contest_builder: MemeContestBuilder):
 	_players.shuffle()
 	_contest_builder = contest_builder
 
-func next(vote_weight = 1, contest_type = MemeContest.ContestType.BASIC):
+func next(contest_type, vote_weight = 1):
 	var contests
 	match contest_type:
-		MemeContest.ContestType.BASIC:
+		MemeContest.ContestType.THEMED, MemeContest.ContestType.BASIC:
 			contests = _generate_two_player_contests(contest_type, vote_weight)
 		_:
 			printerr("Invalid ContestType: %s" % contest_type)
@@ -28,8 +28,10 @@ func next(vote_weight = 1, contest_type = MemeContest.ContestType.BASIC):
 func _generate_two_player_contests(contest_type, vote_weight):
 	var pairs = _generate_player_pairs()
 	var contests = Array()
+	var builder_context = _contest_builder.using_context()
 	for pair in pairs:
-		var contest = _contest_builder.build([pair.a, pair.b], vote_weight, contest_type)
+		var contest = builder_context.build(
+			[pair.a, pair.b], vote_weight, contest_type)
 		contests.append(contest)
 	return contests
 
