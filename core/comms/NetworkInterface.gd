@@ -1,5 +1,8 @@
 extends Node
 
+# development key - change in production before building
+const API_KEY = "development-key";
+
 export var server_url = 'ws://localhost:3000/hosts'
 export var reconnect = true
 
@@ -110,6 +113,7 @@ func send_players(targets, message):
 		send_player(target, message)
 
 func send_server(message):
+	message.data["apiKey"] = API_KEY
 	_message_queue.push_back(message)
 
 func on_player(message_type: String, target: Object, method: String):
