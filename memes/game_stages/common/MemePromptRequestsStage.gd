@@ -1,5 +1,7 @@
 extends "res://core/game_stages/common/GameStage.gd"
 
+const MAX_CAPTION_LENGTH = 25
+
 export(float) var time_per_contest = 30
 
 onready var _player_icon_display = $PlayerIconDisplay
@@ -44,6 +46,7 @@ func _send_prompt_to_player(player, contest):
 		"promptType": "meme",	# input type
 		"promptData": {	# data that corresponds to input type
 			"id": contest.id,
+			"maxInputLength": MAX_CAPTION_LENGTH,
 			"template": contest.meme_template.to_json()
 		}
 	}))

@@ -3,7 +3,7 @@ extends Node
 const Message = preload("res://core/comms/Message.gd")
 const Player = preload("res://core/player/Player.gd")
 
-const MAX_USERNAME_LENGTH = 80
+const MAX_USERNAME_LENGTH = 15
 
 var players = []
 var code
