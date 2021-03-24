@@ -1,11 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://core/ui/UI.gd" type="Script" id=1]
 [ext_resource path="res://core/ui/dialogs/PauseDialog.tscn" type="PackedScene" id=2]
 [ext_resource path="res://core/ui/PauseButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://core/ui/PauseButton.gd" type="Script" id=4]
-[ext_resource path="res://core/ui/icons/sound_off.png" type="Texture" id=5]
-
 
 [node name="UI" type="CanvasLayer"]
 pause_mode = 2
@@ -21,20 +19,8 @@ __meta__ = {
 }
 
 [node name="PauseDialog" parent="." instance=ExtResource( 2 )]
+visible = true
 
 [node name="PauseButton" parent="." instance=ExtResource( 3 )]
 script = ExtResource( 4 )
-
-[node name="MuteButton" type="TextureButton" parent="."]
-margin_left = 56.0
-margin_right = 109.0
-margin_bottom = 57.0
-rect_scale = Vector2( 0.998182, 1 )
-texture_normal = ExtResource( 5 )
-expand = true
-stretch_mode = 5
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 [connection signal="pressed" from="PauseButton" to="PauseButton" method="_on_pressed"]
