@@ -270,7 +270,7 @@ func get_minimum_size():
 		return ms + min_style
 
 
-func get_longest_line_width():
+func _get_longest_line_width():
 	var font = get_font("font")
 	var max_line_width = 0
 	var line_width = 0
@@ -296,6 +296,25 @@ func get_longest_line_width():
 
 	return max_line_width
 
+func get_longest_line_width():
+	if not word_cache:
+		return 0
+	var max_line_width = 0
+	var line_width = 0
+	var current = word_cache
+	var count = 100
+	while current:
+		if current.char_pos == WordCache.CHAR_NEWLINE or current.char_pos == WordCache.CHAR_WRAPLINE:
+			line_width = 0
+		else:
+			if current.pixel_width:
+				line_width += current.pixel_width
+		if line_width > max_line_width:
+			max_line_width = line_width
+		current = word_cache.next
+		if current == word_cache.next:
+			break
+	return max_line_width
 
 func get_line_count():
 	if not is_inside_tree():
@@ -331,7 +350,7 @@ func regenerate_word_cache():
 		var style = get_stylebox("normal")
 		width = max(get_size().x, get_custom_minimum_size().x) - style.get_minimum_size().x
 	else:
-		width = get_longest_line_width()
+		width = _get_longest_line_width()
 
 	var font = get_font("font")
 
@@ -403,7 +422,7 @@ func regenerate_word_cache():
 			# if autowrap and (current_word_size > width):
 			# 	separatable = true
 
-		if (autowrap and (line_width >= width) and current_word_size < width and ((last and last.char_pos >= 0) || separatable)) || insert_newline:
+		if (autowrap and (line_width >= width) and (current_word_size < width) and ((last and last.char_pos >= 0) || separatable)) || insert_newline:
 			if separatable:
 				if current_word_size > 0:
 					var wc = WordCache.new()

@@ -4,7 +4,7 @@
 [ext_resource path="res://memes/meme/MemeCaptionLabel.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFont" id=1]
-size = 70
+size = 71
 outline_size = 6
 outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
@@ -42,4 +42,4 @@ lines_skipped = 0
 max_lines_visible = -1
 min_font_size = 10
 max_font_size = 80
-font_size_resolution = 5
+font_size_resolution = 1
