@@ -1,0 +1,24 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://memes/meme/MemeTemplate.gd" type="Script" id=1]
+[ext_resource path="res://memes/meme/MemeCaption.gd" type="Script" id=2]
+[ext_resource path="res://memes/meme/textures/Bernie-I-Am-Once-Again-Asking-For-Your-Support.jpg" type="Texture" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+x = 160.0
+y = 650.0
+width = 435.0
+height = 90.0
+rotation = 0.0
+text_color = Color( 0.984314, 0.972549, 0.972549, 1 )
+background_color = Color( 1, 1, 1, 0 )
+center_h = true
+center_v = false
+text = ""
+
+[resource]
+script = ExtResource( 1 )
+image = ExtResource( 3 )
+captions = [ SubResource( 1 ) ]
+type = 0
