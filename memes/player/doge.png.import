@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/doge.png-9e881749a89bcdf0691d6f023b9c76d3.stex"
+path="res://.import/doge.png-905970aeb445dab05fd650237e1f548b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://memes/textures/doge.png"
-dest_files=[ "res://.import/doge.png-9e881749a89bcdf0691d6f023b9c76d3.stex" ]
+source_file="res://memes/player/doge.png"
+dest_files=[ "res://.import/doge.png-905970aeb445dab05fd650237e1f548b.stex" ]
 
 [params]
 
