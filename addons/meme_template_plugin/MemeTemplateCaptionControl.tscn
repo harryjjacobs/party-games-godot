@@ -20,14 +20,14 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 508.0
-margin_bottom = 342.0
+margin_bottom = 377.0
 color = Color( 0.968627, 0.423529, 0.0235294, 1 )
 
 [node name="Fields" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 508.0
-margin_bottom = 342.0
+margin_bottom = 377.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -139,10 +139,29 @@ size_flags_vertical = 3
 min_value = -360.0
 max_value = 360.0
 
-[node name="HAlignmentField" type="HBoxContainer" parent="Fields"]
+[node name="PlaceholderTextField" type="HBoxContainer" parent="Fields"]
 margin_top = 175.0
 margin_right = 501.0
 margin_bottom = 206.0
+
+[node name="Label" type="Label" parent="Fields/PlaceholderTextField"]
+margin_right = 248.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "Placeholder text:"
+
+[node name="TextEdit" type="TextEdit" parent="Fields/PlaceholderTextField"]
+margin_left = 252.0
+margin_right = 501.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+
+[node name="HAlignmentField" type="HBoxContainer" parent="Fields"]
+margin_top = 210.0
+margin_right = 501.0
+margin_bottom = 241.0
 
 [node name="Label" type="Label" parent="Fields/HAlignmentField"]
 margin_right = 248.0
@@ -160,9 +179,9 @@ size_flags_horizontal = 3
 clip_text = true
 
 [node name="VAlignmentField" type="HBoxContainer" parent="Fields"]
-margin_top = 210.0
+margin_top = 245.0
 margin_right = 501.0
-margin_bottom = 241.0
+margin_bottom = 276.0
 
 [node name="Label" type="Label" parent="Fields/VAlignmentField"]
 margin_right = 248.0
@@ -180,9 +199,9 @@ size_flags_horizontal = 3
 clip_text = true
 
 [node name="TextColorField" type="HBoxContainer" parent="Fields"]
-margin_top = 245.0
+margin_top = 280.0
 margin_right = 501.0
-margin_bottom = 276.0
+margin_bottom = 311.0
 
 [node name="Label" type="Label" parent="Fields/TextColorField"]
 margin_right = 248.0
@@ -205,16 +224,15 @@ flat = true
 align = 0
 
 [node name="BackgroundColorField" type="HBoxContainer" parent="Fields"]
-margin_top = 280.0
+margin_top = 315.0
 margin_right = 501.0
-margin_bottom = 311.0
+margin_bottom = 346.0
 
 [node name="Label" type="Label" parent="Fields/BackgroundColorField"]
 margin_right = 248.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
 custom_fonts/font = SubResource( 1 )
 text = "Background color:"
 
@@ -224,15 +242,14 @@ margin_right = 501.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
 text = "          "
 flat = true
 align = 0
 color = Color( 1, 1, 1, 0 )
 
 [node name="DeleteButton" type="Button" parent="Fields"]
-margin_top = 315.0
+margin_top = 350.0
 margin_right = 501.0
-margin_bottom = 335.0
+margin_bottom = 370.0
 text = "Delete"
 [connection signal="pressed" from="Fields/DeleteButton" to="." method="_on_delete_button_pressed"]

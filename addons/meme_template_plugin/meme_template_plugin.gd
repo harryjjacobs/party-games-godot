@@ -17,7 +17,7 @@ func edit(object):
 	dock.edit_template(current_object)
 
 func make_visible(visible: bool):
-	if visible:
+	if visible and current_object:
 		make_bottom_panel_item_visible(dock)
 		dock.edit_template(current_object)
 	else:

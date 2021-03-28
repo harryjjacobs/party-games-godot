@@ -11,6 +11,7 @@ onready var position_y_field = $Fields/PositionYField/SpinBox
 onready var width_field = $Fields/WidthField/SpinBox
 onready var height_field = $Fields/HeightField/SpinBox
 onready var rotation_field = $Fields/RotationField/SpinBox
+onready var text_field = $Fields/PlaceholderTextField/TextEdit
 onready var text_color_field = $Fields/TextColorField/ColorPickerButton
 onready var background_color_field = $Fields/BackgroundColorField/ColorPickerButton
 onready var center_h = $Fields/HAlignmentField/CheckBox
@@ -26,6 +27,7 @@ func _ready():
 	width_field.connect("value_changed", self, "_on_field_changed")
 	height_field.connect("value_changed", self, "_on_field_changed")
 	rotation_field.connect("value_changed", self, "_on_field_changed")
+	text_field.connect("text_changed", self, "_on_field_changed")
 	text_color_field.connect("color_changed", self, "_on_field_changed")
 	background_color_field.connect("color_changed", self, "_on_field_changed")
 	center_h.connect("toggled", self, "_on_field_changed")
@@ -41,11 +43,12 @@ func set_color(_color: Color):
 
 func _update_caption():
 	if is_inside_tree():
-		caption.x = position_x_field.value
-		caption.y = position_y_field.value
-		caption.width = width_field.value
-		caption.height = height_field.value
+		caption.x = int(position_x_field.value)
+		caption.y = int(position_y_field.value)
+		caption.width = int(width_field.value)
+		caption.height = int(height_field.value)
 		caption.rotation = rotation_field.value
+		caption.text = text_field.text
 		caption.center_h = center_h.pressed
 		caption.center_v = center_v.pressed
 		caption.text_color = text_color_field.color
@@ -58,6 +61,7 @@ func _update_fields():
 		width_field.value = caption.width
 		height_field.value = caption.height
 		rotation_field.value = caption.rotation
+		text_field.text = caption.text
 		text_color_field.color = caption.text_color
 		center_h.pressed = caption.center_h
 		center_v.pressed = caption.center_v
@@ -68,6 +72,6 @@ func _update_fields():
 func _on_delete_button_pressed():
 	emit_signal("on_delete", self)
 
-func _on_field_changed(_value):
+func _on_field_changed(_value = null):
 	_update_caption()
 	emit_signal("on_change", self)

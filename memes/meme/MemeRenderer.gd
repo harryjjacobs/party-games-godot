@@ -1,3 +1,4 @@
+tool
 extends PanelContainer
 
 onready var texture_rect = $TextureRect
@@ -17,6 +18,13 @@ func init(meme_template: MemeTemplate, captions: Array):
 	_texture = meme_template.image
 	texture_rect.texture = _texture
 	_create_labels()
+
+func set_editor_label_border_colors(colors: Array):
+	var colors_copy = colors.duplicate()
+	for label in captions_parent.get_children():
+		var color = colors_copy.pop_front()
+		if color:
+			label.set_editor_border_color(color)
 
 func _create_labels():
 	yield(get_tree(), "idle_frame")

@@ -2,9 +2,8 @@ tool
 extends Control
 
 export(PackedScene) var caption_control
-export(PackedScene) var caption_visualisation_control
 
-export(Array, Color) var item_colors = [
+const item_colors = [
 	Color.red,
 	Color.green,
 	Color.blue,
@@ -12,12 +11,13 @@ export(Array, Color) var item_colors = [
 	Color.purple,
 	Color.turquoise,
 	Color.orange,
-	Color.pink
+	Color.pink,
+	Color.brown
 ]
 var color_pool: Array
 
 onready var captions_container = $HBoxContainer/ItemEditContainer/ItemsScrollContainer/MemeCaptions
-onready var caption_visualisations_container = $HBoxContainer/VisualisationContainer/Preview/MemeCaptionVisualisation
+onready var meme_renderer = $HBoxContainer/VisualisationContainer/MemeRenderer
 onready var add_button = $HBoxContainer/ItemEditContainer/AddButton
 onready var save_button = $HBoxContainer/ItemEditContainer/SaveButton
 
@@ -27,8 +27,11 @@ func _ready():
 	color_pool = item_colors.duplicate()
 
 func edit_template(meme_template):
+	#print("caption width: ", meme_template.captions[0].width)
 	template = meme_template
+	color_pool = item_colors.duplicate()
 	_populate_captions()
+	_update_meme_renderer()
 
 func _populate_captions():
 	for n in captions_container.get_children():
@@ -36,7 +39,6 @@ func _populate_captions():
 	color_pool = item_colors.duplicate()
 	for tti in template.captions:
 		_create_new_item_control(tti)
-	_update_item_visualisations()
 
 func _create_new_item_control(caption):
 	var control = caption_control.instance()
@@ -47,7 +49,6 @@ func _create_new_item_control(caption):
 	control.connect("on_change", self, "_on_item_control_changed")
 	control.connect("on_delete", self, "_on_item_control_delete")
 	captions_container.add_child(control)
-	_update_item_visualisations()
 
 func _on_add_button_pressed():
 	if not template:
@@ -56,28 +57,30 @@ func _on_add_button_pressed():
 	template.captions.append(tti)
 	_create_new_item_control(tti)
 	template.property_list_changed_notify()
-	_update_item_visualisations()
+	_update_meme_renderer()
 
 func _on_item_control_changed(control):
 	var item = control.caption
 	template.captions[control.get_index()] = item
 	template.property_list_changed_notify()
-	_update_item_visualisations()
+	_update_meme_renderer()
 
 func _on_item_control_delete(control):
 	template.captions.remove(control.get_index())
 	control.queue_free()
 	template.property_list_changed_notify()
-	_update_item_visualisations()
+	_update_meme_renderer()
 
-func _update_item_visualisations():
-	var vis_children = caption_visualisations_container.get_children().duplicate()
-	for child in vis_children:
-		child.queue_free()
-	for capt_control in captions_container.get_children():
-		var vis_control = caption_visualisation_control.instance()
-		vis_control.set_caption(capt_control.caption, capt_control.color)
-		caption_visualisations_container.add_child(vis_control)
+func _update_meme_renderer():
+	var captions_text = []
+	for caption in template.captions:
+		captions_text.append(caption.text)
+	meme_renderer.init(template, captions_text)
+	# label border colors editor visualisation 
+	var label_border_colors = []
+	for caption_control in captions_container.get_children():
+		label_border_colors.append(caption_control.color)
+	meme_renderer.set_editor_label_border_colors(label_border_colors)
 
 func _on_save_button_pressed():
 	ResourceSaver.save(template.resource_path, template)
