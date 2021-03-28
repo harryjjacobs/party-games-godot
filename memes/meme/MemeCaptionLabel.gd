@@ -4,27 +4,55 @@ extends "res://core/ui/WordWrapLabel.gd"
 export(int) var min_font_size = 10
 export(int) var max_font_size = 80
 export(int) var font_size_resolution = 5
+
+onready var _reference_rect = $ReferenceRect
+
 var font: DynamicFont
 var original_size
 var old_text
 
+var _font_size_to_width_k
+
 func _enter_tree():
 	font = get_font("font")
-	fit_in_rect()
+	_calculate_font_size_width_relationship()
+	_fit_in_rect()
+
+func set_editor_border_color(color: Color):
+	_reference_rect.border_color = color
 
 func _process(_delta):
 	if text != old_text:
 		old_text = text
-		fit_in_rect()
+		_fit_in_rect()
 
 func _set(property, _value):
 	if property == "text":
-		fit_in_rect()
+		_fit_in_rect()
 
-func fit_in_rect():
+func _calculate_font_size_width_relationship():
+	var min_font = font.duplicate()
+	min_font.size = max(min_font_size, 1)
+	var max_font = font.duplicate()
+	max_font.size = max_font_size
+	var test_str = "abcdefghijklmnopqrstuvqxwzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,#"
+	var test_len = len(test_str)
+	var width_at_min = (min_font.get_string_size(test_str).x / test_len)
+	var width_at_max = (max_font.get_string_size(test_str).x / test_len)
+	var k_at_min = width_at_min / min_font.size
+	var k_at_max = width_at_max / max_font.size
+	_font_size_to_width_k = (k_at_min + k_at_max) / 2.0
+
+func _fit_in_rect():
 	if not font:
 		return
 	font.size = max_font_size;
+	regenerate_word_cache()
+	var longest_line_count = len(get_longest_line())
+	if longest_line_count == 0:
+		return
+	# initial estimate
+	font.size = int(min(get_size().x / (_font_size_to_width_k * longest_line_count) + font_size_resolution, max_font_size))
 	if autowrap:
 		visible = false
 		while get_visible_line_count() < get_line_count() or get_longest_line_width() > get_size().x:
@@ -32,9 +60,7 @@ func fit_in_rect():
 			if font.size <= min_font_size:
 				font.size = min_font_size
 				break
-			# required to fix problem where get_longest_line_width() returns an outdated value
-			# if called too soon after the font is increased
-			yield(get_tree(), "idle_frame")
+			regenerate_word_cache()
 		visible = true
 	else:
 		var text = tr(text)

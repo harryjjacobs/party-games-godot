@@ -296,13 +296,13 @@ func _get_longest_line_width():
 
 	return max_line_width
 
+	
 func get_longest_line_width():
 	if not word_cache:
 		return 0
 	var max_line_width = 0
 	var line_width = 0
 	var current = word_cache
-	var count = 100
 	while current:
 		if current.char_pos == WordCache.CHAR_NEWLINE or current.char_pos == WordCache.CHAR_WRAPLINE:
 			line_width = 0
@@ -311,10 +311,26 @@ func get_longest_line_width():
 				line_width += current.pixel_width
 		if line_width > max_line_width:
 			max_line_width = line_width
-		current = word_cache.next
-		if current == word_cache.next:
-			break
+		current = current.next
 	return max_line_width
+
+
+func get_longest_line():
+	if not word_cache:
+		return ""
+	var longest_line = ""
+	var line = ""
+	var current = word_cache
+	while current:
+		if current.char_pos == WordCache.CHAR_NEWLINE or current.char_pos == WordCache.CHAR_WRAPLINE:
+			line = ""
+		else:
+			line += xl_text.substr(current.char_pos, current.word_len)
+		if len(line) > len(longest_line):
+			longest_line = line
+		current = current.next
+	return longest_line
+
 
 func get_line_count():
 	if not is_inside_tree():
@@ -440,20 +456,21 @@ func regenerate_word_cache():
 					current_word_size = char_width
 					word_pos = i
 
-			var wc = WordCache.new()
-			if word_cache:
-				last.next = wc
-			else:
-				word_cache = wc
+			if i < xl_text.length():
+				var wc = WordCache.new()
+				if word_cache:
+					last.next = wc
+				else:
+					word_cache = wc
 
-			last = wc
+				last = wc
 
-			wc.pixel_width = 0
-			wc.char_pos = WordCache.CHAR_NEWLINE if insert_newline else WordCache.CHAR_WRAPLINE
+				wc.pixel_width = 0
+				wc.char_pos = WordCache.CHAR_NEWLINE if insert_newline else WordCache.CHAR_WRAPLINE
 
-			line_width = current_word_size
-			line_count += 1
-			space_count = 0
+				line_width = current_word_size
+				line_count += 1
+				space_count = 0
 
 	if not autowrap:
 		minsize.x = width
