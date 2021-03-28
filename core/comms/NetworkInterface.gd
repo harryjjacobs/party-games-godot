@@ -65,6 +65,7 @@ func _process(_delta):
 	_client.poll()
 	if connection_state == ConnectionState.CONNECTED and not _message_queue.empty():
 		var message = _message_queue.pop_front()
+		message.data["apiKey"] = API_KEY
 		var message_str = JSON.print(message)
 		var log_msg = message_str
 		if len(log_msg) > MAX_LOG_LENGTH:
@@ -113,7 +114,6 @@ func send_players(targets, message):
 		send_player(target, message)
 
 func send_server(message):
-	message.data["apiKey"] = API_KEY
 	_message_queue.push_back(message)
 
 func on_player(message_type: String, target: Object, method: String):
