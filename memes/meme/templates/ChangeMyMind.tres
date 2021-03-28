@@ -6,10 +6,10 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 1 )
-x = 205.0
-y = 230.0
-width = 210.0
-height = 85.0
+x = 205
+y = 230
+width = 210
+height = 85
 rotation = -7.0
 text_color = Color( 0, 0, 0, 1 )
 background_color = Color( 1, 1, 1, 0 )
