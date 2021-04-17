@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://memes/meme/MemeTemplate.gd" type="Script" id=1]
+[ext_resource path="res://memes/meme/textures/Expanding-Brain.jpg" type="Texture" id=3]
+
+[resource]
+script = ExtResource( 1 )
+image = ExtResource( 3 )
+captions = [  ]
+type = 1

@@ -20,7 +20,7 @@ func _on_stage_exit(params):
 	assert(params.current_round.contests[0])
 	assert(params.current_round.contests[0].theme)
 	var expected_theme = params.current_round.contests[0].theme
-	print("Generated contests with common theme: ", expected_theme)
+	Log.info("Generated contests with common theme: " + expected_theme)
 	for contest in params.current_round.contests:
 		assert(contest.theme == expected_theme)
-	print("TEST PASSED")
+	Log.info("TEST PASSED")

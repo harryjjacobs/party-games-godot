@@ -29,8 +29,19 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+text = ""
+color = Color( 1, 1, 1, 1 )
+align = 0
+valign = 0
 autowrap = true
+clip = false
 uppercase = true
+visible_chars = -1
+percent_visible = 1
+lines_skipped = 0
+max_lines_visible = -1
+min_font_size = 10
+max_font_size = 80
 font_size_resolution = 1
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]

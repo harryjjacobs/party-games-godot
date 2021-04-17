@@ -34,14 +34,14 @@ func _ready():
 	var expected_requests = 0
 	for contest in _test_round.contests:
 		expected_requests += len(contest.players)
-		print("delaying for %s s" % _response_delay_time)
+		Log.info("delaying for %s s" % _response_delay_time)
 		yield(get_tree().create_timer(_response_delay_time), "timeout")
 		assert(_requests_sent == expected_requests)
 	yield(get_tree().create_timer(5.0), "timeout")
 	assert(_exit_requested == true)
 	for contest in _test_round.contests:
 		assert(len(contest.responses) == len(contest.players))
-	print("TEST PASSED")
+	Log.info("TEST PASSED")
 
 func _server_message_handler(conn_id, message):
 	# mock player responses

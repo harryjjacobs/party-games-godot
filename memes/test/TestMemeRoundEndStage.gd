@@ -40,7 +40,7 @@ func _on_stage_exit(_params):
 	for player_icon in _icons_container.get_children():
 		assert(player_icon._player == sorted_players[i])
 		i += 1
-	print("TEST PASSED")
+	Log.info("TEST PASSED")
 
 func _sort_descending_by_points(a, b):
 	return b.points < a.points

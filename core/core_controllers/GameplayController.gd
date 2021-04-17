@@ -28,13 +28,13 @@ func _initialise(game_builder = null):
 		if parent:
 			parent.remove_child(stage)
 			game_builder.queue_free()
-	print("[%s] Stages initialised. Stage stack: " % name)
+		Log.info("[%s] Stages initialised. Stage stack: " % name)
 	for stage in _stage_stack:
-		print("- %s" % stage.name)
+		Log.info("- %s" % stage.name)
 	var music_tracks = game_builder.build_background_music()
 	BackgroundMusic.clear_tracks()
 	BackgroundMusic.add_tracks(music_tracks)
-	print("[%s] Background music initialised. %d tracks added" % [name, len(music_tracks)])
+	Log.info("[%s] Background music initialised. %d tracks added" % [name, len(music_tracks)])
 
 func _begin():
 	_next_stage({})
@@ -45,11 +45,11 @@ func _next_stage(params):
 	if _current_stage:
 		_current_stage.exit()
 		remove_child(_current_stage)
-		print("Stage %s exited" % _current_stage.name)
+		Log.info("Stage %s exited" % _current_stage.name)
 	var old_stage = _current_stage
 	_current_stage = _stage_stack.pop_front()
 	var _err = _current_stage.connect("request_exit", self, "_on_stage_request_exit")
-	print("Stage %s entered" % _current_stage.name)
+	Log.info("Stage %s entered" % _current_stage.name)
 	add_child(_current_stage)
 	_current_stage.enter(params)
 	Events.emit_signal("gamestage_changed", old_stage, _current_stage)

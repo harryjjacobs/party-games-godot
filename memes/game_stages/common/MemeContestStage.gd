@@ -26,7 +26,7 @@ func enter(params):
 	for contest in params.current_round.contests:
 		if not is_inside_tree():
 			return
-		print("[%s] Contest begin" % name)
+		Log.info("[%s] Contest begin" % name)
 		current_contest = contest
 		_show_contest_response_displays(contest)
 		# record votes
@@ -109,7 +109,7 @@ func _get_winning_responses():
 	return responses
 
 func _voting_process():
-	print("[%s] Voting begin" % name)
+	Log.info("[%s] Voting begin" % name)
 	._play_audio(vote_prompt_audio)
 	NetworkInterface.on_player(Message.PROMPT_RESPONSE, self, "_on_vote_received")
 	_countdown_display.start(vote_timeout)
@@ -123,7 +123,7 @@ func _voting_process():
 	_countdown_display.stop()
 	NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_vote_received")
-	print("[%s] Voting end" % name)
+	Log.info("[%s] Voting end" % name)
 
 func _on_voting_timeout():
 	_waiting_for_votes = false
@@ -152,7 +152,7 @@ func _on_vote_received(client_id, message):
 	if current_contest.id == message.data.contestId:
 		var result = _check_vote_validity(client_id, message)
 		if result != _VoteValidity.OK:
-			print("Invalid vote received from %s. Reason: %s" % [client_id, _VoteValidity.keys()[result]])
+			Log.info("Invalid vote received from %s. Reason: %s" % [client_id, _VoteValidity.keys()[result]])
 			return
 		var player = Room.find_player_by_id(client_id)
 		var choice = current_contest.responses[message.data.choice]

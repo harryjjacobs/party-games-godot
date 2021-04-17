@@ -10,6 +10,7 @@ export(Color) var text_color = Color.black
 export(Color) var background_color = Color.transparent
 export(bool) var center_h
 export(bool) var center_v
+export(bool) var outline_text
 export(String) var text
 
 func to_json():

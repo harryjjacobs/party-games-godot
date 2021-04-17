@@ -42,7 +42,7 @@ func _ready():
 		yield(get_tree().create_timer(meme_contest_stage.vote_timeout), "timeout")
 	# for contest in _test_round.contests:
 	# 	assert(len(contest.responses) == len(contest.players))
-	print("TEST PASSED")
+	Log.info("TEST PASSED")
 
 func _server_message_handler(conn_id, message):
 	# mock player responses

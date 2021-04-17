@@ -55,12 +55,12 @@ func _on_player_prompt_response(client_id, message):
 	var player = Room.find_player_by_id(client_id)
 	if not player:
 		return
-	print("Prompt response received from %s (%s)" % [client_id, player.username])
+	Log.info("Prompt response received from %s (%s)" % [client_id, player.username])
 	var valid = false
 	for contest in _current_round.contests:
 		if contest.id == message.data.contestId:
 			if not player in contest.players:
-				print("Invalid contest response - player not in this contest")
+				Log.info("Invalid contest response - player not in this contest")
 				return
 			var contest_response = MemeContestResponse.new()
 			contest_response.player = player
@@ -68,7 +68,7 @@ func _on_player_prompt_response(client_id, message):
 			contest.responses.append(contest_response)
 			valid = true
 	if not valid:
-		print("Invalid contest response - no matching contest with id %s found" % message.data.contestId)
+		Log.info("Invalid contest response - no matching contest with id %s found" % message.data.contestId)
 		return
 	_pending_responses -= 1
 	if _pending_responses <= 0:

@@ -32,7 +32,7 @@ func _ready():
 	_stage.enter(params)
 
 func _on_stage_exit(_params):
-	print("TEST PASSED")
+	Log.info("TEST PASSED")
 
 func _sort_descending_by_points(a, b):
 	return b.points < a.points

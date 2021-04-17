@@ -3,11 +3,12 @@ extends Node
 # development key - change in production before building
 const API_KEY = "development-key";
 
+const PRODUCTION_SERVER_URL = 'ws://party-games-310323.ew.r.appspot.com/hosts'
+
 export var server_url = 'ws://localhost:3000/hosts'
 export var reconnect = true
 
 enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
-const MAX_LOG_LENGTH = 500
 
 onready var _reconnection_timer = $ReconnectionTimer
 var connection_state
@@ -32,25 +33,23 @@ func _disconnect():
 	_client.disconnect_from_host()
 
 func _closed(was_clean = false):
-	print("Connection to server closed, clean: ", was_clean)
+	Log.info("Connection to server closed, clean: %b" % was_clean)
 	_update_state(ConnectionState.DISCONNECTED)
 	if reconnect:
 		_reconnection_timer.start()
 
 func _opened(_proto = ""):
-	print("Connection to server opened")
+	Log.info("Connection to server opened")
 	_update_state(ConnectionState.CONNECTED)
 	_reconnection_timer.stop()
 
 func _on_data():
 	var data_str = _client.get_peer(1).get_packet().get_string_from_utf8()
 	var log_msg = data_str
-	if len(log_msg) > MAX_LOG_LENGTH:
-		log_msg = log_msg.left(MAX_LOG_LENGTH) + "... (concatenated)"
-	print("[%s] Received data from server: " % name, log_msg)
+	Log.info("[%s] Received data from server: %s" % [name, log_msg])
 	var parse_result = JSON.parse(data_str)
 	if parse_result.error != OK:
-		print("Failed to parse message")
+		Log.info("Failed to parse message")
 		return
 	var message = parse_result.result
 	if not "type" in message:
@@ -67,21 +66,18 @@ func _process(_delta):
 		var message = _message_queue.pop_front()
 		message.data["apiKey"] = API_KEY
 		var message_str = JSON.print(message)
-		var log_msg = message_str
-		if len(log_msg) > MAX_LOG_LENGTH:
-			log_msg = log_msg.left(MAX_LOG_LENGTH) + "... (concatenated)"
-		print("Sending message: ", log_msg)
+		Log.info("Sending message: %s" % message_str)
 		_client.get_peer(1).put_packet(message_str.to_utf8())
 
 func _handle_message(message):
 	if not message.type:
-		print("Invalid message received %s: (type not specified)" % message)
+		Log.info("Invalid message received %s: (type not specified)" % message)
 	if not message.data:
-		print("Invalid message received %s (data not specified)" % message)
+		Log.info("Invalid message received %s (data not specified)" % message)
 	if message.type == 'player_to_host':
 		var handlers = _message_handlers.get(message.data.payload.type)
 		if not handlers:
-			print("No handlers registered for message type %s" % message.data.payload.type)
+			Log.info("No handlers registered for message type %s" % message.data.payload.type)
 			return
 		for handler in handlers:
 			handler.funcref.call_func(message.data.clientId, message.data.payload)

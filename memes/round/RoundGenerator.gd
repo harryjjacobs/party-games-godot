@@ -16,7 +16,7 @@ func next(contest_type, vote_weight = 1):
 		MemeContest.ContestType.THEMED, MemeContest.ContestType.BASIC:
 			contests = _generate_two_player_contests(contest_type, vote_weight)
 		_:
-			printerr("Invalid ContestType: %s" % contest_type)
+			Log.error("Invalid ContestType: %s" % contest_type)
 	var r = Round.new()
 	r.contests = contests
 	_count += 1

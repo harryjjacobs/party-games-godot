@@ -18,4 +18,4 @@ func _ready():
 
 func _on_stage_exit(params):
 	assert(len(params.current_round.contests) > 0)
-	print("TEST PASSED")
+	Log.info("TEST PASSED")

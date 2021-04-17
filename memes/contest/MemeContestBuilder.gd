@@ -45,7 +45,7 @@ func destroy_context(context_id):
 # certain features such as theme, or meme template
 func build_with_context(context_id, players: Array, vote_weight, contest_type):
 	if not _contexts.has(context_id):
-		printerr("context with context_id % not found" % context_id)
+		Log.error("context with context_id % not found" % context_id)
 	var context = _contexts[context_id]
 	var contest = MemeContest.new()
 	contest.players = players
@@ -61,7 +61,7 @@ func build_with_context(context_id, players: Array, vote_weight, contest_type):
 			else:
 				contest.theme = _next_theme()
 		_:
-			printerr("Invalid ContestType: %s" % contest_type)
+			Log.error("Invalid ContestType: %s" % contest_type)
 	context.add_contest(contest)
 	return contest
 
@@ -74,9 +74,11 @@ func _next_template(contest_type):
 	var valid_meme_types = meme_types_for_contest[contest_type]
 	while not _meme_template_pool.empty():
 		var template = _meme_template_pool.pop_front()
-		if template.type in valid_meme_types:
-			return template
-
+		for meme_type in valid_meme_types:
+			if template.type & meme_type == meme_type:
+				return template
+	assert(false, "No suitable meme template found")
+	
 func _next_theme():
 	if _theme_pool.empty():
 		_theme_pool = _themes.duplicate()

@@ -123,8 +123,8 @@ func _update_player_positions():
 func _calculate_player_position(player_icon: PlayerIcon):
 	var index = player_icon.get_position_in_parent()
 	if index == -1:
-		print("%s._calculate_player_position() player_icon for %s not added" 
-			% name, player_icon.player.username)
+		Log.info("%s._calculate_player_position() player_icon for %s not added" %
+			[name, player_icon.player.username])
 		return
 	match type:
 		LayoutType.RING:

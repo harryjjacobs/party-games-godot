@@ -6,19 +6,20 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 1 )
-x = 205
+x = 210
 y = 230
-width = 210
+width = 200
 height = 85
 rotation = -7.0
 text_color = Color( 0, 0, 0, 1 )
 background_color = Color( 1, 1, 1, 0 )
 center_h = true
 center_v = true
+outline_text = false
 text = ""
 
 [resource]
 script = ExtResource( 3 )
 image = ExtResource( 2 )
 captions = [ SubResource( 1 ) ]
-type = 0
+type = 1

@@ -35,7 +35,7 @@ func _on_room_created(code):
 	var _err = Events.connect("player_joined_room", self, "_on_player_joined_room")
 
 func _on_player_joined_room(player):
-	print("Player %s joined the lobby" % player.username)
+	Log.info("Player %s joined the lobby" % player.username)
 	# assign additional information to the player
 	player.color = _player_color_generator.next()
 	# display the player

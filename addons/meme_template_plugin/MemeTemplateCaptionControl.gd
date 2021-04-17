@@ -14,6 +14,7 @@ onready var rotation_field = $Fields/RotationField/SpinBox
 onready var text_field = $Fields/PlaceholderTextField/TextEdit
 onready var text_color_field = $Fields/TextColorField/ColorPickerButton
 onready var background_color_field = $Fields/BackgroundColorField/ColorPickerButton
+onready var outline_text_field = $Fields/OutlineTextField/CheckBox
 onready var center_h = $Fields/HAlignmentField/CheckBox
 onready var center_v = $Fields/VAlignmentField/CheckBox
 
@@ -30,6 +31,7 @@ func _ready():
 	text_field.connect("text_changed", self, "_on_field_changed")
 	text_color_field.connect("color_changed", self, "_on_field_changed")
 	background_color_field.connect("color_changed", self, "_on_field_changed")
+	outline_text_field.connect("toggled", self, "_on_field_changed")
 	center_h.connect("toggled", self, "_on_field_changed")
 	center_v.connect("toggled", self, "_on_field_changed")
 
@@ -53,6 +55,7 @@ func _update_caption():
 		caption.center_v = center_v.pressed
 		caption.text_color = text_color_field.color
 		caption.background_color = background_color_field.color
+		caption.outline_text = outline_text_field.pressed
 
 func _update_fields():
 	if is_inside_tree():
@@ -66,6 +69,7 @@ func _update_fields():
 		center_h.pressed = caption.center_h
 		center_v.pressed = caption.center_v
 		background_color_field.color = caption.background_color
+		outline_text_field.pressed = caption.outline_text
 		
 		color_rect.color = color
 

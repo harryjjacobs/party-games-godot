@@ -20,14 +20,14 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 508.0
-margin_bottom = 377.0
+margin_bottom = 412.0
 color = Color( 0.968627, 0.423529, 0.0235294, 1 )
 
 [node name="Fields" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 508.0
-margin_bottom = 377.0
+margin_bottom = 412.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -198,10 +198,30 @@ margin_bottom = 31.0
 size_flags_horizontal = 3
 clip_text = true
 
-[node name="TextColorField" type="HBoxContainer" parent="Fields"]
+[node name="OutlineTextField" type="HBoxContainer" parent="Fields"]
 margin_top = 280.0
 margin_right = 501.0
 margin_bottom = 311.0
+
+[node name="Label" type="Label" parent="Fields/OutlineTextField"]
+margin_right = 248.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "Text outline:"
+
+[node name="CheckBox" type="CheckBox" parent="Fields/OutlineTextField"]
+margin_left = 252.0
+margin_right = 501.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+clip_text = true
+
+[node name="TextColorField" type="HBoxContainer" parent="Fields"]
+margin_top = 315.0
+margin_right = 501.0
+margin_bottom = 346.0
 
 [node name="Label" type="Label" parent="Fields/TextColorField"]
 margin_right = 248.0
@@ -224,9 +244,9 @@ flat = true
 align = 0
 
 [node name="BackgroundColorField" type="HBoxContainer" parent="Fields"]
-margin_top = 315.0
+margin_top = 350.0
 margin_right = 501.0
-margin_bottom = 346.0
+margin_bottom = 381.0
 
 [node name="Label" type="Label" parent="Fields/BackgroundColorField"]
 margin_right = 248.0
@@ -248,8 +268,8 @@ align = 0
 color = Color( 1, 1, 1, 0 )
 
 [node name="DeleteButton" type="Button" parent="Fields"]
-margin_top = 350.0
+margin_top = 385.0
 margin_right = 501.0
-margin_bottom = 370.0
+margin_bottom = 405.0
 text = "Delete"
 [connection signal="pressed" from="Fields/DeleteButton" to="." method="_on_delete_button_pressed"]

@@ -44,9 +44,9 @@ func _remove_player(player):
 
 func _on_accept_create_room(message):
 	if not _pending_creation:
-		print("_on_accept_create_room(): Room already initialised. Use init() to reset")
+		Log.info("_on_accept_create_room(): Room already initialised. Use init() to reset")
 	if not message.data.roomCode:
-		print("_on_accept_create_room(): Invalid room code in message ", message)
+		Log.info("_on_accept_create_room(): Invalid room code in message: " + message)
 		return
 	code = message.data.roomCode
 	_pending_creation = false
@@ -84,7 +84,7 @@ func _on_player_request_join(client_id, message):
 
 func _on_player_request_rejoin(client_id, message):
 	if not message.data.oldClientId:
-		print("_on_player_request_rejoin() oldClientId not specified")
+		Log.info("_on_player_request_rejoin() oldClientId not specified")
 	var accepted = false
 	for player in players:
 		if player.client_id == message.data.oldClientId:
