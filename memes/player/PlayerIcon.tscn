@@ -4,7 +4,6 @@
 [ext_resource path="res://memes/player/doge.png" type="Texture" id=2]
 [ext_resource path="res://memes/audio/pop_1.wav" type="AudioStream" id=3]
 
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ) ],
@@ -16,19 +15,19 @@ animations = [ {
 [sub_resource type="DynamicFontData" id=2]
 font_path = "res://core/ui/fonts/Montserrat-Black.ttf"
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=3]
 size = 50
 outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
 font_data = SubResource( 2 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=4]
 size = 35
 outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
 font_data = SubResource( 2 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=5]
 size = 100
 outline_size = 10
 outline_color = Color( 0, 0, 0, 1 )
@@ -36,7 +35,7 @@ use_mipmaps = true
 use_filter = true
 font_data = SubResource( 2 )
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=6]
 step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:scale")
@@ -90,7 +89,7 @@ tracks/0/keys = {
 }
 
 [node name="PlayerIcon" type="Node2D"]
-position = Vector2( 104.65, 77.2985 )
+position = Vector2( -4.03963, 4.24479 )
 script = ExtResource( 1 )
 animate_entry = true
 
@@ -109,7 +108,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 225, 22 )
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
 text = "0 Pts"
 align = 1
@@ -130,7 +129,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 225, 22 )
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
 text = "PLAYER NAME 123"
 align = 1
@@ -156,7 +155,7 @@ grow_vertical = 2
 rect_rotation = 337.938
 rect_pivot_offset = Vector2( 90, 20 )
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "+5"
 align = 1
@@ -170,7 +169,7 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 method_call_mode = 1
-anims/IconEntrance = SubResource( 11 )
+anims/IconEntrance = SubResource( 6 )
 anims/IconExit = SubResource( 7 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

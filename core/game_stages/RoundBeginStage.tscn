@@ -3,6 +3,5 @@
 [ext_resource path="res://core/game_stages/RoundBeginStage.gd" type="Script" id=1]
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=2]
 
-
 [node name="RoundBeginStage" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
