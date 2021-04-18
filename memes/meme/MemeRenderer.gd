@@ -3,6 +3,8 @@ extends PanelContainer
 
 const text_outline_size = 6
 
+export(bool) var debug_mode = false
+
 onready var texture_rect = $TextureRect
 onready var captions_parent = $Captions
 
@@ -37,20 +39,21 @@ func _create_labels():
 		var caption_text = _captions[i]
 		var label = label_scene.instance()
 		captions_parent.add_child(label)
+		label.debug_mode = debug_mode
 		var scaling_rect = _get_texture_scaling_rect()
 		label.rect_position = scaling_rect.position + scaling_rect.size * Vector2(caption.x, caption.y)
 		label.rect_size = scaling_rect.size * Vector2(caption.width, caption.height)
 		label.rect_rotation = caption.rotation
-		label.add_color_override("font_color", caption.text_color)
 		var modified_font = label.get_font("font").duplicate()
 		modified_font.outline_size = text_outline_size if caption.outline_text else 0
 		modified_font.outline_color = caption.text_color.inverted() if caption.outline_text else caption.text_color
 		label.add_font_override("font", modified_font)
-		label.text = caption_text
+		label.color = caption.text_color
 		if caption.center_h:
 			label.align = Label.ALIGN_CENTER
 		if caption.center_v:
 			label.valign = Label.VALIGN_CENTER
+		label.text = caption_text
 
 func _get_texture_scaling_rect():
 	assert(texture_rect.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED)

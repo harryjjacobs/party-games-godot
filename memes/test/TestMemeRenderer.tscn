@@ -9,7 +9,15 @@ script = ExtResource( 2 )
 meme_template = ExtResource( 3 )
 
 [node name="MemeRenderer" parent="." instance=ExtResource( 1 )]
-margin_left = 2.0
-margin_top = 9.0
-margin_right = 1920.0
-margin_bottom = 1074.0
+anchor_top = 0.0
+anchor_bottom = 0.0
+margin_left = 27.0
+margin_top = 32.0
+margin_right = 716.0
+margin_bottom = 338.0
+debug_mode = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MemeRenderer"]
+margin_right = 689.0
+margin_bottom = 306.0
+editor_only = false

@@ -34,11 +34,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/core_controllers/GameplayController.gd"
 }, {
-"base": "Reference",
-"class": "Log",
-"language": "GDScript",
-"path": "res://core/util/Log.gd"
-}, {
 "base": "Resource",
 "class": "MemeCaption",
 "language": "GDScript",
@@ -120,7 +115,6 @@ _global_script_class_icons={
 "GameBuilder": "",
 "GameConfiguration": "",
 "GameplayController": "",
-"Log": "",
 "MemeCaption": "",
 "MemeCaptionControl": "",
 "MemeCaptionVisualisation": "",

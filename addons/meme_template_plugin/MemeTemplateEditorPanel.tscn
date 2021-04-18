@@ -38,6 +38,8 @@ anchor_bottom = 0.0
 margin_top = 0.0
 margin_right = 775.0
 margin_bottom = 458.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="ItemEditContainer" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 787.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://memes/meme/textures/Bernie-I-Am-Once-Again-Asking-For-Your-Support.jpg" type="Texture" id=1]
 [ext_resource path="res://memes/meme/MemeRenderer.gd" type="Script" id=2]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -9,10 +9,8 @@
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -1080.0
-margin_right = 642.0
-margin_bottom = -382.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+margin_right = 655.0
+margin_bottom = -699.0
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
@@ -20,16 +18,15 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 642.0
-margin_bottom = 698.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+margin_right = 655.0
+margin_bottom = 381.0
 texture = ExtResource( 1 )
+expand = true
 stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Captions" type="Control" parent="."]
-margin_right = 642.0
-margin_bottom = 698.0
+margin_right = 655.0
+margin_bottom = 381.0

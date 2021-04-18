@@ -7,14 +7,16 @@
 [ext_resource path="res://core/ui/icons/help.png" type="Texture" id=5]
 [ext_resource path="res://memes/contest/VotesContainer.gd" type="Script" id=6]
 
-
-
 [node name="PlayerContestResponseBubble" type="Node2D"]
 visible = false
 position = Vector2( 960, 540 )
 script = ExtResource( 2 )
+flip_h = false
+disable_inspector_tool = false
+speech_bubble_position = Vector2( -400, 0 )
 meme_renderer_position = Vector2( -340, -460 )
 player_icon_position = Vector2( -830, 410 )
+emphasis_scale = Vector2( 1.1, 1.1 )
 
 [node name="Tween" type="Tween" parent="."]
 

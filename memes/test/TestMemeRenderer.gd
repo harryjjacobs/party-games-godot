@@ -6,5 +6,5 @@ onready var _meme_renderer = $MemeRenderer
 
 func _ready():
 	_meme_renderer.init(meme_template, [
-		"This is a caption... Testing abcdefghijklmnopqrstuvqxyz0123456789. Hello"
+		"This is a caption... Testing abcdefg hijklmno 789. Hello"
 	])

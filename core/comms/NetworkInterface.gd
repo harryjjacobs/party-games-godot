@@ -33,7 +33,7 @@ func _disconnect():
 	_client.disconnect_from_host()
 
 func _closed(was_clean = false):
-	Log.info("Connection to server closed, clean: %b" % was_clean)
+	Log.info("Connection to server closed, clean: %s" % was_clean)
 	_update_state(ConnectionState.DISCONNECTED)
 	if reconnect:
 		_reconnection_timer.start()

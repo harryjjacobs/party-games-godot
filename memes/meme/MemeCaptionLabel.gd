@@ -4,17 +4,16 @@ extends "res://core/ui/WordWrapLabel.gd"
 export(int) var min_font_size = 10
 export(int) var max_font_size = 80
 export(int) var font_size_resolution = 5
+export (bool) var debug_mode = false
 
 onready var _reference_rect = $ReferenceRect
 
-var font: DynamicFont
 var original_size
 var old_text
 
 var _font_size_to_width_k
 
 func _enter_tree():
-	font = get_font("font")
 	_calculate_font_size_width_relationship()
 	_fit_in_rect()
 
@@ -31,6 +30,7 @@ func _set(property, _value):
 		_fit_in_rect()
 
 func _calculate_font_size_width_relationship():
+	var font = get_font("font")
 	var min_font = font.duplicate()
 	min_font.size = max(min_font_size, 1)
 	var max_font = font.duplicate()
@@ -44,6 +44,9 @@ func _calculate_font_size_width_relationship():
 	_font_size_to_width_k = (k_at_min + k_at_max) / 2.0
 
 func _fit_in_rect():
+	if _reference_rect:
+		_reference_rect.editor_only = not debug_mode
+	var font = get_font("font")
 	if not font:
 		return
 	font.size = max_font_size;
@@ -71,3 +74,4 @@ func _fit_in_rect():
 			if font.size <= min_font_size:
 				font.size = min_font_size
 				break
+	regenerate_word_cache()
