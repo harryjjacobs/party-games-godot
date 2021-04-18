@@ -93,29 +93,23 @@ tracks/5/keys = {
 [node name="ThemedMemeRoundBeginStage" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
-[node name="Background" parent="." index="0"]
-margin_left = 5.65674
-margin_top = 5.65674
-margin_right = 1925.66
-margin_bottom = 1085.66
-
 [node name="Title" parent="." index="3" instance=ExtResource( 3 )]
-margin_left = 7.0
-margin_top = 63.0
-margin_right = 1927.0
-margin_bottom = 624.0
+margin_left = 1.0
+margin_top = 58.0
+margin_right = 1921.0
+margin_bottom = 619.0
 text = "Round x"
 
 [node name="Subtitle" parent="." index="4" instance=ExtResource( 4 )]
-margin_left = 185.0
-margin_top = 770.0
-margin_right = 1741.0
-margin_bottom = 975.0
+margin_left = 179.0
+margin_top = 765.0
+margin_right = 1735.0
+margin_bottom = 1028.0
 rect_pivot_offset = Vector2( 778, 397 )
 text = "Try to relate your answers to the theme that we give you"
 
 [node name="Thmemes" type="Node2D" parent="." index="5"]
-position = Vector2( 962.58, 493.834 )
+position = Vector2( 956.58, 488.834 )
 
 [node name="Thmemes" type="Label" parent="Thmemes" index="0"]
 visible = false
