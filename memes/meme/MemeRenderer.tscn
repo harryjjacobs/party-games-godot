@@ -16,6 +16,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+debug_mode = false
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 655.0

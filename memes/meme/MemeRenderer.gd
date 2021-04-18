@@ -49,6 +49,7 @@ func _create_labels():
 		modified_font.outline_color = caption.text_color.inverted() if caption.outline_text else caption.text_color
 		label.add_font_override("font", modified_font)
 		label.color = caption.text_color
+		label.background_color = caption.background_color
 		if caption.center_h:
 			label.align = Label.ALIGN_CENTER
 		if caption.center_v:
