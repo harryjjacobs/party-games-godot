@@ -3,10 +3,13 @@ extends Node
 # development key - change in production before building
 const API_KEY = "development-key";
 
+const DEVELOPMENT_SERVER_URL = 'ws://localhost:8080/hosts'
 const PRODUCTION_SERVER_URL = 'ws://party-games-310323.ew.r.appspot.com/hosts'
 
-export var server_url = 'ws://localhost:3000/hosts'
+export var use_production_server = false
 export var reconnect = true
+
+var server_url = PRODUCTION_SERVER_URL if use_production_server else DEVELOPMENT_SERVER_URL
 
 enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
 
