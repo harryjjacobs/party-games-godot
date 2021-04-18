@@ -3,6 +3,8 @@ extends Node
 onready var meme_contest_stage = $MemeContestStage
 onready var mock_server = $MockMemeGameServer
 
+export(Resource) var meme_template
+
 var _test_round
 var _default_contest_image
 var _vote_prompts_sent = 0
@@ -47,6 +49,8 @@ func _ready():
 func _server_message_handler(conn_id, message):
 	# mock player responses
 	assert(message.type == Message.HOST_TO_PLAYER)
+	if message.data.payload.type == Message.HIDE_PROMPT:
+		return
 	assert(message.data.payload.type == Message.REQUEST_INPUT)
 	assert(message.data.payload.data.promptType == "multichoice")
 	assert(message.data.payload.data.promptData.options)
@@ -72,13 +76,8 @@ func _build_contest(player_a, player_b):
 	var contest = MemeContest.new()
 	contest.type = MemeContest.ContestType.BASIC
 	contest.players = [player_a, player_b]
-	contest.meme_template = MemeTemplate.new()
-	assert(_default_contest_image)
-	contest.meme_template.image = _default_contest_image
-	var caption = MemeCaption.new()
-	caption.width = 100
-	caption.height = 100
-	contest.meme_template.captions = [caption]
+	contest.meme_template = meme_template.duplicate()
+	assert(contest.meme_template)
 	contest.responses = Array()
 	contest.votes = Array()
 	return contest
@@ -86,5 +85,5 @@ func _build_contest(player_a, player_b):
 func _build_response(player):
 	var response = MemeContestResponse.new()
 	response.player = player
-	response.captions = ["An example caption for testing. abcdefghijklmnopqrstuvwxyz0123456789"]
+	response.captions = ["An example caption. abcdefghi jkl mnopqrs t uvw xyz0123 456789"]
 	return response
