@@ -11,10 +11,6 @@ func _ready():
 	_server.connect("client_connected", self, "_connected")
 	_server.connect("client_disconnected", self, "_disconnected")
 	_server.connect("client_close_request", self, "_close_request")
-	# This signal is emitted when not using the Multiplayer API every time a
-	# full packet is received.
-	# Alternatively, you could check get_peer(PEER_ID).get_available_packets()
-	# in a loop for each connected peer.
 	_server.connect("data_received", self, "_on_data")
 	# Start listening on the given port.
 	var err = _server.listen(PORT)
@@ -39,8 +35,6 @@ func _disconnected(id, was_clean = false):
 		Log.info("Client %d disconnected, clean: %s" % [id, str(was_clean)])
 
 func _on_data(conn_id):
-		# Print the received packet, you MUST always use get_peer(id).get_packet to receive data,
-		# and not get_packet directly when not using the MultiplayerAPI.
 		var pkt = _server.get_peer(conn_id).get_packet()
 		var data_str = pkt.get_string_from_utf8()
 		Log.info("[%s] Received data from client %d: %s" % [name, conn_id, data_str])
@@ -49,7 +43,6 @@ func _on_data(conn_id):
 		emit_signal("message_received", conn_id, parse_result.result)
 
 func _process(_delta):
-		# Call this in _process or _physics_process.
 		# Data transfer, and signals emission will only happen when calling this function.
 		_server.poll()
 
