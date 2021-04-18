@@ -36,7 +36,6 @@ func edit_template(meme_template):
 func _populate_captions():
 	for n in captions_container.get_children():
 		n.queue_free()
-	color_pool = item_colors.duplicate()
 	for tti in template.captions:
 		_create_new_item_control(tti)
 
@@ -53,7 +52,11 @@ func _create_new_item_control(caption):
 func _on_add_button_pressed():
 	if not template:
 		return
-	var tti = MemeCaption.new()
+	var tti 
+	if len(template.captions) > 0:
+		tti = template.captions[-1].duplicate()
+	else:
+		tti	= MemeCaption.new()
 	template.captions.append(tti)
 	_create_new_item_control(tti)
 	template.property_list_changed_notify()
