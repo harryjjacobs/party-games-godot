@@ -135,7 +135,7 @@ _global_script_class_icons={
 [application]
 
 config/name="party-games"
-run/main_scene="res://memes/Memes.tscn"
+run/main_scene="res://TitleScene.tscn"
 config/icon="res://icon.png"
 
 [autoload]

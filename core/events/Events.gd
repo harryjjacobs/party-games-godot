@@ -4,6 +4,7 @@ extends Node
 signal create_game(config)
 signal request_pause
 signal request_resume
+signal request_main_menu
 signal game_paused
 signal game_resumed
 signal gamestage_changed(previous_stage, current_stage)

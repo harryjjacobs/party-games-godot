@@ -11,7 +11,7 @@ var _current_stage: GameStage
 func _ready():
 	var _err = Events.connect("request_pause", self, "_on_request_pause")
 	_err = Events.connect("request_resume", self, "_on_request_resume")
-
+	_err = Events.connect("request_main_menu", self, "_on_request_main_menu")
 	_initialise()
 	_begin()
 
@@ -54,6 +54,13 @@ func _next_stage(params):
 	_current_stage.enter(params)
 	Events.emit_signal("gamestage_changed", old_stage, _current_stage)
 
+func _end_current_game():
+	Log.info("Ending current game")
+	if _current_stage:
+		_current_stage.exit()
+		remove_child(_current_stage)
+		Log.info("Stage %s exited" % _current_stage.name)
+
 func _on_stage_request_exit(params):
 	_next_stage(params)
 
@@ -66,4 +73,4 @@ func _on_request_resume():
 	Events.emit_signal("game_resumed")
 
 func _on_request_main_menu():
-	pass
+	_end_current_game()
