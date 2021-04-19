@@ -1,15 +1,24 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=1]
 [ext_resource path="res://memes/game_stages/common/GameBeginStage.gd" type="Script" id=2]
 [ext_resource path="res://memes/contest/MemeContestBuilder.tscn" type="PackedScene" id=3]
 [ext_resource path="res://memes/meme/templates/ChangeMyMind.tres" type="Resource" id=4]
 [ext_resource path="res://memes/meme/templates/BernieOnceAgainAsking.tres" type="Resource" id=5]
+[ext_resource path="res://memes/meme/templates/WhisperGoosebumps.tres" type="Resource" id=6]
 [ext_resource path="res://memes/meme/templates/DistractedBoyfriend.tres" type="Resource" id=7]
+[ext_resource path="res://memes/meme/templates/GandhiQuote.tres" type="Resource" id=8]
 [ext_resource path="res://memes/meme/templates/EpicHandshake.tres" type="Resource" id=9]
+[ext_resource path="res://memes/meme/templates/OneDoesNotSimply.tres" type="Resource" id=10]
+[ext_resource path="res://memes/meme/templates/ExpandingBrain.tres" type="Resource" id=11]
+[ext_resource path="res://memes/meme/templates/IBetHesThinkingAboutOtherGirls.tres" type="Resource" id=12]
+[ext_resource path="res://memes/meme/templates/HardToSwallowPills.tres" type="Resource" id=13]
+[ext_resource path="res://memes/meme/templates/FeelingsOfPowerGraph.tres" type="Resource" id=14]
+[ext_resource path="res://memes/meme/templates/TypesOfHeadaches.tres" type="Resource" id=15]
+[ext_resource path="res://memes/meme/templates/UnoDraw25.tres" type="Resource" id=16]
 
 [node name="GameBeginStage" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="MemeContestBuilder" parent="." index="2" instance=ExtResource( 3 )]
-meme_templates = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 9 ) ]
+meme_templates = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 8 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 10 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 6 ) ]
