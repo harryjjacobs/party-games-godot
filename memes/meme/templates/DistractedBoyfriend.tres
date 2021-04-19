@@ -15,7 +15,7 @@ text_color = Color( 0, 0, 0, 1 )
 background_color = Color( 1, 1, 1, 0 )
 center_h = true
 center_v = true
-outline_text = true
+outline_text = false
 text = ""
 
 [sub_resource type="Resource" id=2]
@@ -43,7 +43,7 @@ text_color = Color( 0, 0, 0, 1 )
 background_color = Color( 1, 1, 1, 0 )
 center_h = true
 center_v = true
-outline_text = true
+outline_text = false
 text = ""
 
 [resource]
