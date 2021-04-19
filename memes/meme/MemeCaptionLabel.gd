@@ -1,14 +1,13 @@
 tool
 extends "res://core/ui/WordWrapLabel.gd"
 
-export(int) var min_font_size = 10
+export(int) var min_font_size = 5
 export(int) var max_font_size = 80
 export(int) var font_size_resolution = 5
 export (bool) var debug_mode = false
 export(Color) var background_color := Color(1, 1, 1, 1) setget set_background_color
 
 onready var _reference_rect = $ReferenceRect
-onready var _background_color_rect = $ColorRect
 
 var original_size
 var old_text
@@ -23,7 +22,9 @@ func set_editor_border_color(color: Color):
 	_reference_rect.border_color = color
 
 func set_background_color(bg_color: Color):
-	_background_color_rect.color = bg_color
+	var stylebox_override = theme.get("/styles/default").duplicate()
+	stylebox_override.set_bg_color(bg_color)
+	add_stylebox_override("normal", stylebox_override)
 
 func _process(_delta):
 	if text != old_text:

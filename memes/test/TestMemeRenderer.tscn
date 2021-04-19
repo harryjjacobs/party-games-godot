@@ -2,7 +2,7 @@
 
 [ext_resource path="res://memes/meme/MemeRenderer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://memes/test/TestMemeRenderer.gd" type="Script" id=2]
-[ext_resource path="res://memes/meme/templates/ChangeMyMind.tres" type="Resource" id=3]
+[ext_resource path="res://memes/meme/templates/BernieOnceAgainAsking.tres" type="Resource" id=3]
 
 [node name="TestMemeRenderer" type="Node2D"]
 script = ExtResource( 2 )
