@@ -1,6 +1,6 @@
 extends "res://core/game_stages/common/GameStage.gd"
 
-const MAX_CAPTION_LENGTH = 25
+const MAX_CAPTION_LENGTH = 75
 
 export(float) var time_per_contest = 30
 
