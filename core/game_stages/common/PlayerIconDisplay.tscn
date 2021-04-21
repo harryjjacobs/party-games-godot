@@ -5,15 +5,9 @@
 [node name="PlayerIconDisplay" type="Node2D"]
 position = Vector2( 966.163, 546.612 )
 script = ExtResource( 1 )
-player_icon_scene = null
-ranking_label_scene = null
 margin_x = 0.0
 margin_y = 0.0
-player_icon_scale = 1.0
-max_ranking_label_scale = 1.0
-min_ranking_label_scale = 0.5
 type = 2
-max_leaderboard_columns = 4
 
 [node name="RankingLabelContainer" type="Node2D" parent="."]
 

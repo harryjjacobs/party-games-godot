@@ -23,15 +23,19 @@ export(int, 1, 10) var max_leaderboard_columns = 4
 onready var _player_icon_container = $PlayerIconContainer
 onready var _ranking_label_container = $RankingLabelContainer
 
-var _player_icon_lookup = {}
 var _screen_size
+var _player_icon_lookup = {}
 
 func _ready():
-	_screen_size = get_viewport().size
+	_screen_size = Vector2(
+		ProjectSettings.get("display/window/size/width"), 
+		ProjectSettings.get("display/window/size/height")
+	)
+	_update_player_positions()
 
 func _process(_delta):
-	if Engine.editor_hint:
-		_update_player_positions()
+	#if Engine.editor_hint:
+	_update_player_positions()
 
 func add_player(player: Player, animate = true):
 	if player in _player_icon_lookup:
@@ -130,8 +134,8 @@ func _calculate_player_position(player_icon: PlayerIcon):
 		LayoutType.RING:
 			var radius_scale = Vector2(1 - margin_x, 1 - margin_y)
 			var angle_increment = (2 * PI) / _player_icon_container.get_child_count()
-			var x = _screen_size.x / 2 * radius_scale.y * sin(angle_increment * index)
-			var y = _screen_size.y / 2 * radius_scale.x * -cos(angle_increment * index)
+			var x = _screen_size.x / 2 * radius_scale.x * sin(angle_increment * index)
+			var y = _screen_size.y / 2 * radius_scale.y * -cos(angle_increment * index)
 			return Vector2(x, y)
 		LayoutType.ROW:
 			var count = _player_icon_container.get_child_count()
