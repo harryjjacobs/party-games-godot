@@ -3,13 +3,20 @@ extends Node
 # development key - change in production before building
 const API_KEY = "development-key";
 
-const DEVELOPMENT_SERVER_URL = 'ws://localhost:8080/hosts'
-const PRODUCTION_SERVER_URL = 'ws://party-games-310323.ew.r.appspot.com/hosts'
+const WS_PROTOCOL = 'ws'
+const HTTP_PROTOCOL = 'http'
+const DEVELOPMENT_SERVER_URL = 'localhost:8080'
+const PRODUCTION_SERVER_URL = 'party-games-310323.ew.r.appspot.com'
+
+const HOSTS_ENDPOINT_NAME = "hosts"
+
+const PLAYERS_CLIENT_APP_NAME = "memes"
 
 export var use_production_server = false
 export var reconnect = true
 
-var server_url = PRODUCTION_SERVER_URL if use_production_server else DEVELOPMENT_SERVER_URL
+var hosts_endpoint_url = _get_server_endpoint_url(WS_PROTOCOL, HOSTS_ENDPOINT_NAME)
+var players_client_app_endpoint_url = _get_server_endpoint_url(HTTP_PROTOCOL, PLAYERS_CLIENT_APP_NAME)
 
 enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
 
@@ -29,7 +36,7 @@ func _ready():
 
 func _connect():
 	_update_state(ConnectionState.CONNECTING)
-	_client.connect_to_url(server_url)
+	_client.connect_to_url(hosts_endpoint_url)
 	_reconnection_timer.stop()
 
 func _disconnect():
@@ -96,6 +103,9 @@ func connect_to_server():
 func disconnect_from_server():
 	_disconnect()
 
+func get_player_client_url():
+	return players_client_app_endpoint_url
+
 func send_player(target, message):
 	var client_id
 	if target is Player:
@@ -154,3 +164,9 @@ func _funcref_wrapper(target: Object, method: String):
 		"target": target,
 		"method": method
 	}
+
+func _get_server_endpoint_url(protocol, name):
+	if use_production_server:
+		return PoolStringArray([protocol + '://' + PRODUCTION_SERVER_URL, name]).join("/")
+	else:
+		return PoolStringArray([protocol + '://' + DEVELOPMENT_SERVER_URL, name]).join("/")
