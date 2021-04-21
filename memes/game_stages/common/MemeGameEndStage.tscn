@@ -25,10 +25,5 @@ text = "And the winner is..."
 [node name="PlayerIconDisplay" parent="." index="4" instance=ExtResource( 6 )]
 position = Vector2( 960, 540 )
 player_icon_scene = ExtResource( 5 )
-ranking_label_scene = null
-margin_x = 0.2
 margin_y = 0.1
 player_icon_scale = 3.0
-max_ranking_label_scale = 1.0
-min_ranking_label_scale = 0.5
-max_leaderboard_columns = 4

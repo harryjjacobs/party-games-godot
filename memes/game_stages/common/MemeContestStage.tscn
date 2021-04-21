@@ -16,14 +16,9 @@ contest_response_display_paths = [ NodePath("ResponseBubbleLeft"), NodePath("Res
 [node name="CountdownDisplay" parent="." index="3" instance=ExtResource( 4 )]
 
 [node name="ResponseBubbleLeft" parent="." index="4" instance=ExtResource( 3 )]
-flip_h = false
-disable_inspector_tool = false
-speech_bubble_position = Vector2( -400, 0 )
 emphasis_scale = Vector2( 1.03, 1.03 )
 
 [node name="ResponseBubbleRight" parent="." index="5" instance=ExtResource( 3 )]
 flip_h = true
-disable_inspector_tool = false
-speech_bubble_position = Vector2( -400, 0 )
 emphasis_scale = Vector2( 1.03, 1.03 )
 [connection signal="timeout" from="VotingTimer" to="." method="_on_voting_timeout"]

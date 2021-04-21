@@ -14,4 +14,6 @@ script = ExtResource( 2 )
 [node name="PlayerIconDisplay" parent="." index="3" instance=ExtResource( 3 )]
 position = Vector2( 976, 540 )
 player_icon_scene = ExtResource( 6 )
+margin_x = 0.221
+margin_y = 0.256
 type = 0

@@ -56,6 +56,7 @@ position = Vector2( -830, 410 )
 [node name="PlayerIcon" parent="Pivot/PlayerIconContainer" instance=ExtResource( 3 )]
 visible = false
 position = Vector2( 0.0700359, 0.775364 )
+animate_entry = false
 
 [node name="PlayerIconPlaceholder" type="Sprite" parent="Pivot/PlayerIconContainer"]
 position = Vector2( -2.75775, 42.153 )
