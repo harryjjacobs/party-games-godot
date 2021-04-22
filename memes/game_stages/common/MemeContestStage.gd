@@ -1,7 +1,7 @@
 extends "res://core/game_stages/common/GameStage.gd"
 
 export(float) var vote_timeout = 15
-export(float) var time_between_contests = 1.0
+export(float) var time_between_contests = 0.5
 export(float) var display_contest_result_duration = 5.0
 export(AudioStreamSample) var vote_prompt_audio
 export(Array, NodePath) var contest_response_display_paths
@@ -136,7 +136,7 @@ func _send_vote_prompts():
 		for response in current_contest.responses:
 			var caption_list = ""
 			for caption in response.captions:
-				caption_list += caption + "\n"
+				caption_list += caption + "<br />"
 			options.append(caption_list)
 		var message = Message.create(Message.REQUEST_INPUT, {
 			"promptType": "multichoice",
