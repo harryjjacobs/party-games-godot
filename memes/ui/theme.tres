@@ -19,13 +19,13 @@ use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.141176, 0.486275, 0.792157, 1 )
+bg_color = Color( 0.0588235, 0.2, 0.32549, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
-shadow_size = 3
-shadow_offset = Vector2( 5, 5 )
+shadow_size = 4
+shadow_offset = Vector2( 2, 2 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 80
@@ -35,14 +35,14 @@ use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.141176, 0.486275, 0.792157, 1 )
+bg_color = Color( 0.0588235, 0.2, 0.32549, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 corner_detail = 15
 shadow_size = 4
-shadow_offset = Vector2( 5, 5 )
+shadow_offset = Vector2( 2, 2 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 30
