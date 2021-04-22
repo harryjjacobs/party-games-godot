@@ -19,6 +19,7 @@ script = ExtResource( 1 )
 position = Vector2( 960, 590 )
 player_icon_scene = ExtResource( 5 )
 ranking_label_scene = ExtResource( 7 )
+margin_x = 0.198
 margin_y = 0.2
 max_ranking_label_scale = 1.6
 min_ranking_label_scale = 1.0

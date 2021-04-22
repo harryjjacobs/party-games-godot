@@ -8,15 +8,10 @@
 [ext_resource path="res://memes/contest/VotesContainer.gd" type="Script" id=6]
 
 [node name="PlayerContestResponseBubble" type="Node2D"]
-visible = false
 position = Vector2( 960, 540 )
 script = ExtResource( 2 )
-flip_h = false
-disable_inspector_tool = false
-speech_bubble_position = Vector2( -400, 0 )
-meme_renderer_position = Vector2( -340, -460 )
+meme_renderer_position = Vector2( -340, -440 )
 player_icon_position = Vector2( -830, 410 )
-emphasis_scale = Vector2( 1.1, 1.1 )
 
 [node name="Tween" type="Tween" parent="."]
 
@@ -33,18 +28,20 @@ anchor_top = -0.00436983
 anchor_right = 1.0
 anchor_bottom = 0.99563
 margin_left = -340.0
-margin_top = -455.281
+margin_top = -435.281
 margin_right = -572.0
-margin_bottom = -624.281
+margin_bottom = -604.281
 
 [node name="Tween" type="Tween" parent="Pivot/SpeechBubble"]
 
 [node name="VotesContainer" type="GridContainer" parent="Pivot/SpeechBubble"]
-margin_left = -383.0
-margin_top = -555.0
-margin_right = 428.0
-margin_bottom = -415.0
-columns = 2
+margin_left = -430.0
+margin_top = -531.0
+margin_right = 460.0
+margin_bottom = -378.0
+custom_constants/vseparation = 5
+custom_constants/hseparation = 5
+columns = 3
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
