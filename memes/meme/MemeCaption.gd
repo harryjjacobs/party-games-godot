@@ -22,8 +22,10 @@ func to_json():
 			"height": height
 		},
 		"rotation": rotation,
+		"text": text,
 		"text_color": _color_to_json(text_color),
 		"background_color": _color_to_json(background_color),
+		"outline_text": outline_text,
 		"center_h": center_h,
 		"center_v": center_v
 	}
