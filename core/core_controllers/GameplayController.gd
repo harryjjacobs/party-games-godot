@@ -60,6 +60,9 @@ func _end_current_game():
 		_current_stage.exit()
 		remove_child(_current_stage)
 		Log.info("Stage %s exited" % _current_stage.name)
+	Log.debug("Disconnecting from server...")
+	NetworkInterface.disconnect_from_server()
+	Log.debug("Disconnected")
 
 func _on_stage_request_exit(params):
 	_next_stage(params)

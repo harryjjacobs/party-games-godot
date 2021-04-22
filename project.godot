@@ -145,7 +145,6 @@ NetworkInterface="*res://core/comms/NetworkInterface.tscn"
 Room="*res://core/core_controllers/Room.gd"
 BackgroundMusic="*res://core/audio/BackgroundMusic.tscn"
 Log="*res://core/util/Log.gd"
-QrCodeService="*res://core/comms/QrCodeService.tscn"
 
 [display]
 

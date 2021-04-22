@@ -10,6 +10,7 @@ export(Resource) var player_color_palette
 onready var player_icon_display = $PlayerIconDisplay
 onready var join_info_label = $JoinInformationLabel
 onready var qr_code_texture_rect = $QrCodeTextureRect
+onready var qr_code_service = $QrCodeService
 
 var _begin_game_prompt_id
 var _sent_begin_game_prompt
@@ -20,6 +21,8 @@ func enter(params):
 	_begin_game_prompt_id = ""
 	_sent_begin_game_prompt = false
 	_player_color_generator = ColorGenerator.new(player_color_palette)
+	if NetworkInterface.connection_state != NetworkInterface.ConnectionState.DISCONNECTED:
+		NetworkInterface.disconnect_from_server()
 	NetworkInterface.connect_to_server()
 	var _err = Events.connect("room_created", self, "_on_room_created")
 	Room.init(max_players)
@@ -34,8 +37,8 @@ func exit():
 	BackgroundMusic.skip_track()
 
 func _generate_qr_code():
-	if QrCodeService.request_qr_code(NetworkInterface.get_player_client_url(), QR_CODE_SIZE):
-		var texture = yield(QrCodeService, "request_completed")
+	if qr_code_service.request_qr_code(NetworkInterface.get_player_client_url(), QR_CODE_SIZE):
+		var texture = yield(qr_code_service, "request_completed")
 		if texture:
 			qr_code_texture_rect.texture = texture
 

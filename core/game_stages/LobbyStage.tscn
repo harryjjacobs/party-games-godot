@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://core/game_stages/LobbyStage.gd" type="Script" id=1]
 [ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=3]
 [ext_resource path="res://core/game_stages/common/PlayerIconDisplay.tscn" type="PackedScene" id=4]
 [ext_resource path="res://memes/player/PlayerIcon.tscn" type="PackedScene" id=5]
+[ext_resource path="res://core/comms/QrCodeService.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
@@ -48,3 +49,5 @@ stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="QrCodeService" parent="." index="6" instance=ExtResource( 6 )]
