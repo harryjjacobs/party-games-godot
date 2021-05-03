@@ -105,8 +105,8 @@ func connect_to_server():
 func disconnect_from_server():
 	_disconnect()
 
-func get_player_client_url(endpoint):
-	return PLAYERS_CLIENT_APP_URL + "/" + endpoint
+func get_player_client_url():
+	return PLAYERS_CLIENT_APP_URL
 
 func send_player(target, message):
 	var client_id

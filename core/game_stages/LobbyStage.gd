@@ -36,18 +36,18 @@ func exit():
 	Events.disconnect("player_joined_room", self, "_on_player_joined_room")
 	BackgroundMusic.skip_track()
 
-func _generate_qr_code():
+func _generate_qr_code(url):
 	# TODO: abstract "memes" somewhere higher up
-	if qr_code_service.request_qr_code(NetworkInterface.get_player_client_url("memes"), QR_CODE_SIZE):
+	if qr_code_service.request_qr_code(url, QR_CODE_SIZE):
 		var texture = yield(qr_code_service, "request_completed")
 		if texture:
 			qr_code_texture_rect.texture = texture
 
 func _on_room_created(code):
-	# TODO: abstract "memes" somewhere higher up
-	join_info_label.text = "Go to %s\nEnter code %s to join" % [NetworkInterface.get_player_client_url("memes"), code]
+	var url = NetworkInterface.get_player_client_url()
+	join_info_label.text = "Go to %s\nEnter code %s to join" % [url, code]
 	var _err = Events.connect("player_joined_room", self, "_on_player_joined_room")
-	_generate_qr_code()
+	_generate_qr_code(url)
 
 func _on_player_joined_room(player):
 	Log.info("Player %s joined the lobby" % player.username)
