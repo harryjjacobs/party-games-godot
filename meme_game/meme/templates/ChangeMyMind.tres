@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://meme_game/meme/MemeCaption.gd" type="Script" id=1]
+[ext_resource path="res://meme_game/meme/MemeTemplate.gd" type="Script" id=2]
+[ext_resource path="res://meme_game/meme/textures/Change-My-Mind.jpg" type="Texture" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 1 )
+x = 210
+y = 230
+width = 200
+height = 85
+rotation = -7.0
+text_color = Color( 0, 0, 0, 1 )
+background_color = Color( 1, 1, 1, 0 )
+center_h = true
+center_v = true
+outline_text = false
+text = ""
+
+[resource]
+script = ExtResource( 2 )
+image = ExtResource( 3 )
+captions = [ SubResource( 1 ) ]
+type = 1

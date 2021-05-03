@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://meme_game/meme/MemeRenderer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://core/textures/SpeechBubble.png" type="Texture" id=2]
+[ext_resource path="res://meme_game/contest/MemeContestResponseBubble.gd" type="Script" id=3]
+[ext_resource path="res://meme_game/contest/VotesContainer.gd" type="Script" id=4]
+[ext_resource path="res://core/ui/icons/help.png" type="Texture" id=5]
+[ext_resource path="res://meme_game/player/PlayerIcon.tscn" type="PackedScene" id=6]
+
+[node name="PlayerContestResponseBubble" type="Node2D"]
+position = Vector2( 960, 540 )
+script = ExtResource( 3 )
+meme_renderer_position = Vector2( -340, -440 )
+player_icon_position = Vector2( -830, 410 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="SpeechBubble" type="Sprite" parent="Pivot"]
+position = Vector2( -400, 0 )
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 2 )
+
+[node name="MemeRenderer" parent="Pivot/SpeechBubble" instance=ExtResource( 1 )]
+anchor_left = -3.17891e-08
+anchor_top = -0.00436983
+anchor_right = 1.0
+anchor_bottom = 0.99563
+margin_left = -340.0
+margin_top = -435.281
+margin_right = -572.0
+margin_bottom = -604.281
+
+[node name="Tween" type="Tween" parent="Pivot/SpeechBubble"]
+
+[node name="VotesContainer" type="GridContainer" parent="Pivot/SpeechBubble"]
+margin_left = -430.0
+margin_top = -531.0
+margin_right = 460.0
+margin_bottom = -378.0
+custom_constants/vseparation = 5
+custom_constants/hseparation = 5
+columns = 3
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerIconContainer" type="Node2D" parent="Pivot"]
+position = Vector2( -830, 410 )
+
+[node name="PlayerIcon" parent="Pivot/PlayerIconContainer" instance=ExtResource( 6 )]
+visible = false
+position = Vector2( 0.0700359, 0.775364 )
+animate_entry = false
+
+[node name="PlayerIconPlaceholder" type="Sprite" parent="Pivot/PlayerIconContainer"]
+position = Vector2( -2.75775, 42.153 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )

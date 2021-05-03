@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://meme_game/meme/MemeCaptionLabel.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://core/ui/fonts/Montserrat-Black.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 10
+use_mipmaps = true
+use_filter = true
+font_data = SubResource( 2 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
+/styles/default = SubResource( 1 )
+
+[node name="MemeCaptionLabel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 316.0
+margin_top = 526.0
+margin_right = -1427.0
+margin_bottom = -490.0
+rect_rotation = -7.3473
+mouse_filter = 2
+size_flags_vertical = 4
+theme = SubResource( 4 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+text = "hello"
+color = Color( 1, 1, 1, 1 )
+align = 0
+valign = 0
+autowrap = true
+clip = false
+uppercase = true
+visible_chars = -1
+percent_visible = 1
+lines_skipped = 0
+max_lines_visible = -1
+min_font_size = 10
+max_font_size = 80
+font_size_resolution = 1
+debug_mode = false
+background_color = Color( 1, 1, 1, 1 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.2265
+margin_top = 0.287109
+margin_right = 2.2265
+margin_bottom = 0.287109
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/vote_reverb.wav-0293211484484147df451f422a8ee369.sample"
+
+[deps]
+
+source_file="res://meme_game/audio/vote_reverb.wav"
+dest_files=[ "res://.import/vote_reverb.wav-0293211484484147df451f422a8ee369.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

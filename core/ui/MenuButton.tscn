@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://memes/ui/theme.tres" type="Theme" id=1]
+[ext_resource path="res://meme_game/ui/theme.tres" type="Theme" id=1]
 
 [node name="MenuButton" type="Button"]
 anchor_left = 0.5

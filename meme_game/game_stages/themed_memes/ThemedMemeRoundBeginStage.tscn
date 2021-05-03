@@ -1,0 +1,186 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://core/ui/fonts/AnnieUseYourTelescope-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://core/game_stages/RoundBeginStage.tscn" type="PackedScene" id=2]
+[ext_resource path="res://meme_game/game_stages/SimpleSubtitle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://meme_game/game_stages/SimpleTitle.tscn" type="PackedScene" id=4]
+[ext_resource path="res://meme_game/game_stages/themed_memes/ThemedMemeRoundBeginStage.gd" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Thmemes"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Thmemes/Memes:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.3, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 200, 0 ), Vector2( 200, 0 ), Vector2( -200, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Thmemes/Themed:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.3, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -600, 0 ), Vector2( -600, 0 ), Vector2( -200, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Thmemes/Thmemes:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.3, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Thmemes/Thmemes:rect_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.6, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.0889923, 1 ), Vector2( 1e-05, 1 ), Vector2( 3, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Thmemes/Themed:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.3, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Thmemes/Memes:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1.3, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, false ]
+}
+
+[node name="ThemedMemeRoundBeginStage" instance=ExtResource( 2 )]
+script = ExtResource( 5 )
+
+[node name="Title" parent="." index="3" instance=ExtResource( 4 )]
+margin_left = 1.0
+margin_top = 58.0
+margin_right = 1921.0
+margin_bottom = 619.0
+text = "Round x"
+
+[node name="Subtitle" parent="." index="4" instance=ExtResource( 3 )]
+margin_left = 179.0
+margin_top = 765.0
+margin_right = 1735.0
+margin_bottom = 1028.0
+rect_pivot_offset = Vector2( 778, 397 )
+text = "Try to relate your answers to the theme that we give you"
+
+[node name="Thmemes" type="Node2D" parent="." index="5"]
+position = Vector2( 956.58, 488.834 )
+
+[node name="Thmemes" type="Label" parent="Thmemes" index="0"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_right = 400.0
+margin_bottom = 144.0
+rect_scale = Vector2( 0.0889923, 1 )
+rect_pivot_offset = Vector2( 400, 487 )
+rect_clip_content = true
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00289917, 0.258909, 0.371094, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+text = "T H M E M E S"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Themed" type="Label" parent="Thmemes" index="1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -600.0
+margin_right = -200.0
+margin_bottom = 144.0
+rect_pivot_offset = Vector2( 960, 487 )
+rect_clip_content = true
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.00289917, 0.258909, 0.371094, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+text = "THEMED"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Memes" type="Label" parent="Thmemes" index="2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 200.0
+margin_right = 600.001
+margin_bottom = 144.0
+rect_pivot_offset = Vector2( 960, 487 )
+rect_clip_content = true
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.00289917, 0.258909, 0.371094, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+text = "MEMES"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
+anims/Thmemes = SubResource( 3 )

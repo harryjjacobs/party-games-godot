@@ -1,6 +1,6 @@
 extends Control
 
-const _meme_game_scene = preload("res://memes/Memes.tscn")
+const _meme_game_scene = preload("res://meme_game/Memes.tscn")
 
 onready var confirmation_dialog = $ConfirmationDialog
 

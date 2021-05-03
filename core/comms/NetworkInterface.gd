@@ -4,19 +4,19 @@ extends Node
 const API_KEY = "development-key";
 
 const WS_PROTOCOL = 'ws'
+const WSS_PROTOCOL = 'wss'
 const HTTP_PROTOCOL = 'http'
 const DEVELOPMENT_SERVER_URL = 'localhost:8080'
 const PRODUCTION_SERVER_URL = 'party-games-310323.ew.r.appspot.com'
 
 const HOSTS_ENDPOINT_NAME = "hosts"
 
-const PLAYERS_CLIENT_APP_NAME = "memes"
+const PLAYERS_CLIENT_APP_URL = "play.jacobs.software"
 
 export var use_production_server = false
 export var reconnect = true
 
-var hosts_endpoint_url = _get_server_endpoint_url(WS_PROTOCOL, HOSTS_ENDPOINT_NAME)
-var players_client_app_endpoint_url = _get_server_endpoint_url(HTTP_PROTOCOL, PLAYERS_CLIENT_APP_NAME)
+var hosts_endpoint_url
 
 enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
 
@@ -28,6 +28,7 @@ var _message_queue = []
 var _client_id
 
 func _ready():
+	hosts_endpoint_url = _get_server_endpoint_url(HOSTS_ENDPOINT_NAME)
 	_client.connect("connection_closed", self, "_closed")
 	_client.connect("connection_error", self, "_closed")
 	_client.connect("connection_established", self, "_opened")
@@ -36,6 +37,7 @@ func _ready():
 
 func _connect():
 	_update_state(ConnectionState.CONNECTING)
+	Log.info("Attempting to connect to %s" % hosts_endpoint_url)
 	_client.connect_to_url(hosts_endpoint_url)
 	_reconnection_timer.stop()
 
@@ -103,8 +105,8 @@ func connect_to_server():
 func disconnect_from_server():
 	_disconnect()
 
-func get_player_client_url():
-	return players_client_app_endpoint_url
+func get_player_client_url(endpoint):
+	return PLAYERS_CLIENT_APP_URL + "/" + endpoint
 
 func send_player(target, message):
 	var client_id
@@ -165,8 +167,8 @@ func _funcref_wrapper(target: Object, method: String):
 		"method": method
 	}
 
-func _get_server_endpoint_url(protocol, name):
+func _get_server_endpoint_url(name):
 	if use_production_server:
-		return PoolStringArray([protocol + '://' + PRODUCTION_SERVER_URL, name]).join("/")
+		return PoolStringArray(['wss://' + PRODUCTION_SERVER_URL, name]).join("/")
 	else:
-		return PoolStringArray([protocol + '://' + DEVELOPMENT_SERVER_URL, name]).join("/")
+		return PoolStringArray(['ws://' + DEVELOPMENT_SERVER_URL, name]).join("/")

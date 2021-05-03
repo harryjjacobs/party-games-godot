@@ -2,7 +2,7 @@
 
 [ext_resource path="res://core/ui/dialogs/DefaultConfirmationDialog.tscn" type="PackedScene" id=1]
 [ext_resource path="res://core/ui/dialogs/PauseDialog.gd" type="Script" id=2]
-[ext_resource path="res://memes/ui/theme.tres" type="Theme" id=3]
+[ext_resource path="res://meme_game/ui/theme.tres" type="Theme" id=3]
 [ext_resource path="res://core/ui/MenuButton.tscn" type="PackedScene" id=4]
 
 [node name="PauseDialog" type="WindowDialog"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://meme_game/game_stages/basic_round/BasicMemeRoundBeginStage.gd" type="Script" id=1]
+[ext_resource path="res://core/game_stages/RoundBeginStage.tscn" type="PackedScene" id=2]
+[ext_resource path="res://meme_game/game_stages/SimpleSubtitle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://meme_game/game_stages/SimpleTitle.tscn" type="PackedScene" id=4]
+
+[node name="BasicMemeRoundBeginStage" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+duration = 3.0
+
+[node name="Title" parent="." index="3" instance=ExtResource( 4 )]
+text = "Round x"
+
+[node name="Subtitle" parent="." index="4" instance=ExtResource( 3 )]
+margin_left = 6.04187
+margin_top = 678.139
+margin_right = 1911.04
+margin_bottom = 808.139
+text = "Complete the prompts on your device"

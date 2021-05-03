@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://meme_game/game_stages/basic_round/BasicMemeRoundBeginStage.tscn" type="PackedScene" id=1]
+[ext_resource path="res://meme_game/test/TestBasicMemeRoundBeginStage.gd" type="Script" id=2]
+[ext_resource path="res://meme_game/contest/MemeContestBuilder.tscn" type="PackedScene" id=3]
+[ext_resource path="res://meme_game/meme/templates/ChangeMyMind.tres" type="Resource" id=4]
+
+[node name="TestBasicMemeRoundBeginStage" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="BasicMemeRoundBeginStage" parent="." instance=ExtResource( 1 )]
+duration = 1.0
+
+[node name="MemeContestBuilder" parent="." instance=ExtResource( 3 )]
+meme_templates = [ ExtResource( 4 ) ]
