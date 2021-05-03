@@ -37,7 +37,6 @@ func exit():
 	BackgroundMusic.skip_track()
 
 func _generate_qr_code(url):
-	# TODO: abstract "memes" somewhere higher up
 	if qr_code_service.request_qr_code(url, QR_CODE_SIZE):
 		var texture = yield(qr_code_service, "request_completed")
 		if texture:
