@@ -16,21 +16,24 @@ onready var _player_icon = $Pivot/PlayerIconContainer/PlayerIcon
 onready var _player_icon_placeholder = $Pivot/PlayerIconContainer/PlayerIconPlaceholder
 onready var _meme_renderer = $Pivot/SpeechBubble/MemeRenderer
 onready var _votes_container = $Pivot/SpeechBubble/VotesContainer
+onready var _no_captions_display = $Pivot/SpeechBubble/MemeRenderer/NoCaptionsPanel
 
 var _original_scale
 
 func _ready():
 	_original_scale = scale
+	_no_captions_display.hide()
 	close()
 
 func _process(_delta):
 	if not disable_inspector_tool and Engine.editor_hint:
 		_update_positions()
 
-func open(player: Player, meme_template: MemeTemplate, captions: Array):
+func open(player: Player, meme_template: MemeTemplate, captions: Array = []):
 	_player_icon.init(player)
 	_meme_renderer.init(meme_template, captions)
 	scale = _original_scale
+	_no_captions_display.visible = len(captions) == 0
 	show_votes([])
 	show_player_icon(false)
 	_update_positions()

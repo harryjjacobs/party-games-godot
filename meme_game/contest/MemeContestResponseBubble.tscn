@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://meme_game/meme/MemeRenderer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://core/textures/SpeechBubble.png" type="Texture" id=2]
@@ -6,6 +6,19 @@
 [ext_resource path="res://meme_game/contest/VotesContainer.gd" type="Script" id=4]
 [ext_resource path="res://core/ui/icons/help.png" type="Texture" id=5]
 [ext_resource path="res://meme_game/player/PlayerIcon.tscn" type="PackedScene" id=6]
+[ext_resource path="res://core/ui/icons/cross.png" type="Texture" id=7]
+[ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.956863, 0.952941, 0.952941, 0.423529 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 60
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
 
 [node name="PlayerContestResponseBubble" type="Node2D"]
 position = Vector2( 960, 540 )
@@ -31,6 +44,36 @@ margin_left = -340.0
 margin_top = -435.281
 margin_right = -572.0
 margin_bottom = -604.281
+
+[node name="NoCaptionsPanel" type="Panel" parent="Pivot/SpeechBubble/MemeRenderer"]
+visible = false
+margin_right = 728.0
+margin_bottom = 911.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Texture" type="TextureRect" parent="Pivot/SpeechBubble/MemeRenderer/NoCaptionsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Pivot/SpeechBubble/MemeRenderer/NoCaptionsPanel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -244.0
+margin_bottom = -73.9998
+custom_fonts/font = SubResource( 2 )
+text = "NO RESPONSE"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Tween" type="Tween" parent="Pivot/SpeechBubble"]
 

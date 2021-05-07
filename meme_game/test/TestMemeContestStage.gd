@@ -15,7 +15,7 @@ func _ready():
 	mock_server.connect("message_received", self, "_server_message_handler")
 	yield(get_tree().create_timer(0.1), "timeout")
 	NetworkInterface.reconnect = false
-	NetworkInterface.server_url = 'ws://localhost:%d' % mock_server.PORT
+	NetworkInterface.hosts_endpoint_url = 'ws://localhost:%d' % mock_server.PORT
 	NetworkInterface.connect_to_server()
 	yield(get_tree().create_timer(1.0), "timeout")
 	var player_a = Player.new("0000-0000", "Player a")
@@ -27,12 +27,16 @@ func _ready():
 		_build_contest(player_a, player_b),
 		_build_contest(player_b, player_a)
 	]
+
+	meme_contest_stage.connect("request_exit", self, "_on_exit_requested")
+
+	# TEST ALL PROMPTS ANSWERED
+	_vote_prompts_sent = 0
 	for contest in _test_round.contests:
 		contest.responses = [
 			_build_response(player_a),
 			_build_response(player_b)
 		]
-	meme_contest_stage.connect("request_exit", self, "_on_exit_requested")
 	meme_contest_stage.enter({
 		"current_round": _test_round,
 		"round_history": Array(),
@@ -42,8 +46,27 @@ func _ready():
 		yield(get_tree().create_timer(5.0), "timeout")
 		assert(_vote_prompts_sent == (i + 1) * (len(Room.players) - 2))
 		yield(get_tree().create_timer(meme_contest_stage.vote_timeout), "timeout")
-	# for contest in _test_round.contests:
-	# 	assert(len(contest.responses) == len(contest.players))
+	for contest in _test_round.contests:
+		assert(len(contest.responses) == len(contest.players))
+	meme_contest_stage.exit()
+
+	# TEST UNANSWERED PROMPTS ARE HANDLED PROPERLY
+	_vote_prompts_sent = 0
+	for contest in _test_round.contests:
+		contest.responses = [
+			_build_response(player_a),
+		]
+	meme_contest_stage.enter({
+		"current_round": _test_round,
+		"round_history": Array(),
+		"round_generator": null
+	})
+	for i in len(_test_round.contests):
+		yield(get_tree().create_timer(5.0), "timeout")
+		assert(_vote_prompts_sent == 0)
+		yield(get_tree().create_timer(meme_contest_stage.vote_timeout), "timeout")
+	for contest in _test_round.contests:
+		assert(len(contest.responses) == len(contest.players) - 1)
 	Log.info("TEST PASSED")
 
 func _server_message_handler(conn_id, message):
@@ -55,7 +78,7 @@ func _server_message_handler(conn_id, message):
 	assert(message.data.payload.data.promptType == "multichoice")
 	assert(message.data.payload.data.promptData.options)
 	_vote_prompts_sent += 1
-	# delay before sending responses
+	# delay before sending vote responses
 	yield(get_tree().create_timer(2.0), "timeout")
 	mock_server.send_message(conn_id, Message.create(Message.PLAYER_TO_HOST, {
 		"clientId": message.data.playerClientId,
