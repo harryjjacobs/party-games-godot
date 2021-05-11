@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/thmemes.wav-0fe123f44a27b7106e18ae4194e3aaf5.sample"
+
+[deps]
+
+source_file="res://meme_game/audio/thmemes.wav"
+dest_files=[ "res://.import/thmemes.wav-0fe123f44a27b7106e18ae4194e3aaf5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

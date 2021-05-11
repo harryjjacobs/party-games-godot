@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/yeah.wav-277af88a1b05a609347e3f2f94b3c1bd.sample"
+
+[deps]
+
+source_file="res://meme_game/audio/yeah.wav"
+dest_files=[ "res://.import/yeah.wav-277af88a1b05a609347e3f2f94b3c1bd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
