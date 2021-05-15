@@ -15,7 +15,6 @@ var _texture
 var _captions: Array
 
 func init(meme_template: MemeTemplate, captions: Array):
-	assert(len(meme_template.captions) == len(captions))
 	assert(meme_template.image)
 	_meme_template = meme_template
 	_captions = captions
@@ -34,7 +33,7 @@ func _create_labels():
 	yield(get_tree(), "idle_frame")
 	for child in captions_parent.get_children():
 		child.queue_free()
-	for i in len(_meme_template.captions):
+	for i in len(_captions):
 		var caption = _meme_template.captions[i]
 		var caption_text = _captions[i]
 		var label = label_scene.instance()
