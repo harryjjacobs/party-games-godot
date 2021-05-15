@@ -67,9 +67,10 @@ func _hide_all_contest_response_displays():
 		display.close()
 
 func _show_voting_results():
-	for i in len(current_contest.responses):
+	for i in len(current_contest.players):
+		var player = current_contest.players[i]
 		var display = _contest_response_displays[i]
-		var response = current_contest.responses[i]
+		var response = _find_response_by_player(player, current_contest.responses)
 		display.show_player_icon(true)
 		var voters = Array()
 		for vote in current_contest.votes:
@@ -78,9 +79,10 @@ func _show_voting_results():
 		display.show_votes(voters)
 	yield(get_tree().create_timer(1.0), "timeout")
 	var winners = _get_winning_responses()
-	for i in len(current_contest.responses):
+	for i in len(current_contest.players):
+		var player = current_contest.players[i]
 		var display = _contest_response_displays[i]
-		var response = current_contest.responses[i]
+		var response = _find_response_by_player(player, current_contest.responses)
 		if response in winners:
 			display.emphasise(true)
 
@@ -93,11 +95,11 @@ func _update_points():
 	for player in votes_per_player:
 		var points_group = len(_parameters.round_history)
 		player.update_points(votes_per_player[player], points_group)
-	for i in len(current_contest.responses):
+	for i in len(current_contest.players):
+		var player = current_contest.players[i]
 		var display = _contest_response_displays[i]
-		var response = current_contest.responses[i]
-		if response.player in votes_per_player:
-			display.show_point_change(votes_per_player[response.player])
+		if player in votes_per_player:
+			display.show_point_change(votes_per_player[player])
 
 func _get_winning_responses():
 	var responses = []
@@ -201,9 +203,8 @@ func _check_vote_validity(client_id, message) -> int:
 			return _VoteValidity.ALREADY_VOTED
 	return _VoteValidity.OK
 
-
 func _find_response_by_player(player, responses):
 	for response in responses:
-		if player == player:
+		if response.player == player:
 			return response
 	return null
