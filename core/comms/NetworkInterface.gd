@@ -84,15 +84,17 @@ func _process(_delta):
 func _handle_message(message):
 	if not message.type:
 		Log.info("Invalid message received %s: (type not specified)" % message)
-	if not message.data:
+	if not "data" in message:
 		Log.info("Invalid message received %s (data not specified)" % message)
-	if message.type == 'player_to_host':
+	if message.type == Message.PLAYER_TO_HOST:
 		var handlers = _message_handlers.get(message.data.payload.type)
 		if not handlers:
 			Log.info("No handlers registered for message type %s" % message.data.payload.type)
 			return
 		for handler in handlers:
 			handler.funcref.call_func(message.data.clientId, message.data.payload)
+	elif message.type == Message.HEARTBEAT_PING:
+		send_server(Message.create(Message.HEARTBEAT_PONG, {}))
 	else:
 		var handlers = _message_handlers.get(message.type)
 		if handlers:

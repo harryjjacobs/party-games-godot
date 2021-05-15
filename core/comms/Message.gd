@@ -3,12 +3,14 @@ class_name Message
 # from server
 const ACCEPT_CREATE_ROOM = "accept_create_room"
 const PLAYER_TO_HOST = "player_to_host"
+const HEARTBEAT_PING = "heartbeat_ping"
 
 # to server
 const REQUEST_CREATE_ROOM = "create_room"
 const HOST_TO_PLAYER = "host_to_player"
 const ADD_PLAYER = "add_player"
 const UPDATE_PLAYER_INFO = "update_player_info"
+const HEARTBEAT_PONG = "heartbeat_pong"
 
 # from player
 const REQUEST_JOIN = "request_join"
