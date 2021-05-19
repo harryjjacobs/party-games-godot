@@ -13,18 +13,23 @@ const HOSTS_ENDPOINT_NAME = "hosts"
 
 const PLAYERS_CLIENT_APP_URL = "play.jacobs.software"
 
+enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
+
+const _GAMEPLAY_AGNOSTIC_MESSAGE_TYPES = [
+	Message.HEARTBEAT_PING, 
+	Message.HEARTBEAT_PONG,
+]
+
 export var use_production_server = false
 export var reconnect = true
 
-var hosts_endpoint_url
-
-enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
-
 onready var _reconnection_timer = $ReconnectionTimer
+var hosts_endpoint_url
 var connection_state
 var _client = WebSocketClient.new()
 var _message_handlers = {}
-var _message_queue = []
+var _outgoing_message_queue = []
+var _incoming_message_queue = []
 var _client_id
 
 func _ready():
@@ -70,16 +75,20 @@ func _on_data():
 		return
 	if "clientId" in message:
 		_client_id = message.clientId
-	_handle_message(message)
+	_incoming_message_queue.push_back(message)
 	
 func _process(_delta):
 	_client.poll()
-	if connection_state == ConnectionState.CONNECTED and not _message_queue.empty():
-		var message = _message_queue.pop_front()
-		message.data["apiKey"] = API_KEY
-		var message_str = JSON.print(message)
-		Log.info("Sending message: %s" % message_str)
-		_client.get_peer(1).put_packet(message_str.to_utf8())
+	if not _incoming_message_queue.empty():
+		if not get_tree().paused or _incoming_message_queue.front().type in _GAMEPLAY_AGNOSTIC_MESSAGE_TYPES:
+			_handle_message(_incoming_message_queue.pop_front())
+	if connection_state == ConnectionState.CONNECTED and not _outgoing_message_queue.empty():
+		if not get_tree().paused or _outgoing_message_queue.front().type in _GAMEPLAY_AGNOSTIC_MESSAGE_TYPES:
+			var message = _outgoing_message_queue.pop_front()
+			message.data["apiKey"] = API_KEY
+			var message_str = JSON.print(message)
+			Log.info("Sending message: %s" % message_str)
+			_client.get_peer(1).put_packet(message_str.to_utf8())
 
 func _handle_message(message):
 	if not message.type:
@@ -120,14 +129,14 @@ func send_player(target, message):
 		"playerClientId": client_id, 
 		"payload": message
 	})
-	_message_queue.push_back(host_to_player_message)
+	_outgoing_message_queue.push_back(host_to_player_message)
 
 func send_players(targets, message):
 	for target in targets:
 		send_player(target, message)
 
 func send_server(message):
-	_message_queue.push_back(message)
+	_outgoing_message_queue.push_back(message)
 
 func on_player(message_type: String, target: Object, method: String):
 	var handlers = _message_handlers.get(message_type)
