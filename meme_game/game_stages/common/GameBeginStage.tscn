@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=1]
 [ext_resource path="res://meme_game/meme/templates/WhisperGoosebumps.tres" type="Resource" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://meme_game/meme/templates/OneDoesNotSimply.tres" type="Resource" id=7]
 [ext_resource path="res://meme_game/meme/templates/GandhiQuote.tres" type="Resource" id=8]
 [ext_resource path="res://meme_game/meme/templates/DistractedBoyfriend.tres" type="Resource" id=9]
-[ext_resource path="res://meme_game/meme/templates/ExpandingBrain.tres" type="Resource" id=10]
 [ext_resource path="res://meme_game/meme/templates/IBetHesThinkingAboutOtherGirls.tres" type="Resource" id=11]
 [ext_resource path="res://meme_game/meme/templates/HardToSwallowPills.tres" type="Resource" id=12]
 [ext_resource path="res://meme_game/meme/templates/FeelingsOfPowerGraph.tres" type="Resource" id=13]
@@ -21,4 +20,4 @@
 script = ExtResource( 5 )
 
 [node name="MemeContestBuilder" parent="." index="2" instance=ExtResource( 16 )]
-meme_templates = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 8 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 7 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 2 ) ]
+meme_templates = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 13 ), ExtResource( 8 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 7 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 2 ) ]
