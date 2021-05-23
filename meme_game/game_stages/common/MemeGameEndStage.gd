@@ -11,7 +11,7 @@ func enter(params):
 	.enter(params)
 	var winners = _get_winners()
 	_show_winners(winners)
-	set_timeout(10.0, _parameters)
+	set_timeout(5.0, _parameters)
 
 func _get_winners():
 	var ordered_players = Room.players.duplicate()
