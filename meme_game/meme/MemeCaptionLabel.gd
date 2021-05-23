@@ -17,6 +17,7 @@ var _font_size_to_width_k
 func _enter_tree():
 	_calculate_font_size_width_relationship()
 	_fit_in_rect()
+	theme.set_color("font_color_shadow", "Control", Color.transparent)
 
 func set_editor_border_color(color: Color):
 	_reference_rect.border_color = color

@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/core_controllers/GameplayController.gd"
 }, {
+"base": "Node2D",
+"class": "LobbyStage",
+"language": "GDScript",
+"path": "res://core/game_stages/LobbyStage.gd"
+}, {
 "base": "Resource",
 "class": "MemeCaption",
 "language": "GDScript",
@@ -115,6 +120,7 @@ _global_script_class_icons={
 "GameBuilder": "",
 "GameConfiguration": "",
 "GameplayController": "",
+"LobbyStage": "",
 "MemeCaption": "",
 "MemeCaptionControl": "",
 "MemeCaptionVisualisation": "",

@@ -1,4 +1,5 @@
 extends "res://core/game_stages/common/GameStage.gd"
+class_name LobbyStage
 
 const Message = preload("res://core/comms/Message.gd")
 

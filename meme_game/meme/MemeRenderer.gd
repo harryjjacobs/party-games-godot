@@ -4,6 +4,7 @@ extends PanelContainer
 const text_outline_size = 3
 
 export(bool) var debug_mode = false
+export(float) var alpha = 1.0 setget _set_alpha, _get_alpha
 
 onready var texture_rect = $TextureRect
 onready var captions_parent = $Captions
@@ -13,6 +14,10 @@ const label_scene = preload("res://meme_game/meme/MemeCaptionLabel.tscn")
 var _meme_template: MemeTemplate
 var _texture
 var _captions: Array
+var _initial_texture
+
+func _ready():
+	_initial_texture = texture_rect.texture
 
 func init(meme_template: MemeTemplate, captions: Array):
 	assert(meme_template.image)
@@ -21,6 +26,14 @@ func init(meme_template: MemeTemplate, captions: Array):
 	_texture = meme_template.image
 	texture_rect.texture = _texture
 	_create_labels()
+
+func deinit():
+	for child in captions_parent.get_children():
+		child.queue_free()
+	_meme_template = null
+	_captions = []
+	_texture = _initial_texture
+	texture_rect.texture = _texture
 
 func set_editor_label_border_colors(colors: Array):
 	var colors_copy = colors.duplicate()
@@ -75,3 +88,18 @@ func _get_texture_scaling_rect():
 	rect.size = Vector2(tex_width / orig_texture_size.x, tex_height / orig_texture_size.y)
 	
 	return rect
+
+
+func _set_alpha(a):
+	if texture_rect:
+		texture_rect.material.set_shader_param("alpha", a)
+		for caption_label in captions_parent.get_children():
+			var color = caption_label.color
+			color.a = a
+			caption_label.color = color
+
+func _get_alpha():
+	if texture_rect:
+		return texture_rect.material.get_shader_param("alpha")
+	else:
+		return 1

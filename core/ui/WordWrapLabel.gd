@@ -99,7 +99,7 @@ func _notification(p_what: int):
 		var size = get_size()
 		var style = get_stylebox("normal")
 		var font = get_font("font")
-		var font_color = get_color("font_color") if color.a <= 0.0 else color
+		var font_color = color
 		var font_color_shadow = get_color("font_color_shadow")
 		var use_outline = get_constant("shadow_as_outline")
 		var shadow_ofs = Vector2(get_constant("shadow_offset_x"), get_constant("shadow_offset_y"))

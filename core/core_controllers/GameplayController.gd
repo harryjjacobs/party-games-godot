@@ -12,14 +12,15 @@ func _ready():
 	var _err = Events.connect("request_pause", self, "_on_request_pause")
 	_err = Events.connect("request_resume", self, "_on_request_resume")
 	_err = Events.connect("request_main_menu", self, "_on_request_main_menu")
-	_initialise()
+	_err = Events.connect("request_restart", self, "_on_request_restart")
+	_initialise_stage_stack()
 	_begin()
 
 func _exit_tree():
 	for stage in _stage_stack:
 		stage.queue_free()
 
-func _initialise(game_builder = null):
+func _initialise_stage_stack(game_builder = null):
 	if not game_builder:
 		game_builder = _game_builder_scene.instance()
 	for stage in game_builder.build_stages():
@@ -54,15 +55,26 @@ func _next_stage(params):
 	_current_stage.enter(params)
 	Events.emit_signal("gamestage_changed", old_stage, _current_stage)
 
-func _end_current_game():
+func _end_current_game(preserve_room = false):
 	Log.info("Ending current game")
 	if _current_stage:
 		_current_stage.exit()
 		remove_child(_current_stage)
 		Log.info("Stage %s exited" % _current_stage.name)
-	Log.debug("Disconnecting from server...")
-	NetworkInterface.disconnect_from_server()
-	Log.debug("Disconnected")
+	if not preserve_room:
+		Log.debug("Disconnecting from server...")
+		NetworkInterface.disconnect_from_server()
+		Log.debug("Disconnected")
+
+func _restart_current_game(preserve_room):
+	_end_current_game(preserve_room)
+	_initialise_stage_stack()
+	if preserve_room:
+		for stage in _stage_stack:
+			if stage is LobbyStage:
+				_stage_stack.erase(stage)
+				break
+	_begin()
 
 func _on_stage_request_exit(params):
 	_next_stage(params)
@@ -77,3 +89,6 @@ func _on_request_resume():
 
 func _on_request_main_menu():
 	_end_current_game()
+
+func _on_request_restart(keep_players):
+	_restart_current_game(keep_players)

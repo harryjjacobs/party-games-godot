@@ -1,0 +1,177 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=1]
+[ext_resource path="res://meme_game/game_stages/common/MemeGameCreditsStage.gd" type="Script" id=2]
+[ext_resource path="res://meme_game/meme/MemeRenderer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://core/ui/fonts/AnnieUseYourTelescope-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://core/ui/MenuButton.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+void fragment(){
+  COLOR = texture(TEXTURE, UV); //read from texture
+  COLOR.b = 1.0; //set blue channel to 1.0
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 100
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 70
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 40
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 4 )
+
+[node name="MemeGameCreditsStage" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." index="3"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 1870.0
+margin_bottom = 1030.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 30
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MemeRendererContainer" type="VBoxContainer" parent="HBoxContainer" index="0"]
+material = SubResource( 7 )
+margin_right = 1310.0
+margin_bottom = 980.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="MemeRenderer" parent="HBoxContainer/MemeRendererContainer" index="0" instance=ExtResource( 3 )]
+anchor_top = 0.0
+anchor_bottom = 0.0
+margin_top = 0.0
+margin_right = 1310.0
+margin_bottom = 813.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
+
+[node name="MemeInformationPanel" type="VBoxContainer" parent="HBoxContainer/MemeRendererContainer" index="1"]
+margin_top = 817.0
+margin_right = 1310.0
+margin_bottom = 980.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="PlayerNameLabel" type="Label" parent="HBoxContainer/MemeRendererContainer/MemeInformationPanel" index="0"]
+margin_top = 9.0
+margin_right = 1310.0
+margin_bottom = 153.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 8 )
+text = "- Player Name"
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" index="1"]
+margin_left = 1340.0
+margin_right = 1820.0
+margin_bottom = 980.0
+
+[node name="CreditsContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" index="0"]
+margin_right = 480.0
+margin_bottom = 801.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+alignment = 1
+
+[node name="Title" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="0"]
+margin_top = 288.0
+margin_right = 480.0
+margin_bottom = 389.0
+custom_fonts/font = SubResource( 4 )
+text = "A Jabobs Production"
+align = 1
+valign = 1
+
+[node name="Credits1" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="1"]
+margin_top = 393.0
+margin_right = 480.0
+margin_bottom = 451.0
+custom_fonts/font = SubResource( 5 )
+text = "Design: Harry Jacobs"
+align = 1
+valign = 1
+
+[node name="Credits2" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="2"]
+margin_top = 455.0
+margin_right = 480.0
+margin_bottom = 513.0
+custom_fonts/font = SubResource( 5 )
+text = "Programming: Harry Jacobs"
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" index="1"]
+margin_top = 805.0
+margin_right = 480.0
+margin_bottom = 980.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+alignment = 2
+
+[node name="PlayAgainSamePlayersButton" parent="HBoxContainer/VBoxContainer/VBoxContainer" index="0" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 480.0
+margin_bottom = 45.0
+text = "Play again with the same players?"
+
+[node name="PlayAgainButton" parent="HBoxContainer/VBoxContainer/VBoxContainer" index="1" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 65.0
+margin_right = 480.0
+margin_bottom = 110.0
+text = "Start a new game of Untitled Meme Game?"
+
+[node name="ExitToMainMenuButton" parent="HBoxContainer/VBoxContainer/VBoxContainer" index="2" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 130.0
+margin_right = 480.0
+margin_bottom = 175.0
+text = "Exit"
+
+[node name="Tween" type="Tween" parent="." index="4"]
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/VBoxContainer/PlayAgainSamePlayersButton" to="." method="_on_play_again_same_players_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/VBoxContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/VBoxContainer/ExitToMainMenuButton" to="." method="_on_exit_to_main_menu_button_pressed"]
