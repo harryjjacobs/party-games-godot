@@ -15,7 +15,7 @@ const PLAYERS_CLIENT_APP_URL = "play.jacobs.software"
 
 enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
 
-const _GAMEPLAY_AGNOSTIC_MESSAGE_TYPES = [
+const _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES = [
 	Message.HEARTBEAT_PING, 
 	Message.HEARTBEAT_PONG,
 ]
@@ -80,10 +80,10 @@ func _on_data():
 func _process(_delta):
 	_client.poll()
 	if not _incoming_message_queue.empty():
-		if not get_tree().paused or _incoming_message_queue.front().type in _GAMEPLAY_AGNOSTIC_MESSAGE_TYPES:
+		if not get_tree().paused or _incoming_message_queue.front().type in _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES:
 			_handle_message(_incoming_message_queue.pop_front())
 	if connection_state == ConnectionState.CONNECTED and not _outgoing_message_queue.empty():
-		if not get_tree().paused or _outgoing_message_queue.front().type in _GAMEPLAY_AGNOSTIC_MESSAGE_TYPES:
+		if not get_tree().paused or _outgoing_message_queue.front().type in _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES:
 			var message = _outgoing_message_queue.pop_front()
 			message.data["apiKey"] = API_KEY
 			var message_str = JSON.print(message)
