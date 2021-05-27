@@ -23,7 +23,7 @@ func _on_resume_button_pressed():
 	Events.emit_signal("request_resume")
 		
 func _on_settings_button_pressed():
-	pass
+	Events.emit_signal("open_settings")
 
 func _on_exit_button_pressed():
 	confirmation_dialog.title = "Exit to main menu?"

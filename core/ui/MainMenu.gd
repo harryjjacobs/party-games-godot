@@ -13,6 +13,10 @@ func _on_play_button_pressed():
 	visible = false
 	active_game = _meme_game_scene.instance()
 	get_tree().get_root().add_child(active_game)
+	Events.emit_signal("game_started")
+
+func _on_settings_button_pressed():
+	Events.emit_signal("open_settings")
 
 func _on_exit_button_pressed():
 	confirmation_dialog.title = "Quit?"
@@ -28,3 +32,4 @@ func _request_main_menu():
 	visible = true
 	if active_game:
 		active_game.queue_free()
+	Events.emit_signal("game_stopped")

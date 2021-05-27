@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://core/ui/UI.gd" type="Script" id=1]
 [ext_resource path="res://core/ui/dialogs/PauseDialog.tscn" type="PackedScene" id=2]
 [ext_resource path="res://core/ui/PauseButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://core/ui/PauseButton.gd" type="Script" id=4]
+[ext_resource path="res://core/ui/dialogs/SettingsDialog.tscn" type="PackedScene" id=5]
+[ext_resource path="res://core/ui/dialogs/SettingsDialog.gd" type="Script" id=6]
 
 [node name="UI" type="CanvasLayer"]
 pause_mode = 2
@@ -19,8 +21,15 @@ __meta__ = {
 }
 
 [node name="PauseDialog" parent="." instance=ExtResource( 2 )]
-visible = true
+visible = false
 
 [node name="PauseButton" parent="." instance=ExtResource( 3 )]
 script = ExtResource( 4 )
+
+[node name="SettingsDialog" parent="." instance=ExtResource( 5 )]
+visible = false
+popup_exclusive = true
+window_title = "Settings"
+script = ExtResource( 6 )
+
 [connection signal="pressed" from="PauseButton" to="PauseButton" method="_on_pressed"]

@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://meme_game/ui/theme.tres" type="Theme" id=1]
+[ext_resource path="res://core/ui/fonts/AnnieUseYourTelescope.tres" type="DynamicFont" id=2]
+[ext_resource path="res://core/ui/dialogs/SettingsDialog.gd" type="Script" id=3]
+
+[node name="SettingsDialog" type="WindowDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = 100.0
+margin_right = -100.0
+margin_bottom = -100.0
+theme = ExtResource( 1 )
+window_title = "Settings"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = 100.0
+margin_right = -100.0
+margin_bottom = -100.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1520.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 1520.0
+margin_bottom = 35.0
+alignment = 1
+
+[node name="MasterVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/MasterVolumeContainer"]
+margin_right = 758.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Overall Volume"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/MasterVolumeContainer"]
+margin_left = 762.0
+margin_right = 1520.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+
+[node name="MusicVolumeContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 39.0
+margin_right = 1520.0
+margin_bottom = 74.0
+alignment = 1
+
+[node name="MusicVolumeLabel" type="Label" parent="ScrollContainer/VBoxContainer/MusicVolumeContainer"]
+margin_right = 758.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Music Volume"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/MusicVolumeContainer"]
+margin_left = 762.0
+margin_right = 1520.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+
+[connection signal="hide" from="." to="." method="_on_SettingsDialog_hide"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/MasterVolumeContainer/MasterVolumeSlider" to="." method="_on_MasterVolumeSlider_value_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/MusicVolumeContainer/MusicVolumeSlider" to="." method="_on_MusicVolumeSlider_value_changed"]

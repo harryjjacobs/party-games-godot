@@ -6,8 +6,11 @@ signal request_pause
 signal request_resume
 signal request_restart
 signal request_main_menu
+signal game_started
+signal game_stopped
 signal game_paused
 signal game_resumed
+signal open_settings
 signal gamestage_changed(previous_stage, current_stage)
 
 # network interface

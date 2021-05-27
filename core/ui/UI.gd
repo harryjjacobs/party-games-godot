@@ -1,9 +1,19 @@
 extends CanvasLayer
 
-# Called when the node enters the scene tree for the first time.
+onready var _pause_button = $PauseButton
+
 func _ready():
-	var _err = Events.connect("server_connection_state_changed", self, "_on_server_connection_state_changed")
+	_pause_button.visible = false
+	assert(Events.connect("server_connection_state_changed", self, "_on_server_connection_state_changed") == OK)
+	assert(Events.connect("game_started", self, "_on_game_started") == OK)
+	assert(Events.connect("game_stopped", self, "_on_game_stopped") == OK)
 
 func _on_server_connection_state_changed(state):
 	if state == NetworkInterface.ConnectionState.DISCONNECTED:
 		pass
+
+func _on_game_started():
+	_pause_button.visible = true
+
+func _on_game_stopped():
+	_pause_button.visible = false

@@ -16,8 +16,6 @@ margin_right = 474.612
 margin_bottom = 268.888
 theme = ExtResource( 3 )
 custom_colors/title_color = Color( 0, 0, 0, 1 )
-custom_constants/close_h_ofs = 0
-custom_constants/close_v_ofs = 0
 custom_constants/title_height = 0
 popup_exclusive = true
 window_title = "Paused"
@@ -40,6 +38,8 @@ text = "Settings"
 text = "Exit"
 
 [node name="ConfirmationDialog" parent="." instance=ExtResource( 1 )]
+
 [connection signal="popup_hide" from="." to="." method="_on_popup_hide"]
 [connection signal="pressed" from="Resume" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Settings" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_exit_button_pressed"]
