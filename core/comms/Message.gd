@@ -23,6 +23,7 @@ const REJECT_JOIN = "reject_join"
 const ACCEPT_REJOIN = "accept_rejoin"
 const REJECT_REJOIN = "reject_rejoin"
 const REQUEST_INPUT = "request_input"
+const REJECT_INPUT = "reject_input"
 const HIDE_PROMPT = "hide_prompt"
 
 static func create(type: String, data):

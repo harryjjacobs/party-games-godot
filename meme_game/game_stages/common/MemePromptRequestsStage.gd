@@ -51,25 +51,38 @@ func _send_prompt_to_player(player, contest):
 		}
 	}))
 
+func _send_response_rejection_to_player(player, error_message):
+		NetworkInterface.send_player(player.client_id, Message.create(Message.REJECT_INPUT, {
+		"error": error_message,
+	}))
+
 func _on_player_prompt_response(client_id, message):
 	var player = Room.find_player_by_id(client_id)
 	if not player:
 		return
 	Log.info("Prompt response received from %s (%s)" % [client_id, player.username])
-	var valid = false
+	var found = false
 	for contest in _current_round.contests:
 		if contest.id == message.data.contestId:
 			if not player in contest.players:
-				Log.info("Invalid contest response - player not in this contest")
+				Log.warn("Invalid contest response - player not in this contest")
 				return
 			var contest_response = MemeContestResponse.new()
 			contest_response.player = player
-			contest_response.captions = message.data.captions
+			contest_response.captions = _sanitise_captions(message.data.captions)
+			if _same_response_exists(contest, contest_response):
+				Log.info("Invalid contest response - non-unique response")
+				_send_response_rejection_to_player(player, 
+					"Great minds think alike - an identical response has already been submitted! Try something else.")
+				return
 			contest.responses.append(contest_response)
-			valid = true
-	if not valid:
+			found = true
+			break
+	if not found:
 		Log.info("Invalid contest response - no matching contest with id %s found" % message.data.contestId)
 		return
+	# response accepted, hide input prompt
+	NetworkInterface.send_player(player, Message.create(Message.HIDE_PROMPT, {}))
 	_pending_responses -= 1
 	if _pending_responses <= 0:
 		_pending_responses = 0
@@ -80,3 +93,15 @@ func _on_player_prompt_response(client_id, message):
 		_send_prompt_to_player(player, _pending_requests[player].pop_front())
 	else:
 		_player_icon_display.add_player(player)
+
+func _sanitise_captions(captions):
+	var sanitised_captions = []
+	for caption in captions:
+		sanitised_captions.push_back(caption.to_upper())
+	return sanitised_captions
+
+func _same_response_exists(contest, response):
+	for existing_response in contest.responses:
+		if existing_response.captions == response.captions:
+			return true
+	return false
