@@ -18,6 +18,9 @@ enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
 const _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES = [
 	Message.HEARTBEAT_PING, 
 	Message.HEARTBEAT_PONG,
+	Message.REQUEST_REJOIN,
+	Message.ACCEPT_REJOIN,
+	Message.REJECT_REJOIN
 ]
 
 export var use_production_server = false
