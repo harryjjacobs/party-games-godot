@@ -19,6 +19,8 @@ func _ready():
 func _exit_tree():
 	for stage in _stage_stack:
 		stage.queue_free()
+	BackgroundMusic.pause()
+	BackgroundMusic.clear_tracks()
 
 func _initialise_stage_stack(game_builder = null):
 	if not game_builder:

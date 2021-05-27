@@ -141,7 +141,7 @@ _global_script_class_icons={
 [application]
 
 config/name="party-games"
-run/main_scene="res://TitleScene.tscn"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -151,6 +151,7 @@ NetworkInterface="*res://core/comms/NetworkInterface.tscn"
 Room="*res://core/core_controllers/Room.gd"
 BackgroundMusic="*res://core/audio/BackgroundMusic.tscn"
 Log="*res://core/util/Log.gd"
+Settings="*res://core/util/Settings.gd"
 
 [display]
 
