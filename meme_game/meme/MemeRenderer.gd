@@ -89,7 +89,6 @@ func _get_texture_scaling_rect():
 	
 	return rect
 
-
 func _set_alpha(a):
 	if texture_rect:
 		texture_rect.material.set_shader_param("alpha", a)
