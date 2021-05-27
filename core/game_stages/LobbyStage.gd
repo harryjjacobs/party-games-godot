@@ -70,4 +70,5 @@ func _on_player_joined_room(player):
 
 func _on_prompt_response(_client_id, message):
 	if message.data.id == _begin_game_prompt_id:
+		NetworkInterface.send_player(_client_id, Message.create(Message.HIDE_PROMPT, {}))
 		emit_signal("request_exit", {})
