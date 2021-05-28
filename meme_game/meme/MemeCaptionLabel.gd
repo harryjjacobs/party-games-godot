@@ -80,5 +80,5 @@ func _fit_in_rect():
 			font.size -= font_size_resolution
 			if font.size <= min_font_size:
 				font.size = min_font_size
-				break
+				break		
 	regenerate_word_cache()

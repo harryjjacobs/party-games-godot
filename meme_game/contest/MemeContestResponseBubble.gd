@@ -14,7 +14,7 @@ onready var _speech_bubble_sprite = $Pivot/SpeechBubble
 onready var _player_icon_container = $Pivot/PlayerIconContainer
 onready var _player_icon = $Pivot/PlayerIconContainer/PlayerIcon
 onready var _player_icon_placeholder = $Pivot/PlayerIconContainer/PlayerIconPlaceholder
-onready var _meme_renderer = $Pivot/SpeechBubble/MemeRenderer
+onready var meme_renderer = $Pivot/SpeechBubble/MemeRenderer
 onready var _votes_container = $Pivot/SpeechBubble/VotesContainer
 onready var _no_captions_display = $Pivot/SpeechBubble/MemeRenderer/NoCaptionsPanel
 
@@ -31,7 +31,7 @@ func _process(_delta):
 
 func open(player: Player, meme_template: MemeTemplate, captions: Array = []):
 	_player_icon.init(player)
-	_meme_renderer.init(meme_template, captions)
+	meme_renderer.init(meme_template, captions)
 	scale = _original_scale
 	_no_captions_display.visible = len(captions) == 0
 	show_votes([])
@@ -63,12 +63,12 @@ func _update_positions():
 	if flip_h:
 		_speech_bubble_sprite.position = Vector2(-1, 1) * speech_bubble_position
 		_player_icon_container.position = Vector2(-1, 1) * player_icon_position
-		_meme_renderer.rect_position = Vector2(-1, 1) * meme_renderer_position - \
-			Vector2(_meme_renderer.rect_size.x, 0)
+		meme_renderer.rect_position = Vector2(-1, 1) * meme_renderer_position - \
+			Vector2(meme_renderer.rect_size.x, 0)
 	else:
 		_speech_bubble_sprite.position = speech_bubble_position
 		_player_icon_container.position = player_icon_position
-		_meme_renderer.rect_position = meme_renderer_position
+		meme_renderer.rect_position = meme_renderer_position
 
 func _tween_entry():
 	visible = true

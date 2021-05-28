@@ -35,6 +35,36 @@ func deinit():
 	_texture = _initial_texture
 	texture_rect.texture = _texture
 
+func get_as_image():
+	assert(_meme_template)
+	var viewport = Viewport.new()
+	viewport.usage = viewport.USAGE_2D
+	viewport.render_target_update_mode = viewport.UPDATE_ALWAYS
+	var displayed_rect = _get_displayed_texture_rect()
+	viewport.size = displayed_rect.size
+	get_parent().add_child(viewport)
+	var duplicate_meme_renderer = self.duplicate()
+	viewport.add_child(duplicate_meme_renderer)
+	duplicate_meme_renderer.set_position(-displayed_rect.position)
+	duplicate_meme_renderer.init(_meme_template, _captions)
+
+	viewport.add_child(Camera2D.new())
+
+	yield(VisualServer, "frame_post_draw")
+
+	# wait for meme renderer text autosizing to complete
+	# TODO: this is a hack
+	for _i in range(5):
+		yield(get_tree(), "idle_frame")
+
+	var img = viewport.get_texture().get_data()
+	img.flip_y()
+	img.convert(Image.FORMAT_RGBA8)
+
+	viewport.queue_free()
+
+	return img
+
 func set_editor_label_border_colors(colors: Array):
 	var colors_copy = colors.duplicate()
 	for label in captions_parent.get_children():
@@ -73,6 +103,17 @@ func _get_texture_scaling_rect():
 	assert(texture_rect.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
 	assert(texture_rect.texture.get_size() != Vector2.ZERO)
 
+	var orig_texture_size = _texture.get_size()
+	
+	var rect = _get_displayed_texture_rect()
+	rect.size /= Vector2(orig_texture_size.x, orig_texture_size.y)
+
+	return rect
+
+func _get_displayed_texture_rect():
+	assert(texture_rect.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
+	assert(texture_rect.texture.get_size() != Vector2.ZERO)
+	
 	var rect = Rect2()
 	var orig_texture_size = _texture.get_size()
 	var container_size = texture_rect.rect_size
@@ -81,12 +122,9 @@ func _get_texture_scaling_rect():
 	if tex_width > container_size.x:
 		tex_width = container_size.x
 		tex_height = orig_texture_size.y * tex_width / orig_texture_size.x
-	
-	# offset
+
 	rect.position = Vector2((container_size.x - tex_width) / 2, (container_size.y - tex_height) / 2)
-	# scale
-	rect.size = Vector2(tex_width / orig_texture_size.x, tex_height / orig_texture_size.y)
-	
+	rect.size = Vector2(tex_width, tex_height)
 	return rect
 
 func _set_alpha(a):
