@@ -1,6 +1,8 @@
 tool
 extends "res://core/ui/WordWrapLabel.gd"
 
+signal autosize_finished
+
 export(int) var min_font_size = 5
 export(int) var max_font_size = 80
 export(int) var font_size_resolution = 5
@@ -82,3 +84,4 @@ func _fit_in_rect():
 				font.size = min_font_size
 				break		
 	regenerate_word_cache()
+	emit_signal("autosize_finished")

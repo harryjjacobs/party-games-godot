@@ -78,7 +78,7 @@ func _update_meme_renderer():
 	var captions_text = []
 	for caption in template.captions:
 		captions_text.append(caption.text)
-	meme_renderer.init(template, captions_text)
+	meme_renderer.render(template, captions_text)
 	# label border colors editor visualisation 
 	var label_border_colors = []
 	for caption_control in captions_container.get_children():

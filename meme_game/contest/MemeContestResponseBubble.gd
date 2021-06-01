@@ -31,7 +31,7 @@ func _process(_delta):
 
 func open(player: Player, meme_template: MemeTemplate, captions: Array = []):
 	_player_icon.init(player)
-	meme_renderer.init(meme_template, captions)
+	meme_renderer.render(meme_template, captions)
 	scale = _original_scale
 	_no_captions_display.visible = len(captions) == 0
 	show_votes([])

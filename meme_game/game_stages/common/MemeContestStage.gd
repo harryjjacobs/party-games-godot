@@ -61,15 +61,7 @@ func _show_contest_response_displays():
 			display.open(player, current_contest.meme_template, response.captions)
 		else:
 			display.open(player, current_contest.meme_template)
-		# save meme to disk
-		var d = Directory.new()
-		var path = "user://saved_memes"
-		if not d.dir_exists(path):
-			d.open("user://")
-			d.make_dir(path)
-		var img = yield(display.meme_renderer.get_as_image(), "completed")
-		var filename = player.username + "_" + Time.formatted_timestamp() + ".png"
-		img.save_png(path + "/" + filename)
+		_save_meme_to_disk(display.meme_renderer, player)
 
 func _hide_all_contest_response_displays():
 	for display in _contest_response_displays:
@@ -217,3 +209,11 @@ func _find_response_by_player(player, responses):
 		if response.player == player:
 			return response
 	return null
+
+func _save_meme_to_disk(meme_renderer, player):
+	# save meme to disk
+	var path = "user://saved_memes"
+	FileUtils.open_user_dir(path, true)
+	var img = yield(meme_renderer.capture(), "completed")
+	var filename = player.username + "_" + Time.formatted_timestamp() + ".png"
+	img.save_png(path + "/" + filename)

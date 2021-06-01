@@ -1,5 +1,6 @@
 tool
 extends PanelContainer
+class_name MemeRenderer
 
 const text_outline_size = 3
 
@@ -19,15 +20,15 @@ var _initial_texture
 func _ready():
 	_initial_texture = texture_rect.texture
 
-func init(meme_template: MemeTemplate, captions: Array):
+func render(meme_template: MemeTemplate, captions: Array):
 	assert(meme_template.image)
 	_meme_template = meme_template
 	_captions = captions
 	_texture = meme_template.image
 	texture_rect.texture = _texture
-	_create_labels()
+	yield(_create_labels(), "completed")
 
-func deinit():
+func clear():
 	for child in captions_parent.get_children():
 		child.queue_free()
 	_meme_template = null
@@ -35,27 +36,24 @@ func deinit():
 	_texture = _initial_texture
 	texture_rect.texture = _texture
 
-func get_as_image():
+func capture() -> Image:
 	assert(_meme_template)
 	var viewport = Viewport.new()
 	viewport.usage = viewport.USAGE_2D
 	viewport.render_target_update_mode = viewport.UPDATE_ALWAYS
+	yield(get_tree(), "idle_frame")
 	var displayed_rect = _get_displayed_texture_rect()
 	viewport.size = displayed_rect.size
-	get_parent().add_child(viewport)
-	var duplicate_meme_renderer = self.duplicate()
+	get_tree().get_root().add_child(viewport)
+	var duplicate_meme_renderer = load(filename).instance()
 	viewport.add_child(duplicate_meme_renderer)
-	duplicate_meme_renderer.set_position(-displayed_rect.position)
-	duplicate_meme_renderer.init(_meme_template, _captions)
-
 	viewport.add_child(Camera2D.new())
 
-	yield(VisualServer, "frame_post_draw")
+	duplicate_meme_renderer.set_position(Vector2.ZERO)
+	duplicate_meme_renderer.rect_size = displayed_rect.size
+	yield(duplicate_meme_renderer.render(_meme_template, _captions), "completed")
 
-	# wait for meme renderer text autosizing to complete
-	# TODO: this is a hack
-	for _i in range(5):
-		yield(get_tree(), "idle_frame")
+	yield(VisualServer, "frame_post_draw")
 
 	var img = viewport.get_texture().get_data()
 	img.flip_y()
