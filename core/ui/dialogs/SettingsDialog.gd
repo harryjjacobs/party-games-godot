@@ -3,9 +3,9 @@ extends WindowDialog
 onready var _master_volume_slider = $ScrollContainer/VBoxContainer/MasterVolumeContainer/MasterVolumeSlider
 onready var _music_volume_slider = $ScrollContainer/VBoxContainer/MusicVolumeContainer/MusicVolumeSlider
 
-
 func _ready():
-	assert(Events.connect("open_settings", self, "_on_request_open_settings_menu") == OK)
+	var _err = Events.connect("open_settings", self, "_on_request_open_settings_menu")
+	assert(_err == OK)
 	_initialise_values()
 
 func _on_request_open_settings_menu():

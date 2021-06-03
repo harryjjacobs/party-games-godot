@@ -3,9 +3,10 @@ extends WindowDialog
 onready var confirmation_dialog = $ConfirmationDialog
 
 func _ready():
-	assert(Events.connect("game_paused", self, "_on_game_paused") == OK)
-	assert(Events.connect("game_resumed", self, "_on_game_resumed") == OK)
-
+	var _err = Events.connect("game_paused", self, "_on_game_paused")
+	_err = Events.connect("game_resumed", self, "_on_game_resumed")
+	assert(_err == OK)
+	
 func _on_game_paused():
 	popup_centered()
 
