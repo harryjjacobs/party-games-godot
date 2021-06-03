@@ -23,7 +23,6 @@ const _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES = [
 	Message.REJECT_REJOIN
 ]
 
-export var use_production_server = false
 export var reconnect = true
 
 onready var _reconnection_timer = $ReconnectionTimer
@@ -182,7 +181,7 @@ func _funcref_wrapper(target: Object, method: String):
 	}
 
 func _get_server_endpoint_url(name):
-	if use_production_server:
-		return PoolStringArray(['wss://' + PRODUCTION_SERVER_URL, name]).join("/")
-	else:
+	if OS.is_debug_build():
 		return PoolStringArray(['ws://' + DEVELOPMENT_SERVER_URL, name]).join("/")
+	else:
+		return PoolStringArray(['wss://' + PRODUCTION_SERVER_URL, name]).join("/")
