@@ -5,9 +5,10 @@ signal autosize_finished
 
 export(int) var min_font_size = 5
 export(int) var max_font_size = 80
-export(int) var font_size_resolution = 5
 export (bool) var debug_mode = false
 export(Color) var background_color := Color(1, 1, 1, 1) setget set_background_color
+
+const font_size_resolution = 4
 
 onready var _reference_rect = $ReferenceRect
 
@@ -17,8 +18,8 @@ var old_text
 var _font_size_to_width_k
 
 func _enter_tree():
-	_calculate_font_size_width_relationship()
-	_fit_in_rect()
+	# _calculate_font_size_width_relationship()
+	# _fit_in_rect()
 	theme.set_color("font_color_shadow", "Control", Color.transparent)
 
 func set_editor_border_color(color: Color):
@@ -33,10 +34,7 @@ func _process(_delta):
 	if text != old_text:
 		old_text = text
 		_fit_in_rect()
-
-func _set(property, _value):
-	if property == "text":
-		_fit_in_rect()
+		# yield(_fit_in_rect(), "completed")
 
 func _calculate_font_size_width_relationship():
 	var font = get_font("font")
@@ -58,21 +56,28 @@ func _fit_in_rect():
 	var font = get_font("font")
 	if not font:
 		return
-	font.size = max_font_size;
+	font.size = max_font_size
 	regenerate_word_cache()
 	var longest_line_count = len(get_longest_line())
 	if longest_line_count == 0:
 		return
 	# initial estimate
-	font.size = int(min(get_size().x / (_font_size_to_width_k * longest_line_count) + font_size_resolution, max_font_size))
+	var max_text_width = get_longest_line_width()
+	var max_text_height = get_line_count() * font.size
+	var initial_font_estimate = min(font.size * max(get_size().x / max_text_width, get_size().y / max_text_height), font.size)
+	font.size = initial_font_estimate
 	if autowrap:
 		visible = false
+		var i = 0
 		while get_visible_line_count() < get_line_count() or get_longest_line_width() > get_size().x:
-			font.size -= font_size_resolution;
+			font.size -= font_size_resolution
 			if font.size <= min_font_size:
 				font.size = min_font_size
 				break
 			regenerate_word_cache()
+			yield(get_tree(), "idle_frame")
+			i += 1
+		print("rendered caption label text in %s iterations" % i)
 		visible = true
 	else:
 		var text = tr(text)

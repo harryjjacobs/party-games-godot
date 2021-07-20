@@ -61,7 +61,9 @@ func _show_contest_response_displays():
 			display.open(player, current_contest.meme_template, response.captions)
 		else:
 			display.open(player, current_contest.meme_template)
-		_save_meme_to_disk(display.meme_renderer, player)
+		# TODO - _save_meme_to_disk is very performance intensive as it creates an entirely new meme renderer
+		# try to optimise - or save the meme in between contests
+		#_save_meme_to_disk(display.meme_renderer, player)
 
 func _hide_all_contest_response_displays():
 	for display in _contest_response_displays:
