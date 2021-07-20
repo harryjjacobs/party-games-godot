@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://musiq_game/configuration/MusiqGameBuilder.gd" type="Script" id=1]
+[ext_resource path="res://core/game_stages/LobbyStage.tscn" type="PackedScene" id=2]
+[ext_resource path="res://musiq_game/game_stages/MusiQGameSetupStage.tscn" type="PackedScene" id=3]
+
+[node name="MusiqGameBuilder" type="Node2D"]
+script = ExtResource( 1 )
+_stages = [ NodePath("MusiQGameSetupStage"), NodePath("LobbyStage") ]
+
+[node name="MusiQGameSetupStage" parent="." instance=ExtResource( 3 )]
+
+[node name="LobbyStage" parent="." instance=ExtResource( 2 )]

@@ -1,35 +1,29 @@
 extends Control
+class_name MainMenu
 
-const _meme_game_scene = preload("res://meme_game/Memes.tscn")
+signal play
+signal exit
 
-onready var confirmation_dialog = $ConfirmationDialog
+onready var _confirmation_dialog = $ConfirmationDialog
+onready var _game_selection_dialog = $GameSelectionDialog
 
-var active_game
-
-func _ready():
-	var _err = Events.connect("request_main_menu", self, "_request_main_menu")
+func init(game_selection_options):
+	_game_selection_dialog.set_game_selection_options(game_selection_options)
 
 func _on_play_button_pressed():
-	visible = false
-	active_game = _meme_game_scene.instance()
-	get_tree().get_root().add_child(active_game)
-	Events.emit_signal("game_started")
+	_game_selection_dialog.popup_centered()
+	var game_type = yield(_game_selection_dialog, "selected")
+	emit_signal("play", game_type)
 
 func _on_settings_button_pressed():
 	Events.emit_signal("open_settings")
 
 func _on_exit_button_pressed():
-	confirmation_dialog.title = "Quit?"
-	confirmation_dialog.subtitle = "Are you are you want to exit the game?"
-	confirmation_dialog.yes_text = "Yes"
-	confirmation_dialog.no_text = "No"
-	confirmation_dialog.popup_centered()
-	var quit = yield(confirmation_dialog, "finished")
+	_confirmation_dialog.title = "Quit?"
+	_confirmation_dialog.subtitle = "Are you are you want to exit the game?"
+	_confirmation_dialog.yes_text = "Yes"
+	_confirmation_dialog.no_text = "No"
+	_confirmation_dialog.popup_centered()
+	var quit = yield(_confirmation_dialog, "finished")
 	if quit:
-		get_tree().quit()
-
-func _request_main_menu():
-	visible = true
-	if active_game:
-		active_game.queue_free()
-	Events.emit_signal("game_stopped")
+		emit_signal("exit")

@@ -11,6 +11,7 @@ signal game_stopped
 signal game_paused
 signal game_resumed
 signal open_settings
+signal show_dialog
 signal gamestage_changed(previous_stage, current_stage)
 
 # network interface
