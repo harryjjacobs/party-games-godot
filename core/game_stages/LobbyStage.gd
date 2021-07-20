@@ -34,7 +34,8 @@ func exit():
 	.exit()
 	Room.lock()
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_prompt_response")
-	Events.disconnect("player_joined_room", self, "_on_player_joined_room")
+	if Events.is_connected("player_joined_room", self, "_on_player_joined_room"):
+		Events.disconnect("player_joined_room", self, "_on_player_joined_room")
 	BackgroundMusic.skip_track()
 
 func _generate_qr_code(url):

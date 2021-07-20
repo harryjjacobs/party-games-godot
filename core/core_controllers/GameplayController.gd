@@ -13,6 +13,8 @@ func _ready():
 	_err = Events.connect("request_resume", self, "_on_request_resume")
 	_err = Events.connect("request_main_menu", self, "_on_request_main_menu")
 	_err = Events.connect("request_restart", self, "_on_request_restart")
+	assert(_err == OK)
+
 	_initialise_stage_stack()
 	_begin()
 
@@ -31,7 +33,7 @@ func _initialise_stage_stack(game_builder = null):
 		if parent:
 			parent.remove_child(stage)
 			game_builder.queue_free()
-		Log.info("[%s] Stages initialised. Stage stack: " % name)
+	Log.info("[%s] Stages initialised. Stage stack: " % name)
 	for stage in _stage_stack:
 		Log.info("- %s" % stage.name)
 	var music_tracks = game_builder.build_background_music()
