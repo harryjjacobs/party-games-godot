@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://meme_game/meme/MemeCaption.gd" type="Script" id=1]
+[ext_resource path="res://meme_game/meme/textures/Inspirational-Quote.jpg" type="Texture" id=2]
+[ext_resource path="res://meme_game/meme/MemeTemplate.gd" type="Script" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 1 )
+x = 50
+y = 20
+width = 520
+height = 200
+rotation = 0.0
+text_color = Color( 1, 1, 1, 1 )
+background_color = Color( 1, 1, 1, 0 )
+center_h = true
+center_v = true
+outline_text = true
+text = ""
+
+[resource]
+script = ExtResource( 3 )
+image = ExtResource( 2 )
+captions = [ SubResource( 1 ) ]
+type = 1

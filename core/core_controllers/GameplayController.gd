@@ -53,7 +53,8 @@ func _next_stage(params):
 		Log.info("Stage %s exited" % _current_stage.name)
 	var old_stage = _current_stage
 	_current_stage = _stage_stack.pop_front()
-	var _err = _current_stage.connect("request_exit", self, "_on_stage_request_exit")
+	if not _current_stage.is_connected("request_exit", self, "_on_stage_request_exit"):
+		var _err = _current_stage.connect("request_exit", self, "_on_stage_request_exit")
 	Log.info("Stage %s entered" % _current_stage.name)
 	add_child(_current_stage)
 	_current_stage.enter(params)
@@ -64,6 +65,7 @@ func _end_current_game(preserve_room = false):
 	if _current_stage:
 		_current_stage.exit()
 		remove_child(_current_stage)
+		_current_stage = null
 		Log.info("Stage %s exited" % _current_stage.name)
 	if not preserve_room:
 		Log.debug("Disconnecting from server...")

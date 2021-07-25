@@ -53,23 +53,23 @@ func show_points(show, points = null):
 
 func animate_points_change(from, to):
 	show_points(true, from)
-	tween.interpolate_method(self, "_set_points_label_text",
+	var _err = tween.interpolate_method(self, "_set_points_label_text",
 		from, to, points_label_change_speed, Tween.TRANS_SINE, Tween.EASE_OUT)
-	tween.start()
+	_err = tween.start()
 	yield(tween, "tween_completed")
 
 func animate_point_award(amount):
 	var duration = 0.3
 	var delay = 1.0
 	var orig_scale = point_change_label.rect_scale
-	tween.interpolate_property(point_change_label, "rect_scale",
+	var _err = tween.interpolate_property(point_change_label, "rect_scale",
 		Vector2.ZERO, orig_scale, duration, Tween.TRANS_ELASTIC, Tween.EASE_IN)
-	tween.interpolate_property(point_change_label, "rect_scale",
+	_err = tween.interpolate_property(point_change_label, "rect_scale",
 		orig_scale, Vector2.ZERO, duration, Tween.TRANS_LINEAR, Tween.EASE_IN, duration + delay)
 	point_change_label.rect_scale = Vector2.ZERO
 	point_change_label.text = "+%d" % amount
 	point_change_label.visible = true
-	tween.start()
+	_err = tween.start()
 	yield(tween, "tween_all_completed")
 	point_change_label.visible = false
 

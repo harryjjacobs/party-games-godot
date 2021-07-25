@@ -1,0 +1,39 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://meme_game/meme/MemeCaption.gd" type="Script" id=1]
+[ext_resource path="res://meme_game/meme/MemeTemplate.gd" type="Script" id=2]
+[ext_resource path="res://meme_game/meme/textures/Wants-To-Know-Location.png" type="Texture" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 1 )
+x = 40
+y = 157
+width = 550
+height = 60
+rotation = 0.0
+text_color = Color( 0, 0, 0, 1 )
+background_color = Color( 0, 0, 0, 0 )
+center_h = false
+center_v = true
+outline_text = false
+text = ""
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 1 )
+x = 25
+y = 310
+width = 290
+height = 35
+rotation = 0.0
+text_color = Color( 0, 0, 0, 1 )
+background_color = Color( 0, 0, 0, 0 )
+center_h = true
+center_v = true
+outline_text = false
+text = ""
+
+[resource]
+script = ExtResource( 2 )
+image = ExtResource( 3 )
+captions = [ SubResource( 1 ), SubResource( 2 ) ]
+type = 1

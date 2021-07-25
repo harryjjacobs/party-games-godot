@@ -61,10 +61,10 @@ func generate_sentences(count):
 	var sentences = []
 	for _s in range(count):
 		var sentence = ""
-		for _w in range(1, randi() % 5):
+		for _w in range(2, randi() % 13):
 			var word = ""
 			var n_char = len(chars)
-			for _c in range(1, randi() % 10):
+			for _c in range(3, randi() % 15):
 				word += chars[randi() % n_char]
 			sentence += word + " "
 		sentences.push_back(sentence)

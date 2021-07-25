@@ -16,15 +16,19 @@ func _highlight_reel():
 	var highlights = _generate_highlights()
 	while is_inside_tree():
 		for highlight in highlights:
-			_meme_renderer.init(highlight.template, highlight.response.captions)
+			_meme_renderer.render(highlight.template, highlight.response.captions)
 			_player_name_label.text = " - " + highlight.response.player.username
 			$Tween.interpolate_method(self, "_set_highlights_reel_alpha", 0.0, 1.0, HIGHLIGHTS_REEL_FADE_DURATION / 2)
 			$Tween.start()
 			yield($Tween, "tween_completed")
+			if not is_inside_tree():
+				return
 			yield(get_tree().create_timer(HIGHLIGHTS_REEL_DURATION), "timeout")
 			$Tween.interpolate_method(self, "_set_highlights_reel_alpha", 1.0, 0.0, HIGHLIGHTS_REEL_FADE_DURATION / 2)
 			$Tween.start()
 			yield($Tween, "tween_completed")
+			if not is_inside_tree():
+				return
 			
 func _generate_highlights():
 	var response_vote_count = {}

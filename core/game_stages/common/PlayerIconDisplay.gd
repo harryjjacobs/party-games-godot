@@ -34,8 +34,8 @@ func _ready():
 	_update_player_positions()
 
 func _process(_delta):
-	#if Engine.editor_hint:
-	_update_player_positions()
+	if Engine.editor_hint:
+		_update_player_positions()
 
 func add_player(player: Player, animate = true):
 	if player in _player_icon_lookup:
@@ -73,8 +73,6 @@ func clear():
 func add_players(players: Array, animate = true):
 	for player in players:
 		add_player(player, animate)
-		# if animate:
-		# 	yield(get_tree().create_timer(0.3), "timeout")
 	
 func swap_players(a: Player, b: Player, animate = true):
 	yield(get_tree(), "idle_frame")

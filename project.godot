@@ -180,7 +180,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "meme_template_plugin" )
+enabled=PoolStringArray( "res://addons/meme_template_plugin/plugin.cfg" )
 
 [network]
 

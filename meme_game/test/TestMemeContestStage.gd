@@ -50,6 +50,8 @@ func _ready():
 		assert(len(contest.responses) == len(contest.players))
 	meme_contest_stage.exit()
 
+	yield(get_tree().create_timer(2.0), "timeout")
+
 	# TEST UNANSWERED PROMPTS ARE HANDLED PROPERLY
 	_vote_prompts_sent = 0
 	for contest in _test_round.contests:

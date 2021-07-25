@@ -4,8 +4,9 @@ onready var _leaderboard = $PlayerIconDisplay
 
 func enter(params):
 	.enter(params)
-	_show_initial_positions()
 	yield(get_tree().create_timer(1.0), "timeout")
+	yield(_show_initial_positions(), "completed")
+	yield(get_tree().create_timer(1.5), "timeout")
 	_show_point_changes()
 	yield(get_tree().create_timer(2.0), "timeout")
 	yield(_rearrange_leaderboard(), "completed")
@@ -29,6 +30,7 @@ func _show_initial_positions():
 		_leaderboard.add_player(snapshot.player, true)
 		var icon = _leaderboard.get_player_icon(snapshot.player)
 		icon.show_points(true, snapshot.points)
+		yield(get_tree().create_timer(0.4), "timeout")
 
 func _show_point_changes():
 	# show the points gained in this round

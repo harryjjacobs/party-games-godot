@@ -4,6 +4,7 @@ export(float) var vote_timeout = 15
 export(float) var time_between_contests = 0.5
 export(float) var display_contest_result_duration = 5.0
 export(AudioStreamSample) var vote_prompt_audio
+export(AudioStreamSample) var contest_winner_audio
 export(Array, NodePath) var contest_response_display_paths
 
 onready var _countdown_display = $CountdownDisplay
@@ -88,6 +89,8 @@ func _show_voting_results():
 		var response = _find_response_by_player(player, current_contest.responses)
 		if response in winners:
 			display.emphasise(true)
+	if len(winners) > 0:
+		._play_audio(contest_winner_audio)
 
 func _update_points():
 	var votes_per_player = {}
