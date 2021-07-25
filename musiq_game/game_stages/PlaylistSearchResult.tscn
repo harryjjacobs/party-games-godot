@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://core/textures/EmptyBackground.png" type="Texture" id=1]
 [ext_resource path="res://musiq_game/game_stages/PlaylistSearchResult.gd" type="Script" id=2]
+[ext_resource path="res://core/util/NetworkTextureRect.gd" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0338745, 0.232354, 0.289062, 1 )
@@ -33,7 +34,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+[node name="NetworkTextureRect" type="TextureRect" parent="HBoxContainer"]
 margin_right = 100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
@@ -41,6 +42,7 @@ size_flags_vertical = 3
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
+script = ExtResource( 3 )
 
 [node name="Spacer" type="Control" parent="HBoxContainer"]
 margin_left = 104.0

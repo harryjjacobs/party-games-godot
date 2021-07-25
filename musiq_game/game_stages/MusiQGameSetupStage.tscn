@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=1]
 [ext_resource path="res://core/textures/BlueBackground.png" type="Texture" id=2]
 [ext_resource path="res://musiq_game/ui/fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://musiq_game/ui/MusiQTheme.tres" type="Theme" id=4]
-[ext_resource path="res://musiq_game/game_stages/PlaylistItem.tscn" type="PackedScene" id=5]
 [ext_resource path="res://musiq_game/game_stages/MusiQGameSetupStage.gd" type="Script" id=6]
 [ext_resource path="res://core/ui/icons/search_icon_small.png" type="Texture" id=8]
 
@@ -44,7 +43,7 @@ valign = 1
 [node name="PlaylistsSearch" type="VBoxContainer" parent="SetupOptionsContainer" index="1"]
 margin_top = 146.0
 margin_right = 1820.0
-margin_bottom = 589.0
+margin_bottom = 836.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_constants/separation = 10
@@ -61,33 +60,29 @@ caret_blink = true
 [node name="SearchResultsScrollContainer" type="ScrollContainer" parent="SetupOptionsContainer/PlaylistsSearch" index="1"]
 margin_top = 76.0
 margin_right = 1820.0
-margin_bottom = 443.0
+margin_bottom = 690.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SearchResults" type="VBoxContainer" parent="SetupOptionsContainer/PlaylistsSearch/SearchResultsScrollContainer" index="0"]
 margin_right = 1820.0
-margin_bottom = 367.0
+margin_bottom = 614.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
 
 [node name="ChosenPlaylistsScrollContainer" type="ScrollContainer" parent="SetupOptionsContainer" index="2"]
-margin_top = 609.0
+margin_top = 856.0
 margin_right = 1820.0
-margin_bottom = 893.0
+margin_bottom = 856.0
 scroll_vertical_enabled = false
 
 [node name="ChosenPlaylistsContainer" type="HBoxContainer" parent="SetupOptionsContainer/ChosenPlaylistsScrollContainer" index="0"]
-margin_right = 284.0
-margin_bottom = 284.0
 size_flags_vertical = 3
 custom_constants/separation = 10
 
-[node name="PlaylistItem" parent="SetupOptionsContainer/ChosenPlaylistsScrollContainer/ChosenPlaylistsContainer" index="0" instance=ExtResource( 5 )]
-
 [node name="PlayButton" type="Button" parent="SetupOptionsContainer" index="3"]
-margin_top = 913.0
+margin_top = 876.0
 margin_right = 1820.0
 margin_bottom = 980.0
 size_flags_vertical = 3

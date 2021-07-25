@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using System.Collections.Generic;
-using Image = Godot.Image;
-using System.Linq;
+// using Image = Godot.Image;
 
 public class MusiQTrackPlayer : Godot.Object
 {
@@ -49,8 +48,8 @@ public class MusiQTrackPlayer : Godot.Object
 		{
 			if (!CheckAuth()) return new PlaylistAlbumSearch();
 			var result = (await _spotifyClient.Search.Item(new SearchRequest(SearchRequest.Types.Album | SearchRequest.Types.Playlist, query)));
-			var playlists = result.Playlists.Items.ConvertAll(this.PlaylistConverter) ?? new List<SimplePlaylist>();
-			var albums = result.Albums.Items.ConvertAll(this.SimpleAlbumConverter) ?? new List<Album>();
+			var playlists = result.Playlists.Items.ConvertAll(PlaylistConverter) ?? new List<SimplePlaylist>();
+			var albums = result.Albums.Items.ConvertAll(SimpleAlbumConverter) ?? new List<Album>();
 			return new PlaylistAlbumSearch()
 			{
 				Albums = albums,
@@ -165,23 +164,27 @@ public class MusiQTrackPlayer : Godot.Object
 		{
 			track.Id = fullTrack.Id;
 			track.Title = fullTrack.Name;
+			track.Artists = fullTrack.Artists.ConvertAll(a => a.Name);
 			track.DurationMs = fullTrack.DurationMs;
 		}
 		else if (playable is FullEpisode fullEpisode)
 		{
 			track.Id = fullEpisode.Id;
 			track.Title = fullEpisode.Name;
+			track.DurationMs = fullEpisode.DurationMs;
 		}
 		return track;
 	}
 
 	private Album SimpleAlbumConverter(SimpleAlbum simpleAlbum)
 	{
+		var images = simpleAlbum.Images.ConvertAll(ImageConverter);
 		return new Album()
 		{
 			Id = simpleAlbum.Id,
 			Title = simpleAlbum.Name,
 			Artists = simpleAlbum.Artists.ConvertAll(a => a.Name),
+			Image = images.Count == 0 ? null : images[0],
 		};
 	}
 
@@ -192,12 +195,14 @@ public class MusiQTrackPlayer : Godot.Object
 
 	private SimplePlaylist PlaylistConverter(SpotifyAPI.Web.SimplePlaylist simplePlaylist)
 	{
+		var images = simplePlaylist.Images.ConvertAll(ImageConverter);
+
 		var playlist = new SimplePlaylist()
 		{
 			Id = simplePlaylist.Id,
 			Title = simplePlaylist.Name,
-			Author = simplePlaylist.Owner.DisplayName
-			// Image = simplePlaylist.Images.ConvertAll(ImageConverter).FirstOrDefault(null),
+			Author = simplePlaylist.Owner.DisplayName,
+			Image = images.Count == 0 ? null : images[0],
 		};
 
 		return playlist;
@@ -247,7 +252,7 @@ public class MusiQTrackPlayer : Godot.Object
 	{
 		public string Id { get; set; }
 		public string Title { get; set; }
-		public string Artist { get; set; }
+		public List<string> Artists { get; set; }
 		public int DurationMs { get; set; }
 	}
 
@@ -255,6 +260,7 @@ public class MusiQTrackPlayer : Godot.Object
 	{
 		public string Id { get; set; }
 		public string Title { get; set; }
+		public Image Image { get; set; }
 		public List<string> Artists { get; set; } = new List<string>();
 	}
 

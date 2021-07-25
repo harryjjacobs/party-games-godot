@@ -9,6 +9,7 @@ const _MIN_PLAYLISTS = 1
 onready var _play_button = $SetupOptionsContainer/PlayButton
 onready var _playlist_search_edit = $SetupOptionsContainer/PlaylistsSearch/LineEdit
 onready var _search_results_container = $SetupOptionsContainer/PlaylistsSearch/SearchResultsScrollContainer/SearchResults
+onready var _chosen_playlists_container = $SetupOptionsContainer/ChosenPlaylistsScrollContainer/ChosenPlaylistsContainer
 
 var _track_player_auth_helper
 var _track_player
@@ -36,13 +37,18 @@ func exit():
 func _populate_playlist_search_results(results):
 	NodeUtils.remove_children(_search_results_container)
 	for result in results.Playlists + results.Albums:
+		yield(get_tree(), "idle_frame")
 		var item = PlayableSearchResult.instance()
 		_search_results_container.add_child(item)
 		item.init(result)
 		item.connect("pressed", self, "_on_search_result_pressed", [result])
 
 func _add_item_to_chosen_playlists(item):
-	pass
+	_selected_playlists.push_back(item)
+	var item_node = PlaylistItem.instance()
+	_chosen_playlists_container.add_child(item_node)
+	item_node.init(item)
+	item_node.connect("request_remove", self, "_on_remove_chosen_playlist", [item_node, item])
 
 func _check_play_button_enable():
 	var device_connection = yield(_track_player.CheckDeviceConnection(), "completed")
@@ -55,9 +61,13 @@ func _on_playlist_search_text_changed(text):
 	var results = yield(_track_player.SearchPlaylistsAndAlbums(text), "completed")
 	_populate_playlist_search_results(results)
 
-func _on_search_result_pressed():
+func _on_search_result_pressed(item):
 	_playlist_search_edit.text = ""
+	_add_item_to_chosen_playlists(item)
 
+func _on_remove_chosen_playlist(item_node, item):
+	_selected_playlists.erase(item)
+	item_node.queue_free()
 
 func _on_play_button_pressed():
 	pass
