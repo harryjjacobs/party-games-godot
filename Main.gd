@@ -13,7 +13,7 @@ const _GAME_NAMES = {
 }
 
 const _GAME_THEMES = {
-	Games.UNTITLED_MEME_GAME: preload("res://core/ui/MainTheme.tres"),
+	Games.UNTITLED_MEME_GAME: preload("res://meme_game/ui/MemeGameTheme.tres"),
 	Games.MUSIQ: preload("res://musiq_game/ui/MusiQTheme.tres")
 
 }

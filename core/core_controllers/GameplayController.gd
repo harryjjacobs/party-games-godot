@@ -65,8 +65,8 @@ func _end_current_game(preserve_room = false):
 	if _current_stage:
 		_current_stage.exit()
 		remove_child(_current_stage)
-		_current_stage = null
 		Log.info("Stage %s exited" % _current_stage.name)
+		_current_stage = null
 	if not preserve_room:
 		Log.debug("Disconnecting from server...")
 		NetworkInterface.disconnect_from_server()
