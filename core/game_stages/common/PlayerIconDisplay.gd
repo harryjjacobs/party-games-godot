@@ -17,8 +17,10 @@ export(float, 0.0, 1.0) var margin_y = 0.1
 export(float, 0.0, 10.0) var player_icon_scale = 1.0
 export(float, 0.0, 2.0) var max_ranking_label_scale = 1.0
 export(float, 0.0, 1.0) var min_ranking_label_scale = 0.5
+export(float, 0.0, 10.0) var icon_emphasis_scale = 1.4
 export(LayoutType) var type = LayoutType.RING
 export(int, 1, 10) var max_leaderboard_columns = 4
+export(int) var _editor_preview_icons setget _show_editor_preview_icons, _get_player_icon_count
 
 onready var _player_icon_container = $PlayerIconContainer
 onready var _ranking_label_container = $RankingLabelContainer
@@ -37,6 +39,14 @@ func _process(_delta):
 	if Engine.editor_hint:
 		_update_player_positions()
 
+func _show_editor_preview_icons(quantity):
+	if not Engine.editor_hint:
+		return
+	clear()
+	for i in range(0, quantity):
+		var player = Player.new("", i)
+		add_player(player)
+
 func add_player(player: Player, animate = true):
 	if player in _player_icon_lookup:
 		return
@@ -51,6 +61,7 @@ func add_player(player: Player, animate = true):
 		ranking_label.set_rank(_player_icon_container.get_child_count())
 		_ranking_label_container.add_child(ranking_label)
 	_update_player_positions()
+	return player_icon
 	
 func remove_player(player: Player, animate = true):
 	var player_icon = _player_icon_lookup.get(player)
@@ -107,9 +118,12 @@ func get_player_icon(player):
 func get_player_icons():
 	return _player_icon_container.get_children()
 
+func _get_player_icon_count():
+	return len(get_player_icons())
+	
 func _update_player_positions():
 	var i = 0
-	for player_icon in _player_icon_container.get_children():
+	for player_icon in get_player_icons():
 		var new_position = _calculate_player_position(player_icon)
 		player_icon.position = new_position
 		# update ranking label position and scale
@@ -163,3 +177,8 @@ func _calculate_player_position(player_icon: PlayerIcon):
 			if row_count > 1:
 				y = -((row_count - 1) * spacing_y) / 2 + spacing_y * row_index
 			return Vector2(x, y)
+
+func emphasise_and_center_player(player: Player):
+	var player_icon = _player_icon_lookup.get(player)
+	player_icon.tween_position_to(Vector2.ZERO)
+	yield(player_icon.tween_scale_to(icon_emphasis_scale), "completed")

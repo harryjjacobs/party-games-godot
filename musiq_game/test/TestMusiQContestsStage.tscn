@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://core/ui/UI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://musiq_game/test/TestMusiQContestsStage.gd" type="Script" id=2]
+[ext_resource path="res://musiq_game/game_stages/MusiQContestsStage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://core/test/MockGameServer.tscn" type="PackedScene" id=4]
+
+[node name="TestMusiQRoundContestsStage" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="MockGameServer" parent="." instance=ExtResource( 4 )]
+
+[node name="MusiQContestsStage" parent="." instance=ExtResource( 3 )]
+
+[node name="UI" parent="." instance=ExtResource( 1 )]

@@ -16,6 +16,8 @@ public class MusiQTrackPlayer : Godot.Object
 
 	public bool IsAuthorized { get; private set; } = false;
 
+	public string CurrentAccessToken { get; private set; }
+
 	private const string CLIENT_ID = "35e4b8f45cac4e6ebd25c503005e847e";
 	private const int PLAYBACK_TRANSFER_DELAY = 300;  // ms
 	private SpotifyClient _spotifyClient;
@@ -26,19 +28,41 @@ public class MusiQTrackPlayer : Godot.Object
 		return GenericFunctionStateTask.Create(async () =>
 		{
 			if (!CheckAuth() || !(await CheckDeviceConnectionAsync())) return false;
-			var track = await _spotifyClient.Tracks.Get(trackId);
-			return await _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest()
+
+			try
 			{
-				Uris = new[] { trackId }
-			});
+				var track = await _spotifyClient.Tracks.Get(trackId);
+
+				return await _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest()
+				{
+					Uris = new[] { track.Uri }
+				});
+			}
+			catch (APIException e)
+			{
+				GD.Print(e.ToString());
+				return false;
+			}
 		});
 	}
 
-	public FunctionStateTask Stop()
+	public GenericFunctionStateTask Stop()
 	{
-		return new FunctionStateTask(async () =>
+		return GenericFunctionStateTask.Create(async () =>
 		{
-			if (!CheckAuth() || !(await CheckDeviceConnectionAsync())) return;
+			if (!CheckAuth() || !(await CheckDeviceConnectionAsync())) return false;
+
+			return await _spotifyClient.Player.PausePlayback();
+		});
+	}
+
+	public GenericFunctionStateTask GetTrack(string trackId)
+	{
+		return GenericFunctionStateTask.Create(async () =>
+		{
+			if (!CheckAuth() || !(await CheckDeviceConnectionAsync())) return new Track();
+
+			return PlayableItemConverter(await _spotifyClient.Tracks.Get(trackId));
 		});
 	}
 
@@ -46,15 +70,38 @@ public class MusiQTrackPlayer : Godot.Object
 	{
 		return GenericFunctionStateTask.Create(async () =>
 		{
-			if (!CheckAuth()) return new PlaylistAlbumSearch();
+			if (!CheckAuth()) return new PlayableItemCollectionSearch();
 			var result = (await _spotifyClient.Search.Item(new SearchRequest(SearchRequest.Types.Album | SearchRequest.Types.Playlist, query)));
 			var playlists = result.Playlists.Items.ConvertAll(PlaylistConverter) ?? new List<SimplePlaylist>();
-			var albums = result.Albums.Items.ConvertAll(SimpleAlbumConverter) ?? new List<Album>();
-			return new PlaylistAlbumSearch()
+			var albums = result.Albums.Items.ConvertAll(SimpleAlbumConverter) ?? new List<SimpleAlbum>();
+			return new PlayableItemCollectionSearch()
 			{
 				Albums = albums,
 				Playlists = playlists,
 			};
+		});
+	}
+
+	public GenericFunctionStateTask FetchPlayableItemCollectionTracks(PlayableItemCollection collection)
+	{
+		return GenericFunctionStateTask.Create(async () =>
+		{
+			List<Track> tracks = new List<Track>();
+			if (!CheckAuth()) return tracks;
+
+			if (collection is SimplePlaylist)
+			{
+				var paginatedPlaylistTracks = await _spotifyClient.Playlists.GetItems(collection.Id);
+				var spotifyTrackList = new List<SpotifyAPI.Web.PlaylistTrack<SpotifyAPI.Web.IPlayableItem>>(await _spotifyClient.PaginateAll(paginatedPlaylistTracks));
+				tracks = spotifyTrackList.ConvertAll(PlaylistTrackConverter);
+			}
+			else if (collection is SimpleAlbum)
+			{
+				var paginatedTracks = await _spotifyClient.Albums.GetTracks(collection.Id);
+				var spotifyTrackList = new List<SpotifyAPI.Web.SimpleTrack>(await _spotifyClient.PaginateAll(paginatedTracks));
+				tracks = spotifyTrackList.ConvertAll(SimpleTrackConverter);
+			}
+			return tracks;
 		});
 	}
 
@@ -72,7 +119,9 @@ public class MusiQTrackPlayer : Godot.Object
 		return GenericFunctionStateTask.Create(async () =>
 		{
 			if (!CheckAuth()) return new List<Device>();
-			return (await _spotifyClient.Player.GetAvailableDevices()).Devices.ConvertAll(DeviceConverter);
+			var devices = (await _spotifyClient.Player.GetAvailableDevices()).Devices;
+			if (devices == null) return new List<Device>();
+			return devices.ConvertAll(DeviceConverter);
 		});
 
 	}
@@ -144,9 +193,17 @@ public class MusiQTrackPlayer : Godot.Object
 	private async Task OnImplicitGrantReceived(object sender, ImplictGrantResponse response)
 	{
 		await _authServer.Stop();
-		_spotifyClient = new SpotifyClient(response.AccessToken);
+		CurrentAccessToken = response.AccessToken;
+		_spotifyClient = new SpotifyClient(CurrentAccessToken);
 		IsAuthorized = true;
 		EmitSignal(nameof(authorization_succeeded));
+		await CheckDeviceConnectionAsync().ContinueWith((task) =>
+		{
+			if (task.Result)
+			{
+				EmitSignal(nameof(ready_to_play));
+			}
+		});
 	}
 
 	private async Task OnErrorReceived(object sender, string error, string state)
@@ -157,7 +214,7 @@ public class MusiQTrackPlayer : Godot.Object
 		EmitSignal(nameof(authorization_failed));
 	}
 
-	private Track PlayableItemConverter(IPlayableItem playable)
+	private Track PlayableItemConverter(SpotifyAPI.Web.IPlayableItem playable)
 	{
 		var track = new Track();
 		if (playable is FullTrack fullTrack)
@@ -166,20 +223,35 @@ public class MusiQTrackPlayer : Godot.Object
 			track.Title = fullTrack.Name;
 			track.Artists = fullTrack.Artists.ConvertAll(a => a.Name);
 			track.DurationMs = fullTrack.DurationMs;
+			var images = fullTrack.Album.Images.ConvertAll(ImageConverter);
+			track.Image = images.Count == 0 ? null : images[0];
 		}
 		else if (playable is FullEpisode fullEpisode)
 		{
 			track.Id = fullEpisode.Id;
 			track.Title = fullEpisode.Name;
 			track.DurationMs = fullEpisode.DurationMs;
+			var images = fullEpisode.Images.ConvertAll(ImageConverter);
+			track.Image = images.Count == 0 ? null : images[0];
 		}
 		return track;
 	}
 
-	private Album SimpleAlbumConverter(SimpleAlbum simpleAlbum)
+	private Track SimpleTrackConverter(SpotifyAPI.Web.SimpleTrack simpleTrack)
+	{
+		return new Track()
+		{
+			Id = simpleTrack.Id,
+			Title = simpleTrack.Name,
+			Artists = simpleTrack.Artists.ConvertAll(a => a.Name),
+			DurationMs = simpleTrack.DurationMs,
+		};
+	}
+
+	private SimpleAlbum SimpleAlbumConverter(SpotifyAPI.Web.SimpleAlbum simpleAlbum)
 	{
 		var images = simpleAlbum.Images.ConvertAll(ImageConverter);
-		return new Album()
+		return new SimpleAlbum()
 		{
 			Id = simpleAlbum.Id,
 			Title = simpleAlbum.Name,
@@ -229,9 +301,9 @@ public class MusiQTrackPlayer : Godot.Object
 		return device;
 	}
 
-	public class PlaylistAlbumSearch : Godot.Object
+	public class PlayableItemCollectionSearch : Godot.Object
 	{
-		public List<Album> Albums { get; set; } = new List<Album>();
+		public List<SimpleAlbum> Albums { get; set; } = new List<SimpleAlbum>();
 		public List<SimplePlaylist> Playlists { get; set; } = new List<SimplePlaylist>();
 	}
 
@@ -254,21 +326,26 @@ public class MusiQTrackPlayer : Godot.Object
 		public string Title { get; set; }
 		public List<string> Artists { get; set; }
 		public int DurationMs { get; set; }
+		public Image Image { get; set; }
 	}
 
-	public class Album : Godot.Object
+	public abstract class PlayableItemCollection : Godot.Object
 	{
 		public string Id { get; set; }
 		public string Title { get; set; }
-		public Image Image { get; set; }
+		public Image Image
+		{
+			get; set;
+		}
+	}
+
+	public class SimpleAlbum : PlayableItemCollection
+	{
 		public List<string> Artists { get; set; } = new List<string>();
 	}
 
-	public class SimplePlaylist : Godot.Object
+	public class SimplePlaylist : PlayableItemCollection
 	{
-		public string Id { get; set; }
-		public string Title { get; set; }
 		public string Author { get; set; }
-		public Image Image { get; set; }
 	}
 }

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/correct_answer_ding.mp3-70fc2fc997f8483b25e4fa5a795f8d70.mp3str"
+
+[deps]
+
+source_file="res://musiq_game/audio/correct_answer_ding.mp3"
+dest_files=[ "res://.import/correct_answer_ding.mp3-70fc2fc997f8483b25e4fa5a795f8d70.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

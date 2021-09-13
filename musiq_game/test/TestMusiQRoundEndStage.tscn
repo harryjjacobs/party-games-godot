@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://musiq_game/game_stages/MusiQRoundEndStage.tscn" type="PackedScene" id=1]
+[ext_resource path="res://musiq_game/test/TestMusiQRoundEndStage.gd" type="Script" id=2]
+
+[node name="TestMusiQRoundEndStage" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="MusiQRoundEndStage" parent="." instance=ExtResource( 1 )]

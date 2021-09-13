@@ -2,7 +2,7 @@
 
 [ext_resource path="res://meme_game/game_stages/themed_memes/ThemedMemePromptRequestsStage.tscn" type="PackedScene" id=1]
 [ext_resource path="res://meme_game/test/TestThemedMemePromptRequestsStage.gd" type="Script" id=2]
-[ext_resource path="res://meme_game/test/MockMemeGameServer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://core/test/MockGameServer.tscn" type="PackedScene" id=3]
 
 [node name="TestMemePromptRequestsStage" type="Node2D"]
 script = ExtResource( 2 )

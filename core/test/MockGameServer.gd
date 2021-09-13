@@ -46,5 +46,10 @@ func _process(_delta):
 		# Data transfer, and signals emission will only happen when calling this function.
 		_server.poll()
 
+func configure_network_interface_to_use_mocked_server():
+	NetworkInterface.reconnect = false
+	NetworkInterface.hosts_endpoint_url = 'ws://localhost:%d' % PORT
+	NetworkInterface.connect_to_server()
+
 func send_message(conn_id, message):
 	_server.get_peer(conn_id).put_packet(JSON.print(message).to_utf8())

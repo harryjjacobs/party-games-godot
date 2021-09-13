@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://core/game_stages/RoundBeginStage.tscn" type="PackedScene" id=1]
+[ext_resource path="res://musiq_game/ui/textures/MusiQBackground.png" type="Texture" id=2]
+[ext_resource path="res://musiq_game/game_stages/MusiQALLVALLRoundBeginStage.gd" type="Script" id=3]
+[ext_resource path="res://musiq_game/ui/fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 300
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = ExtResource( 4 )
+
+[node name="MusiQALLVALLRoundBeginStage" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="Background" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="Title" type="Label" parent="." index="3"]
+margin_right = 1918.0
+margin_bottom = 1081.0
+custom_fonts/font = SubResource( 1 )
+text = "Round 1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Subtitle" type="Label" parent="." index="4"]
+margin_top = 680.0
+margin_right = 1918.0
+margin_bottom = 740.0
+custom_fonts/font = SubResource( 2 )
+text = "ALL V ALL"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

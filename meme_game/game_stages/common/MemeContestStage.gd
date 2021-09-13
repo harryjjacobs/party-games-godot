@@ -62,10 +62,7 @@ func _show_contest_response_displays():
 			display.open(player, current_contest.meme_template, response.captions)
 		else:
 			display.open(player, current_contest.meme_template)
-		# TODO - _save_meme_to_disk is very performance intensive as it creates an entirely new meme renderer
-		# try to optimise - or save the meme in between contests
-		#_save_meme_to_disk(display.meme_renderer, player)
-
+			
 func _hide_all_contest_response_displays():
 	for display in _contest_response_displays:
 		display.close()
@@ -99,7 +96,7 @@ func _update_points():
 			votes_per_player[vote.choice.player] = 0
 		votes_per_player[vote.choice.player] += 1
 	for player in votes_per_player:
-		var points_group = len(_parameters.round_history)
+		var points_group = str(len(_parameters.round_history))
 		player.update_points(votes_per_player[player], points_group)
 	for i in len(current_contest.players):
 		var player = current_contest.players[i]
@@ -125,7 +122,7 @@ func _get_winning_responses():
 func _voting_process():
 	yield(get_tree(), "idle_frame")	# so that this function can be yielded
 	Log.info("[%s] Voting begin" % name)
-	if len(current_contest.responses) == 1:
+	if len(current_contest.responses) == 1:	# TODO: also check case where all responses are empty
 		# only one response received. default everyone's votes to this response
 		for player in Room.players:
 			if player in current_contest.players:
@@ -214,11 +211,3 @@ func _find_response_by_player(player, responses):
 		if response.player == player:
 			return response
 	return null
-
-func _save_meme_to_disk(meme_renderer, player):
-	# save meme to disk
-	var path = "user://saved_memes"
-	FileUtils.open_user_dir(path, true)
-	var img = yield(meme_renderer.capture(), "completed")
-	var filename = player.username + "_" + Time.formatted_timestamp() + ".png"
-	img.save_png(path + "/" + filename)

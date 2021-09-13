@@ -15,8 +15,9 @@ const _GAME_NAMES = {
 const _GAME_THEMES = {
 	Games.UNTITLED_MEME_GAME: preload("res://meme_game/ui/MemeGameTheme.tres"),
 	Games.MUSIQ: preload("res://musiq_game/ui/MusiQTheme.tres")
-
 }
+
+const _MAIN_THEME = preload("res://core/ui/MainTheme.tres")
 
 onready var _main_menu = $MainMenu
 onready var _in_game_ui = $CanvasLayer/UI
@@ -52,6 +53,7 @@ func _on_menu_request_exit():
 func _on_request_main_menu():
 	_main_menu.visible = true
 	_in_game_ui.visible = false
+	_in_game_ui.theme = _MAIN_THEME
 	if active_game:
 		active_game.queue_free()
 	Events.emit_signal("game_stopped")

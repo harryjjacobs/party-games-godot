@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/BlueBackground.png-6f8764f442337a9ff52420026f436d0f.stex"
+path="res://.import/tick.png-0a8a577c47afc71b1cf7ac2453fd0f6f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://core/textures/BlueBackground.png"
-dest_files=[ "res://.import/BlueBackground.png-6f8764f442337a9ff52420026f436d0f.stex" ]
+source_file="res://musiq_game/ui/textures/tick.png"
+dest_files=[ "res://.import/tick.png-0a8a577c47afc71b1cf7ac2453fd0f6f.stex" ]
 
 [params]
 

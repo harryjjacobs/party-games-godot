@@ -1,7 +1,7 @@
 extends Node
 
 onready var meme_contest_stage = $MemeContestStage
-onready var mock_server = $MockMemeGameServer
+onready var mock_server = $MockGameServer
 
 export(Resource) var meme_template
 
@@ -13,11 +13,7 @@ var _exit_requested = false
 func _ready():
 	_default_contest_image = load("res://meme_game/meme/textures/Change-My-Mind.jpg")
 	mock_server.connect("message_received", self, "_server_message_handler")
-	yield(get_tree().create_timer(0.1), "timeout")
-	NetworkInterface.reconnect = false
-	NetworkInterface.hosts_endpoint_url = 'ws://localhost:%d' % mock_server.PORT
-	NetworkInterface.connect_to_server()
-	yield(get_tree().create_timer(1.0), "timeout")
+	mock_server.configure_network_interface_to_use_mocked_server()
 	var player_a = Player.new("0000-0000", "Player a")
 	var player_b = Player.new("1111-1111", "Player b")
 	var player_c = Player.new("2222-2222", "Player c")

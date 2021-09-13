@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://core/ui/MenuButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://core/ui/fonts/AnnieUseYourTelescope-Regular.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://core/ui/MainMenu.gd" type="Script" id=4]
 [ext_resource path="res://core/ui/dialogs/DefaultConfirmationDialog.tscn" type="PackedScene" id=5]
 [ext_resource path="res://core/ui/dialogs/GameSelectionDialog.tscn" type="PackedScene" id=6]
+[ext_resource path="res://core/textures/crab.png" type="Texture" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 200
@@ -68,6 +69,11 @@ margin_left = -457.0
 margin_top = -261.0
 margin_right = 457.0
 margin_bottom = 261.0
+
+[node name="crab" type="Sprite" parent="."]
+position = Vector2( 1570.53, 818.62 )
+scale = Vector2( 0.662019, 0.662019 )
+texture = ExtResource( 7 )
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]

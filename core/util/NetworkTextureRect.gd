@@ -1,5 +1,5 @@
 extends TextureRect
-class_name NetworkUtils
+class_name NetworkTextureRect
 
 var _http_request
 var _url

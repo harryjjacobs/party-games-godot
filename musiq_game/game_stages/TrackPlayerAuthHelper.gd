@@ -4,9 +4,9 @@ class_name MusiQPlayerAuthHelper
 const _authorization_dialog = preload("res://core/ui/dialogs/DefaultConfirmationDialog.tscn")
 const _device_selection_dialog = preload("res://musiq_game/ui/dialogs/MusiQPlayerDeviceSelectionDialog.tscn")
 
-signal ready_to_play
-
 var _musiq_player
+
+var _handling_device_connection
 
 func _init(musiq_player):
 	_musiq_player = musiq_player
@@ -31,6 +31,9 @@ func _on_track_player_authorization_succeeded():
 	_musiq_player.CheckDeviceConnection()
 
 func _on_requires_device_connection():
+	if _handling_device_connection:
+		return
+	_handling_device_connection = true
 	print("Searching for available devices...")
 	var devices = yield(_musiq_player.GetAvailableDevicesForConnection(), "completed")
 	var dialog = _device_selection_dialog.instance()
@@ -41,8 +44,10 @@ func _on_requires_device_connection():
 	if result:
 		var connected = yield(_musiq_player.PerformDeviceConnection(result.Id), "completed")
 		if not connected:
+			_handling_device_connection = false
 			_musiq_player.CheckDeviceConnection()
 	else:
+		_handling_device_connection = false
 		Events.emit_signal("request_main_menu")
 
 func _on_device_selection_dialog_request_refresh(dialog):

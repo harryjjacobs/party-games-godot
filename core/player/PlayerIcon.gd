@@ -1,3 +1,4 @@
+tool
 extends Node2D
 class_name PlayerIcon
 
@@ -38,6 +39,13 @@ func tween_position_to(new_position: Vector2):
 		position, new_position, 1.0 / position_movement_speed,
 		Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	var _err = tween.start()
+	yield(tween, "tween_completed")
+
+func tween_scale_to(new_scale: float):
+	var _err = tween.interpolate_property(self, "scale",
+		scale, Vector2.ONE * new_scale, 1.0 / position_movement_speed,
+		Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	_err = tween.start()
 	yield(tween, "tween_completed")
 
 func _animate_entry():
