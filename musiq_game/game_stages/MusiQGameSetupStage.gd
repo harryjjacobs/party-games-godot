@@ -89,6 +89,7 @@ func _on_remove_chosen_playlist(item_node, item):
 
 func _on_play_button_pressed():
 	var contest_builder = MusiQContestBuilder.new(_selected_playlists, _track_player)
+	yield(contest_builder, "initialized")
 	emit_signal("request_exit", {
 		"round_generator": MusiQRoundGenerator.new(contest_builder, _game_duration_profile),
 		"current_round": null,
