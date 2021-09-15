@@ -46,7 +46,25 @@ public class MusiQTrackPlayer : Godot.Object
 		});
 	}
 
-	public GenericFunctionStateTask Stop()
+	public GenericFunctionStateTask Resume()
+	{
+		return GenericFunctionStateTask.Create(async () =>
+		{
+			if (!CheckAuth() || !(await CheckDeviceConnectionAsync())) return false;
+
+			try
+			{
+				return await _spotifyClient.Player.ResumePlayback();
+			}
+			catch (APIException e)
+			{
+				GD.Print(e.ToString());
+				return false;
+			}
+		});
+	}
+
+	public GenericFunctionStateTask Pause()
 	{
 		return GenericFunctionStateTask.Create(async () =>
 		{
@@ -134,7 +152,7 @@ public class MusiQTrackPlayer : Godot.Object
 			await Task.Delay(PLAYBACK_TRANSFER_DELAY);
 			if (success)
 			{
-				EmitSignal(nameof(ready_to_play));
+				CallDeferred("emit_signal", nameof(ready_to_play));
 			}
 			return success;
 		});
@@ -186,7 +204,7 @@ public class MusiQTrackPlayer : Godot.Object
 				return true;
 			}
 		}
-		EmitSignal(nameof(requires_device_connection));
+		CallDeferred("emit_signal", nameof(requires_device_connection));
 		return false;
 	}
 
@@ -196,12 +214,12 @@ public class MusiQTrackPlayer : Godot.Object
 		CurrentAccessToken = response.AccessToken;
 		_spotifyClient = new SpotifyClient(CurrentAccessToken);
 		IsAuthorized = true;
-		EmitSignal(nameof(authorization_succeeded));
+		CallDeferred("emit_signal", nameof(authorization_succeeded));
 		await CheckDeviceConnectionAsync().ContinueWith((task) =>
 		{
 			if (task.Result)
 			{
-				EmitSignal(nameof(ready_to_play));
+				CallDeferred("emit_signal", nameof(ready_to_play));
 			}
 		});
 	}
@@ -211,7 +229,7 @@ public class MusiQTrackPlayer : Godot.Object
 		Console.WriteLine($"Aborting authorization, error received: {error}");
 		IsAuthorized = false;
 		await _authServer.Stop();
-		EmitSignal(nameof(authorization_failed));
+		CallDeferred("emit_signal", nameof(authorization_failed));
 	}
 
 	private Track PlayableItemConverter(SpotifyAPI.Web.IPlayableItem playable)
