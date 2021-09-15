@@ -9,6 +9,8 @@ var _playlist_tracks = {}
 var _used_tracks = []
 
 func _init(playlists, track_player):
+	if len(playlists) == 0:
+		push_error("playlists is empty")
 	_track_player = track_player
 	_playlists = playlists.duplicate()
 	for playlist in _playlists:

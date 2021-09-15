@@ -27,10 +27,6 @@ font_data = ExtResource( 3 )
 script = ExtResource( 6 )
 
 [node name="Background" parent="." index="0"]
-margin_left = -1.5874
-margin_top = 4.76221
-margin_right = 1918.41
-margin_bottom = 1084.76
 texture = ExtResource( 2 )
 
 [node name="SetupOptionsContainer" type="VBoxContainer" parent="." index="3"]

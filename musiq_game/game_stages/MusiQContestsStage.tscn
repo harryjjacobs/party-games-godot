@@ -28,3 +28,7 @@ icon_emphasis_scale = 1.1
 type = 0
 
 [node name="CountdownDisplay" parent="." index="6" instance=ExtResource( 7 )]
+margin_left = 44.0
+margin_top = 28.0
+margin_right = 365.0
+margin_bottom = 176.0
