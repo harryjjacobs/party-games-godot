@@ -28,6 +28,8 @@ func request_qr_code(data, size = 512):
 	return false
 
 func _http_request_completed(result, response_code, _headers, body):
+	if not is_inside_tree():
+		return
 	if result != HTTPRequest.RESULT_SUCCESS:
 		Log.warn("request_qr_code http request failed: %s" % result)
 		emit_signal("request_completed", null)
