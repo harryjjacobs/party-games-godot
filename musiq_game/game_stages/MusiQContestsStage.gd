@@ -15,11 +15,14 @@ onready var _countdown_display = $CountdownDisplay
 
 var _current_contest
 var _accepting_guesses
+var _is_currently_playing_track
 
 func enter(params):
 	.enter(params)
 	var _err = _contest_timeout_timer.connect("timeout", self, "_on_contest_timeout")
 	NetworkInterface.on_player(Message.PROMPT_RESPONSE, self, "_on_player_prompt_response")
+	_err = Events.connect("game_paused", self, "_on_game_paused")
+	_err = Events.connect("game_resumed", self, "_on_game_resumed")
 	for contest in params.current_round.contests:
 		yield(_do_contest(contest), "completed")
 	print("finished all contests in this round. exiting")
@@ -72,6 +75,7 @@ func _do_contest(contest):
 func _play_track(track):
 	var success = yield(_parameters.track_player.Play(track.Id), "completed")
 	_song_playing_spinning_indicator.spin(success)
+	_is_currently_playing_track = success
 	if success:
 		print("Playing track: " + track.Id)
 	else:
@@ -79,8 +83,16 @@ func _play_track(track):
 
 func _stop_track():
 	print("Stopping track")
-	_parameters.track_player.Stop()
+	_parameters.track_player.Pause()
 	_song_playing_spinning_indicator.spin(false)
+	_is_currently_playing_track = false
+
+func _on_game_paused():
+	_parameters.track_player.Pause()
+
+func _on_game_resumed():
+	if _is_currently_playing_track:
+		_parameters.track_player.Resume()
 
 func _on_player_prompt_response(client_id, message):
 	if not _accepting_guesses:
@@ -133,6 +145,10 @@ func is_same_track(track_a, track_b):
 	if not track_a or not track_b:
 		return false
 	if FUZZY_SONG_MATCHING:
-		return track_a.Title == track_b.Title and PoolStringArray(track_a.Artists).join(",") == PoolStringArray(track_b.Artists).join(",")
+		var track_a_artists = PoolStringArray(track_a.Artists).join(",")
+		var track_b_artists = PoolStringArray(track_b.Artists).join(",")
+		print("Fuzzy song comparison: " + track_a.Title + " == " + track_b.Title + " && " + track_a_artists + " == " + track_b_artists)
+		return track_a.Title.to_upper().strip_edges() == track_b.Title.to_upper().strip_edges() and \
+						track_a_artists.to_upper() == track_b_artists.to_upper()
 	else:
 		return track_a.Id == track_b.Id

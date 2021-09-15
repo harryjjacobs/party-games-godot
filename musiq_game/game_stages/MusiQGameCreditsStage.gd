@@ -3,21 +3,25 @@ extends "res://core/game_stages/common/GameStage.gd"
 onready var _song_playing_spinner = $SongPlayingSpinner
 onready var _song_display = $MusiQContestSongDisplay
 
+const TRACK_PREVIEW_TIME = 15
+
 func enter(params):
 	.enter(params)
 	_song_display.visible = false
+	var _err = Events.connect("game_paused", self, "_on_game_paused")
+	_err = Events.connect("game_resumed", self, "_on_game_resumed")
 	_play_song_previews()
 
 func exit():
 	.exit()
-	_parameters.track_player.Stop()
+	_parameters.track_player.Pause()
 
 func _play_song_previews():
 	while is_inside_tree():
 		for r in _parameters.round_history:
 			for contest in r.contests:
 				yield(_play_track(contest.track), "completed")
-				yield(get_tree().create_timer(10), "timeout")
+				yield(get_tree().create_timer(TRACK_PREVIEW_TIME), "timeout")
 				yield(_stop_track(), "completed")
 
 func _play_track(track):
@@ -32,9 +36,16 @@ func _play_track(track):
 
 func _stop_track():
 	print("Stopping track")
-	yield(_parameters.track_player.Stop(), "completed")
+	yield(_parameters.track_player.Pause(), "completed")
 	_song_playing_spinner.spin(false)
 	_song_display.visible = false
+
+func _on_game_paused():
+	# TODO: check if track is actually playing using API
+	_parameters.track_player.Pause()
+
+func _on_game_resumed():
+	_parameters.track_player.Resume()
 
 func _on_play_again_button_pressed():
 	Events.emit_signal("request_restart", false)
