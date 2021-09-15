@@ -1,0 +1,176 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://core/player/PlayerIcon.gd" type="Script" id=1]
+[ext_resource path="res://meme_game/audio/pop_1.wav" type="AudioStream" id=2]
+[ext_resource path="res://core/ui/icons/music_on.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://core/ui/fonts/Montserrat-Black.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 100
+outline_size = 10
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = SubResource( 2 )
+
+[sub_resource type="Animation" id=6]
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.26, 0.34 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.7, 0.7 ), Vector2( 0.5, 0.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AudioStreamPlayer:stream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 0.287175 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.06 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=7]
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.058261, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.7, 0.7 ), Vector2( 1, 1 ), Vector2( 0, 0 ) ]
+}
+
+[node name="PlayerIcon" type="Node2D"]
+position = Vector2( -4.03963, 4.24479 )
+script = ExtResource( 1 )
+animate_entry = true
+
+[node name="PlayerSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 4.80456, -25.3418 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 1 )
+
+[node name="PointsLabel" type="Label" parent="."]
+anchor_bottom = 1.0
+margin_left = -227.0
+margin_top = -143.5
+margin_right = 223.0
+margin_bottom = -81.5
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 225, 22 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
+text = "0 Pts"
+align = 1
+valign = 1
+clip_text = true
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerNameLabel" type="Label" parent="."]
+anchor_bottom = 1.0
+margin_left = -227.0
+margin_top = 41.0
+margin_right = 223.0
+margin_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 225, 22 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
+text = "PLAYER NAME 123"
+align = 1
+valign = 1
+clip_text = true
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PointChangeLabel" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -90.0
+margin_top = -43.0
+margin_right = 68.0
+margin_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_rotation = 337.938
+rect_pivot_offset = Vector2( 90, 20 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "+5"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+method_call_mode = 1
+anims/IconEntrance = SubResource( 6 )
+anims/IconExit = SubResource( 7 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )

@@ -9,7 +9,7 @@ func _ready():
 		Player.new("2", "Player 3")
 	]
 	var params = {
-		"round_generator": RoundGenerator.new(players, $MemeContestBuilder),
+		"round_generator": MemeRoundGenerator.new(players, $MemeContestBuilder),
 		"current_round": null,
 		"round_history": Array(),
 	}

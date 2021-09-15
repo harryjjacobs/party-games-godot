@@ -12,16 +12,16 @@ func _ready():
 		Player.new("4", "Player 5"),
 	]
 	# points awarded in first round
-	players[0].update_points(50, 0)
-	players[1].update_points(72, 0)
-	players[2].update_points(50, 0)
-	players[3].update_points(50, 0)
-	players[4].update_points(60, 0)
+	players[0].update_points(50, "0")
+	players[1].update_points(72, "0")
+	players[2].update_points(50, "0")
+	players[3].update_points(50, "0")
+	players[4].update_points(60, "0")
 	# points awarded in second round
-	players[0].update_points(20, 1)
-	players[2].update_points(50, 1)
-	players[3].update_points(40, 1)
-	players[4].update_points(90, 1)
+	players[0].update_points(20, "1")
+	players[2].update_points(50, "1")
+	players[3].update_points(40, "1")
+	players[4].update_points(90, "1")
 	Room.players = players
 	var params = {
 		"round_generator": null,

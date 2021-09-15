@@ -7,6 +7,7 @@ position = Vector2( 966.163, 546.612 )
 script = ExtResource( 1 )
 margin_x = 0.0
 margin_y = 0.0
+icon_emphasis_scale = 1.2
 type = 2
 
 [node name="RankingLabelContainer" type="Node2D" parent="."]

@@ -48,6 +48,7 @@ func _on_room_created(code):
 	var url = NetworkInterface.get_player_client_url()
 	join_info_label.text = "Go to %s\nEnter code %s to join" % [url, code]
 	var _err = Events.connect("player_joined_room", self, "_on_player_joined_room")
+	url += "?room=" + code
 	_generate_qr_code(url)
 
 func _on_player_joined_room(player):
@@ -72,4 +73,4 @@ func _on_player_joined_room(player):
 func _on_prompt_response(_client_id, message):
 	if message.data.id == _begin_game_prompt_id:
 		NetworkInterface.send_player(_client_id, Message.create(Message.HIDE_PROMPT, {}))
-		emit_signal("request_exit", {})
+		emit_signal("request_exit", _parameters)

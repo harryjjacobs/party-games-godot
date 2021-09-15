@@ -6,3 +6,7 @@ func init(_gameplay_controller):
 
 func build_stages() -> Array:
 	return Array()
+
+
+func build_background_music():
+	pass

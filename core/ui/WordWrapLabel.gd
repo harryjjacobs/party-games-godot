@@ -190,7 +190,7 @@ func _notification(p_what: int):
 				Align.ALIGN_LEFT:
 					x_ofs = style.get_offset().x
 				Align.ALIGN_CENTER:
-					x_ofs = int(size.x - (taken + spaces * space_w)) / 2
+					x_ofs = int(size.x - (taken + spaces * space_w)) / 2.0
 				Align.ALIGN_RIGHT:
 					x_ofs = int(size.x - style.get_margin(MARGIN_RIGHT) - (taken + spaces * space_w))
 

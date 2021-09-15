@@ -24,6 +24,8 @@ const _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES = [
 ]
 
 export var reconnect = true
+# use production server even in debug build
+export var force_production_server = false
 
 onready var _reconnection_timer = $ReconnectionTimer
 var hosts_endpoint_url
@@ -181,7 +183,7 @@ func _funcref_wrapper(target: Object, method: String):
 	}
 
 func _get_server_endpoint_url(name):
-	if OS.is_debug_build():
+	if OS.is_debug_build() and not force_production_server:
 		return PoolStringArray(['ws://' + DEVELOPMENT_SERVER_URL, name]).join("/")
 	else:
 		return PoolStringArray(['wss://' + PRODUCTION_SERVER_URL, name]).join("/")

@@ -5,7 +5,7 @@
 [ext_resource path="res://meme_game/meme/MemeRenderer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://core/ui/fonts/AnnieUseYourTelescope-Regular.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://core/ui/MenuButton.tscn" type="PackedScene" id=5]
-[ext_resource path="res://meme_game/ui/theme.tres" type="Theme" id=6]
+[ext_resource path="res://core/ui/MainTheme.tres" type="Theme" id=6]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -55,7 +55,7 @@ __meta__ = {
 
 [node name="MemeRendererContainer" type="VBoxContainer" parent="HBoxContainer" index="0"]
 material = SubResource( 2 )
-margin_right = 1310.0
+margin_right = 1263.0
 margin_bottom = 980.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -65,7 +65,7 @@ size_flags_stretch_ratio = 2.0
 anchor_top = 0.0
 anchor_bottom = 0.0
 margin_top = 0.0
-margin_right = 1310.0
+margin_right = 1263.0
 margin_bottom = 813.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -73,7 +73,7 @@ size_flags_stretch_ratio = 10.0
 
 [node name="MemeInformationPanel" type="VBoxContainer" parent="HBoxContainer/MemeRendererContainer" index="1"]
 margin_top = 817.0
-margin_right = 1310.0
+margin_right = 1263.0
 margin_bottom = 980.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -81,7 +81,7 @@ size_flags_stretch_ratio = 2.0
 
 [node name="PlayerNameLabel" type="Label" parent="HBoxContainer/MemeRendererContainer/MemeInformationPanel" index="0"]
 margin_top = 9.0
-margin_right = 1310.0
+margin_right = 1263.0
 margin_bottom = 153.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -91,48 +91,48 @@ align = 1
 valign = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" index="1"]
-margin_left = 1340.0
+margin_left = 1293.0
 margin_right = 1820.0
 margin_bottom = 980.0
 
 [node name="CreditsContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" index="0"]
-margin_right = 480.0
-margin_bottom = 801.0
+margin_right = 527.0
+margin_bottom = 753.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 alignment = 1
 
 [node name="Title" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="0"]
-margin_top = 288.0
-margin_right = 480.0
-margin_bottom = 389.0
+margin_top = 264.0
+margin_right = 527.0
+margin_bottom = 365.0
 custom_fonts/font = SubResource( 4 )
 text = "A Jabobs Production"
 align = 1
 valign = 1
 
 [node name="Credits1" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="1"]
-margin_top = 393.0
-margin_right = 480.0
-margin_bottom = 451.0
+margin_top = 369.0
+margin_right = 527.0
+margin_bottom = 427.0
 custom_fonts/font = SubResource( 5 )
 text = "Design: Harry Jacobs"
 align = 1
 valign = 1
 
 [node name="Credits2" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="2"]
-margin_top = 455.0
-margin_right = 480.0
-margin_bottom = 513.0
+margin_top = 431.0
+margin_right = 527.0
+margin_bottom = 489.0
 custom_fonts/font = SubResource( 5 )
 text = "Programming: Harry Jacobs"
 align = 1
 valign = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" index="1"]
-margin_top = 805.0
-margin_right = 480.0
+margin_top = 757.0
+margin_right = 527.0
 margin_bottom = 980.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -146,8 +146,8 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 480.0
-margin_bottom = 45.0
+margin_right = 527.0
+margin_bottom = 61.0
 text = "Play again with the same players?"
 
 [node name="PlayAgainButton" parent="HBoxContainer/VBoxContainer/VBoxContainer" index="1" instance=ExtResource( 5 )]
@@ -156,9 +156,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 65.0
-margin_right = 480.0
-margin_bottom = 110.0
+margin_top = 81.0
+margin_right = 527.0
+margin_bottom = 142.0
 text = "Start a new game of Untitled Meme Game?"
 
 [node name="ExitToMainMenuButton" parent="HBoxContainer/VBoxContainer/VBoxContainer" index="2" instance=ExtResource( 5 )]
@@ -167,9 +167,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 130.0
-margin_right = 480.0
-margin_bottom = 175.0
+margin_top = 162.0
+margin_right = 527.0
+margin_bottom = 223.0
 text = "Exit"
 
 [node name="Tween" type="Tween" parent="." index="4"]

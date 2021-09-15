@@ -5,7 +5,7 @@
 [ext_resource path="res://meme_game/contest/MemeContestResponseBubble.gd" type="Script" id=3]
 [ext_resource path="res://meme_game/contest/VotesContainer.gd" type="Script" id=4]
 [ext_resource path="res://core/ui/icons/help.png" type="Texture" id=5]
-[ext_resource path="res://meme_game/player/PlayerIcon.tscn" type="PackedScene" id=6]
+[ext_resource path="res://core/player/PlayerIcon.tscn" type="PackedScene" id=6]
 [ext_resource path="res://core/ui/icons/cross.png" type="Texture" id=7]
 [ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=8]
 

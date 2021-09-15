@@ -1,0 +1,208 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://musiq_game/ui/fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://musiq_game/ui/textures/cross.png" type="Texture" id=2]
+[ext_resource path="res://core/textures/EmptyBackground.png" type="Texture" id=3]
+[ext_resource path="res://core/util/NetworkTextureRect.gd" type="Script" id=4]
+[ext_resource path="res://musiq_game/ui/textures/speech_bubble.png" type="Texture" id=5]
+[ext_resource path="res://musiq_game/contest/MusiQContestSongGuess.gd" type="Script" id=6]
+[ext_resource path="res://musiq_game/ui/textures/tick.png" type="Texture" id=7]
+[ext_resource path="res://musiq_game/audio/correct_answer_ding.mp3" type="AudioStream" id=8]
+[ext_resource path="res://musiq_game/audio/incorrect_answer_buzzer.mp3" type="AudioStream" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 25
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "CorrectAnswer"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CorrectSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CorrectSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.7893, 0.760037 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AudioStreamPlayer:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 8 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AudioStreamPlayer:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "IncorrectAnswer"
+tracks/0/type = "value"
+tracks/0/path = NodePath("IncorrectSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.149768 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.7893, 0.760037 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AudioStreamPlayer:stream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.00688553, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[node name="MusiQContestSongGuess" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = -279.0
+margin_top = -139.0
+margin_right = 281.0
+margin_bottom = -39.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 18.0
+margin_top = 9.0
+margin_right = -18.0
+margin_bottom = -16.0
+size_flags_horizontal = 3
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NetworkTextureRect" type="TextureRect" parent="Panel/HBoxContainer"]
+margin_right = 87.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_left = 87.0
+margin_right = 524.0
+margin_bottom = 59.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+size_flags_stretch_ratio = 5.0
+
+[node name="SongGuessTitleLabel" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_right = 437.0
+margin_bottom = 31.0
+custom_fonts/font = SubResource( 2 )
+text = "Never Gonna Give You Up"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SongGuessArtistsLabel" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_top = 35.0
+margin_right = 437.0
+margin_bottom = 59.0
+custom_fonts/font = SubResource( 3 )
+text = "Rick Astley"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CorrectSprite" type="Sprite" parent="."]
+position = Vector2( 155.328, -110.429 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 7 )
+
+[node name="IncorrectSprite" type="Sprite" parent="."]
+position = Vector2( 148.032, -93.0305 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/CorrectAnswer = SubResource( 4 )
+anims/IncorrectAnswer = SubResource( 5 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+bus = "Stage"

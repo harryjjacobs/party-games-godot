@@ -1,0 +1,118 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=1]
+[ext_resource path="res://musiq_game/game_stages/MusiQGameCreditsStage.gd" type="Script" id=2]
+[ext_resource path="res://musiq_game/game_stages/SongPlayingSpinner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://musiq_game/contest/MusiQContestSongGuess.tscn" type="PackedScene" id=4]
+[ext_resource path="res://core/ui/MenuButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://musiq_game/ui/MusiQTheme.tres" type="Theme" id=6]
+[ext_resource path="res://musiq_game/ui/fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=7]
+
+[sub_resource type="DynamicFont" id=5]
+size = 50
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 30
+font_data = ExtResource( 7 )
+
+[node name="MusiQGameCreditsStage" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="SongPlayingSpinner" parent="." index="3" instance=ExtResource( 3 )]
+position = Vector2( 976.986, 537.33 )
+
+[node name="MusiQContestSongDisplay" parent="." index="4" instance=ExtResource( 4 )]
+position = Vector2( 978.787, 579.19 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="5"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 1870.0
+margin_bottom = 1030.0
+size_flags_vertical = 3
+theme = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreditsContainer" type="VBoxContainer" parent="VBoxContainer" index="0"]
+margin_right = 1820.0
+margin_bottom = 156.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer/CreditsContainer" index="0"]
+margin_right = 1820.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 5 )
+text = "A Jabobs Production"
+align = 1
+valign = 1
+
+[node name="Credits1" type="Label" parent="VBoxContainer/CreditsContainer" index="1"]
+margin_top = 69.0
+margin_right = 1820.0
+margin_bottom = 111.0
+custom_fonts/font = SubResource( 4 )
+text = "Design: Harry Jacobs"
+align = 1
+valign = 1
+
+[node name="Credits2" type="Label" parent="VBoxContainer/CreditsContainer" index="2"]
+margin_top = 114.0
+margin_right = 1820.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 4 )
+text = "Programming: Harry Jacobs"
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" index="1"]
+margin_top = 159.0
+margin_right = 1820.0
+margin_bottom = 980.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+alignment = 2
+
+[node name="PlayAgainSamePlayersButton" parent="VBoxContainer/VBoxContainer" index="0" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 655.0
+margin_right = 1820.0
+margin_bottom = 697.0
+text = "Play again with the same players?"
+
+[node name="PlayAgainButton" parent="VBoxContainer/VBoxContainer" index="1" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 717.0
+margin_right = 1820.0
+margin_bottom = 759.0
+text = "Start a new game of MusiQ?"
+
+[node name="ExitToMainMenuButton" parent="VBoxContainer/VBoxContainer" index="2" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 779.0
+margin_right = 1820.0
+margin_bottom = 821.0
+text = "Exit"
+
+[node name="Tween" type="Tween" parent="." index="6"]
+
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/PlayAgainSamePlayersButton" to="." method="_on_play_again_same_players_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/ExitToMainMenuButton" to="." method="_on_exit_to_main_menu_button_pressed"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://musiq_game/ui/textures/vinyl_record.png" type="Texture" id=1]
+[ext_resource path="res://musiq_game/game_stages/SongPlayingSpinner.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "SpinningVinyl"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.99 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[node name="SongPlayingSpinner" type="Sprite"]
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/SpinningVinyl = SubResource( 1 )

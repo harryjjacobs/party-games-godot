@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://meme_game/game_stages/common/MemeGameCreditsStage.tscn" type="PackedScene" id=1]
 [ext_resource path="res://meme_game/test/TestMemeGameCreditsStage.gd" type="Script" id=2]
@@ -7,9 +7,14 @@
 [ext_resource path="res://meme_game/meme/templates/WhisperGoosebumps.tres" type="Resource" id=5]
 [ext_resource path="res://meme_game/meme/templates/WantsToKnowYourLocation.tres" type="Resource" id=6]
 [ext_resource path="res://meme_game/meme/templates/ExpandingBrain.tres" type="Resource" id=7]
+[ext_resource path="res://meme_game/meme/templates/IBetHesThinkingAboutOtherGirls.tres" type="Resource" id=8]
+[ext_resource path="res://meme_game/meme/templates/UnoDraw25.tres" type="Resource" id=9]
+[ext_resource path="res://meme_game/meme/templates/KermitWindow.tres" type="Resource" id=10]
+[ext_resource path="res://meme_game/meme/templates/OneDoesNotSimply.tres" type="Resource" id=11]
+[ext_resource path="res://meme_game/meme/templates/FeelingsOfPowerGraph.tres" type="Resource" id=12]
 
 [node name="TestMemeCreditsEndStage" type="Node2D"]
 script = ExtResource( 2 )
-meme_templates = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 4 ) ]
+meme_templates = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 12 ) ]
 
 [node name="MemeGameCreditsStage" parent="." instance=ExtResource( 1 )]

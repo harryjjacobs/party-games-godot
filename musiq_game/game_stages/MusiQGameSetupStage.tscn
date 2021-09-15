@@ -1,0 +1,158 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=1]
+[ext_resource path="res://musiq_game/ui/textures/MusiQBackground.png" type="Texture" id=2]
+[ext_resource path="res://musiq_game/ui/fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://musiq_game/ui/MusiQTheme.tres" type="Theme" id=4]
+[ext_resource path="res://musiq_game/game_stages/MusiQGameSetupStage.gd" type="Script" id=6]
+[ext_resource path="res://core/ui/icons/search_icon_small.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 14
+font_data = ExtResource( 3 )
+
+[node name="MusiQGameSetupStage" instance=ExtResource( 1 )]
+script = ExtResource( 6 )
+
+[node name="Background" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="SetupOptionsContainer" type="VBoxContainer" parent="." index="3"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 1870.0
+margin_bottom = 1030.0
+theme = ExtResource( 4 )
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="SetupOptionsContainer" index="0"]
+margin_right = 1820.0
+margin_bottom = 126.0
+custom_fonts/font = SubResource( 1 )
+text = "Setup"
+align = 1
+valign = 1
+
+[node name="PlaylistsSearch" type="VBoxContainer" parent="SetupOptionsContainer" index="1"]
+margin_top = 146.0
+margin_right = 1820.0
+margin_bottom = 756.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+custom_constants/separation = 10
+
+[node name="LineEdit" type="LineEdit" parent="SetupOptionsContainer/PlaylistsSearch" index="0"]
+margin_right = 1820.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+right_icon = ExtResource( 8 )
+placeholder_text = "Search for playlists and albums..."
+caret_blink = true
+
+[node name="SearchResultsScrollContainer" type="ScrollContainer" parent="SetupOptionsContainer/PlaylistsSearch" index="1"]
+margin_top = 76.0
+margin_right = 1820.0
+margin_bottom = 610.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SearchResults" type="VBoxContainer" parent="SetupOptionsContainer/PlaylistsSearch/SearchResultsScrollContainer" index="0"]
+margin_right = 1820.0
+margin_bottom = 534.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="ChosenPlaylistsScrollContainer" type="ScrollContainer" parent="SetupOptionsContainer" index="2"]
+margin_top = 776.0
+margin_right = 1820.0
+margin_bottom = 776.0
+scroll_vertical_enabled = false
+
+[node name="ChosenPlaylistsContainer" type="HBoxContainer" parent="SetupOptionsContainer/ChosenPlaylistsScrollContainer" index="0"]
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SetupOptionsContainer" index="3"]
+margin_top = 796.0
+margin_right = 1820.0
+margin_bottom = 868.0
+
+[node name="Label" type="Label" parent="SetupOptionsContainer/VBoxContainer" index="0"]
+margin_right = 1820.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 3 )
+text = "Game Duration"
+align = 1
+valign = 1
+
+[node name="GameDurationProfileHSlider" type="HSlider" parent="SetupOptionsContainer/VBoxContainer" index="1"]
+margin_top = 33.0
+margin_right = 1820.0
+margin_bottom = 45.0
+max_value = 2.0
+tick_count = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SetupOptionsContainer/VBoxContainer" index="2"]
+margin_top = 48.0
+margin_right = 1820.0
+margin_bottom = 72.0
+
+[node name="Label" type="Label" parent="SetupOptionsContainer/VBoxContainer/HBoxContainer" index="0"]
+margin_right = 604.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+text = "Short"
+valign = 1
+
+[node name="Label2" type="Label" parent="SetupOptionsContainer/VBoxContainer/HBoxContainer" index="1"]
+margin_left = 607.0
+margin_right = 1212.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+text = "Medium"
+align = 1
+valign = 1
+
+[node name="Label3" type="Label" parent="SetupOptionsContainer/VBoxContainer/HBoxContainer" index="2"]
+margin_left = 1215.0
+margin_right = 1820.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+text = "Long"
+align = 2
+valign = 1
+
+[node name="PlayButton" type="Button" parent="SetupOptionsContainer" index="4"]
+margin_top = 888.0
+margin_right = 1820.0
+margin_bottom = 980.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+text = "PLAY"
+
+[connection signal="text_changed" from="SetupOptionsContainer/PlaylistsSearch/LineEdit" to="." method="_on_playlist_search_text_changed"]
+[connection signal="value_changed" from="SetupOptionsContainer/VBoxContainer/GameDurationProfileHSlider" to="." method="_on_game_duration_profile_slider_value_changed"]
+[connection signal="pressed" from="SetupOptionsContainer/PlayButton" to="." method="_on_play_button_pressed"]

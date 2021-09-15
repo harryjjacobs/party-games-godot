@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://core/core_controllers/GameplayController.gd" type="Script" id=1]
+[ext_resource path="res://musiq_game/configuration/MusiqGameBuilder.tscn" type="PackedScene" id=2]
+
+[node name="Musiq" type="Node2D"]
+
+[node name="GameplayController" type="Node" parent="."]
+script = ExtResource( 1 )
+_game_builder_scene = ExtResource( 2 )

@@ -7,6 +7,8 @@ const HIGHLIGHTS_REEL_FADE_DURATION = 1.0
 onready var _meme_renderer = $HBoxContainer/MemeRendererContainer/MemeRenderer
 onready var _player_name_label = $HBoxContainer/MemeRendererContainer/MemeInformationPanel/PlayerNameLabel
 
+var _saved_to_disk = []
+
 func enter(params):
 	.enter(params)
 	_player_name_label.text = ""
@@ -23,6 +25,9 @@ func _highlight_reel():
 			yield($Tween, "tween_completed")
 			if not is_inside_tree():
 				return
+			if not highlight in _saved_to_disk: 
+				_save_meme_to_disk(_meme_renderer, highlight.response.player)
+				_saved_to_disk.push_back(highlight)
 			yield(get_tree().create_timer(HIGHLIGHTS_REEL_DURATION), "timeout")
 			$Tween.interpolate_method(self, "_set_highlights_reel_alpha", 1.0, 0.0, HIGHLIGHTS_REEL_FADE_DURATION / 2)
 			$Tween.start()
@@ -66,3 +71,11 @@ func _on_play_again_same_players_button_pressed():
 
 func _on_exit_to_main_menu_button_pressed():
 	Events.emit_signal("request_main_menu")
+
+func _save_meme_to_disk(meme_renderer, player):
+	# save meme to disk
+	var path = "user://saved_memes"
+	FileUtils.open_user_dir(path, true)
+	var img = yield(meme_renderer.capture(), "completed")
+	var filename = player.username + "_" + Time.formatted_timestamp() + ".png"
+	img.save_png(path + "/" + filename)
