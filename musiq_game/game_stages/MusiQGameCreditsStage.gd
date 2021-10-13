@@ -1,4 +1,4 @@
-extends "res://core/game_stages/common/GameStage.gd"
+extends "res://core/game_stages/CreditsStage.gd"
 
 onready var _song_playing_spinner = $SongPlayingSpinner
 onready var _song_display = $MusiQContestSongDisplay
@@ -14,6 +14,8 @@ func enter(params):
 
 func exit():
 	.exit()
+	Events.disconnect("game_paused", self, "_on_game_paused")
+	Events.disconnect("game_resumed", self, "_on_game_resumed")
 	_parameters.track_player.Pause()
 
 func _play_song_previews():
@@ -46,12 +48,3 @@ func _on_game_paused():
 
 func _on_game_resumed():
 	_parameters.track_player.Resume()
-
-func _on_play_again_button_pressed():
-	Events.emit_signal("request_restart", false)
-
-func _on_play_again_same_players_button_pressed():
-	Events.emit_signal("request_restart", true)
-
-func _on_exit_to_main_menu_button_pressed():
-	Events.emit_signal("request_main_menu")

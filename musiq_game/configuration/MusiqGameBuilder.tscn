@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://musiq_game/configuration/MusiqGameBuilder.gd" type="Script" id=1]
+[ext_resource path="res://core/configuration/GameBuilder.gd" type="Script" id=1]
 [ext_resource path="res://musiq_game/game_stages/MusiQLobbyStage.tscn" type="PackedScene" id=2]
 [ext_resource path="res://musiq_game/game_stages/MusiQGameSetupStage.tscn" type="PackedScene" id=3]
 [ext_resource path="res://musiq_game/player/PlayerColorPalette.tres" type="Resource" id=4]
@@ -10,11 +10,10 @@
 [ext_resource path="res://musiq_game/game_stages/MusiQHead2HeadRoundBeginStage.tscn" type="PackedScene" id=8]
 [ext_resource path="res://musiq_game/game_stages/MusiQGameEndStage.tscn" type="PackedScene" id=9]
 [ext_resource path="res://musiq_game/game_stages/MusiQGameCreditsStage.tscn" type="PackedScene" id=10]
-[ext_resource path="res://meme_game/audio/applause_1.wav" type="AudioStream" id=11]
 
 [node name="MusiqGameBuilder" type="Node2D"]
 script = ExtResource( 1 )
-_stages = [ NodePath("MusiQGameSetupStage"), NodePath("MusiQLobbyStage"), NodePath("MusiQALLVALLRoundBeginStage"), NodePath("MusiQContestsGameStage"), NodePath("MusiQRoundEndStage"), NodePath("MusiQHead2HeadRoundBeginStage"), NodePath("MusiQContestsGameStage2"), NodePath("MusiQRoundEndStage2"), NodePath("MusiQGameEndStage"), NodePath("MusiQGameCreditsStage") ]
+_stages = [ NodePath("MusiQGameSetupStage"), NodePath("MusiQLobbyStage"), NodePath("MusiQALLVALLRoundBeginStage"), NodePath("MusiQContestsGameStage"), NodePath("MusiQRoundEndStage"), NodePath("MusiQALLVALLRoundBeginStage"), NodePath("MusiQContestsGameStage"), NodePath("MusiQRoundEndStage"), NodePath("MusiQHead2HeadRoundBeginStage"), NodePath("MusiQContestsGameStage"), NodePath("MusiQRoundEndStage"), NodePath("MusiQGameEndStage"), NodePath("MusiQGameCreditsStage") ]
 
 [node name="MusiQGameSetupStage" parent="." instance=ExtResource( 3 )]
 
@@ -30,12 +29,6 @@ player_color_palette = ExtResource( 4 )
 [node name="MusiQHead2HeadRoundBeginStage" parent="." instance=ExtResource( 8 )]
 duration = 2.0
 
-[node name="MusiQContestsGameStage2" parent="." instance=ExtResource( 6 )]
-contest_timeout = 50.0
-
-[node name="MusiQRoundEndStage2" parent="." instance=ExtResource( 7 )]
+[node name="MusiQGameCreditsStage" parent="." instance=ExtResource( 10 )]
 
 [node name="MusiQGameEndStage" parent="." instance=ExtResource( 9 )]
-_celebratory_sound_effect = ExtResource( 11 )
-
-[node name="MusiQGameCreditsStage" parent="." instance=ExtResource( 10 )]

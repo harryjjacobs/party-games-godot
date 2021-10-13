@@ -14,13 +14,13 @@ public class MusiQTrackPlayer : Godot.Object
 	[Signal] public delegate void requires_device_connection();
 	[Signal] public delegate void ready_to_play();
 
-	public bool IsAuthorized { get; private set; } = false;
+	public static bool IsAuthorized { get; private set; } = false;
 
-	public string CurrentAccessToken { get; private set; }
+	public static string CurrentAccessToken { get; private set; }
 
 	private const string CLIENT_ID = "35e4b8f45cac4e6ebd25c503005e847e";
 	private const int PLAYBACK_TRANSFER_DELAY = 300;  // ms
-	private SpotifyClient _spotifyClient;
+	private static SpotifyClient _spotifyClient;
 	private static EmbedIOAuthServer _authServer;
 
 	public GenericFunctionStateTask Play(String trackId)
@@ -183,6 +183,7 @@ public class MusiQTrackPlayer : Godot.Object
 	{
 		if (!IsAuthorized)
 		{
+			GD.Print("SPOTIFY NOT AUTHORIZED");
 			EmitSignal(nameof(requires_authorization));
 			return false;
 		}
@@ -196,7 +197,16 @@ public class MusiQTrackPlayer : Godot.Object
 
 	private async Task<bool> CheckDeviceConnectionAsync()
 	{
-		var deviceResponse = await _spotifyClient.Player.GetAvailableDevices();
+		DeviceResponse deviceResponse;
+		try
+		{
+			deviceResponse = await _spotifyClient.Player.GetAvailableDevices();
+		}
+		catch (System.Exception e)
+		{
+			GD.Print("An error occurred fetching available devices: " + e.ToString());
+			return false;
+		}
 		foreach (var device in deviceResponse.Devices)
 		{
 			if (device.IsActive)
@@ -215,6 +225,7 @@ public class MusiQTrackPlayer : Godot.Object
 		_spotifyClient = new SpotifyClient(CurrentAccessToken);
 		IsAuthorized = true;
 		CallDeferred("emit_signal", nameof(authorization_succeeded));
+		GD.Print("SPOTIFY AUTHORIZED: " + CurrentAccessToken);
 		await CheckDeviceConnectionAsync().ContinueWith((task) =>
 		{
 			if (task.Result)

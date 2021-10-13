@@ -1,4 +1,4 @@
-extends "res://core/game_stages/common/GameStage.gd"
+extends "res://core/game_stages/CreditsStage.gd"
 
 const MAX_BESTOF = 6
 const HIGHLIGHTS_REEL_DURATION = 5.0
@@ -62,15 +62,6 @@ func _set_highlights_reel_alpha(alpha):
 
 func _sort_descending_by_votes(a, b):
 	return b.votes < a.votes
-
-func _on_play_again_button_pressed():
-		Events.emit_signal("request_restart", false)
-
-func _on_play_again_same_players_button_pressed():
-	Events.emit_signal("request_restart", true)
-
-func _on_exit_to_main_menu_button_pressed():
-	Events.emit_signal("request_main_menu")
 
 func _save_meme_to_disk(meme_renderer, player):
 	# save meme to disk

@@ -24,7 +24,7 @@ position = Vector2( 966.163, 579.612 )
 player_icon_scene = ExtResource( 4 )
 margin_x = 0.21
 margin_y = 0.33
-icon_emphasis_scale = 1.1
+icon_emphasis_scale = 1.0
 type = 0
 
 [node name="CountdownDisplay" parent="." index="6" instance=ExtResource( 7 )]

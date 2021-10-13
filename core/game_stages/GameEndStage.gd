@@ -3,6 +3,8 @@ extends "res://core/game_stages/common/GameStage.gd"
 const _celebration_delay = 0.3
 
 export var _celebratory_sound_effect: AudioStreamSample
+export var _winners_title_singular = "And the winner is..."
+export var _winners_title_plural = "And the winners are..."
 
 onready var _title = $Title
 onready var _icon_display = $PlayerIconDisplay
@@ -27,9 +29,9 @@ func _get_winners():
 
 func _show_winners(winners):
 	if len(winners) > 1:
-		_title.text = "And the winners are..."
+		_title.text = _winners_title_plural
 	else:
-		_title.text = "And the winner is..."
+		_title.text = _winners_title_singular
 	_icon_display.add_players(winners)
 	yield(get_tree().create_timer(_celebration_delay), "timeout")
 	_play_audio(_celebratory_sound_effect)

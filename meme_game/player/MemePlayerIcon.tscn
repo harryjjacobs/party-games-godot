@@ -1,24 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://core/player/PlayerIcon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://meme_game/player/doge.png" type="Texture" id=3]
-
-[sub_resource type="SpriteFrames" id=5]
-animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
-
-[sub_resource type="DynamicFont" id=4]
-size = 35
-outline_size = 6
-outline_color = Color( 0, 0, 0, 1 )
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 2 )
+[ext_resource path="res://meme_game/player/MemePlayerIconSpriteFrames.tres" type="SpriteFrames" id=3]
 
 [sub_resource type="DynamicFont" id=2]
 size = 35
@@ -29,6 +13,14 @@ use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 35
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
 size = 100
 outline_size = 6
 outline_color = Color( 0, 0, 0, 1 )
@@ -39,13 +31,13 @@ font_data = ExtResource( 2 )
 [node name="MemePlayerIcon" instance=ExtResource( 1 )]
 
 [node name="PlayerSprite" parent="." index="0"]
-frames = SubResource( 5 )
+frames = ExtResource( 3 )
 
 [node name="PointsLabel" parent="." index="1"]
-custom_fonts/font = SubResource( 4 )
-
-[node name="PlayerNameLabel" parent="." index="2"]
 custom_fonts/font = SubResource( 2 )
 
-[node name="PointChangeLabel" parent="." index="3"]
+[node name="PlayerNameLabel" parent="." index="2"]
 custom_fonts/font = SubResource( 3 )
+
+[node name="PointChangeLabel" parent="." index="3"]
+custom_fonts/font = SubResource( 4 )

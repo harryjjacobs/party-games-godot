@@ -1,21 +1,24 @@
 extends "res://core/game_stages/common/GameStage.gd"
 
-const FUZZY_SONG_MATCHING = true	# whether to compare spotify track IDs or just name and artists
+const FUZZY_SONG_MATCHING = true	# whether to just compare name and artists or spotify track IDs
 
 const _contest_song_guess_scene = preload("res://musiq_game/contest/MusiQContestSongGuess.tscn")
 
 signal _finish_contest(winning_response)
 
-export(float) var contest_timeout = 60.0
+export(float) var default_contest_timeout = 65.0
 
 onready var _contest_timeout_timer = $ContestTimeoutTimer
 onready var _player_icon_display = $PlayerIconDisplay
 onready var _song_playing_spinning_indicator = $SongPlayingSpinner
 onready var _countdown_display = $CountdownDisplay
 
+var _pending_track
 var _current_contest
+var _current_contest_timeout
 var _accepting_guesses
 var _is_currently_playing_track
+var _contest_start_time
 
 func enter(params):
 	.enter(params)
@@ -23,24 +26,31 @@ func enter(params):
 	NetworkInterface.on_player(Message.PROMPT_RESPONSE, self, "_on_player_prompt_response")
 	_err = Events.connect("game_paused", self, "_on_game_paused")
 	_err = Events.connect("game_resumed", self, "_on_game_resumed")
+	_err = params.track_player.connect("ready_to_play", self, "_on_player_ready_to_play")
 	for contest in params.current_round.contests:
 		yield(_do_contest(contest), "completed")
-	print("finished all contests in this round. exiting")
+	print("Finished all contests in this round. Requesting round exit")
 	emit_signal("request_exit", _parameters)
 
 func exit():
 	_stop_track()
 	NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_player_prompt_response")
+	_contest_timeout_timer.disconnect("timeout", self, "_on_contest_timeout")
+	Events.disconnect("game_paused", self, "_on_game_paused")
+	Events.disconnect("game_resumed", self, "_on_game_resumed")
+	_parameters.track_player.disconnect("ready_to_play", self, "_on_player_ready_to_play")
 	.exit()
 
 func _do_contest(contest):
 	_player_icon_display.clear()
 	_current_contest = contest
 	print("Attempting to play track: " + contest.track.Id)
-	_countdown_display.start(contest_timeout)
+	_contest_start_time = OS.get_unix_time()
+	_current_contest_timeout = min(default_contest_timeout, contest.track.DurationMs / 1000)
+	_countdown_display.start(_current_contest_timeout)
+	_contest_timeout_timer.start(_current_contest_timeout)
 	yield(_play_track(contest.track), "completed")
-	_contest_timeout_timer.start(contest_timeout)
 	# send prompts
 	for player in contest.players:
 		NetworkInterface.send_player(player, Message.create(Message.REQUEST_INPUT, {
@@ -58,7 +68,12 @@ func _do_contest(contest):
 	_stop_track()
 	if winning_response:
 		var points_group_id = str(len(_parameters.round_history))
-		winning_response.player.update_points(contest.point_weight, points_group_id)
+		var points = _calculate_winner_points()
+		winning_response.player.update_points(points, points_group_id)
+		yield(get_tree().create_timer(1.0), "timeout")
+		_player_icon_display.emphasise_and_center_player(winning_response.player)
+		var player_icon = _player_icon_display.get_player_icon(winning_response.player)
+		player_icon.animate_point_award(points)
 		# delay before next contest or exit
 		yield(get_tree().create_timer(5.0), "timeout")
 	else:
@@ -78,14 +93,17 @@ func _play_track(track):
 	_is_currently_playing_track = success
 	if success:
 		print("Playing track: " + track.Id)
+		_pending_track = null
 	else:
 		print("Failed to play track: " + track.Id)
+		_pending_track = track
 
 func _stop_track():
 	print("Stopping track")
 	_parameters.track_player.Pause()
 	_song_playing_spinning_indicator.spin(false)
 	_is_currently_playing_track = false
+	_pending_track = null
 
 func _on_game_paused():
 	_parameters.track_player.Pause()
@@ -133,10 +151,6 @@ func _on_player_prompt_response(client_id, message):
 
 	yield(get_tree().create_timer(1.0), "timeout")
 	song_guess_display.show_result(is_correct_answer)
-
-	yield(get_tree().create_timer(1.0), "timeout")
-	if is_correct_answer:
-		_player_icon_display.emphasise_and_center_player(player)
 		
 func _on_contest_timeout():
 	emit_signal("_finish_contest", null)
@@ -152,3 +166,13 @@ func is_same_track(track_a, track_b):
 						track_a_artists.to_upper() == track_b_artists.to_upper()
 	else:
 		return track_a.Id == track_b.Id
+
+func _on_player_ready_to_play():
+	if _pending_track:
+		_play_track(_pending_track)
+
+func _calculate_winner_points():
+	var current_time = OS.get_unix_time()
+	var elapsed_time = current_time - _contest_start_time
+	var time_related_points = _current_contest_timeout - elapsed_time + _current_contest.point_weight
+	return time_related_points

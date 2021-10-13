@@ -204,5 +204,5 @@ anims/CorrectAnswer = SubResource( 4 )
 anims/IncorrectAnswer = SubResource( 5 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
+stream = ExtResource( 8 )
 bus = "Stage"

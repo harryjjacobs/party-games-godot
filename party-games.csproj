@@ -5,8 +5,8 @@
     <RootNamespace>partygames</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SpotifyAPI.Web" Version="6.2.0" />
-    <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.2.0" />
+    <PackageReference Include="SpotifyAPI.Web" Version="6.2.2" />
+    <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.2.2" />
     <Content Include="musiq_game\musiq_player\MusiQMusiQPlayer.cs" />
     <Content Include="musiq_game\musiq_player\FunctionStateTask.cs" />
   </ItemGroup>

@@ -28,7 +28,8 @@ func _on_requires_authorization():
 		Events.emit_signal("request_main_menu")
 
 func _on_track_player_authorization_succeeded():
-	_musiq_player.CheckDeviceConnection()
+	pass
+	# _musiq_player.CheckDeviceConnection()
 
 func _on_requires_device_connection():
 	if _handling_device_connection:

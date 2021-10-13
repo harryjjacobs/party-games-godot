@@ -2,18 +2,26 @@ using Godot;
 using System;
 using System.Threading.Tasks;
 
-
 public class GenericFunctionStateTask : Godot.Object
 {
 	[Signal] public delegate Variant completed();
 
+	public GenericFunctionStateTask() {}
+
 	public static GenericFunctionStateTask Create<T>(Func<Task<T>> task)
 	{
 		var instance = new GenericFunctionStateTask();
-		task().ContinueWith(t =>
+		try
 		{
-			instance.CallDeferred("emit_signal", nameof(completed), t.Result);
-		});
+			task().ContinueWith(t =>
+			{
+				instance.CallDeferred("emit_signal", nameof(completed), t.Result);
+			});
+		}
+		catch (System.Exception e)
+		{
+			GD.Print("exception: " + e.ToString());
+		}
 		return instance;
 	}
 }
@@ -21,6 +29,8 @@ public class GenericFunctionStateTask : Godot.Object
 public class FunctionStateTask : Godot.Object
 {
 	[Signal] public delegate void completed();
+
+	public FunctionStateTask() {}
 
 	public FunctionStateTask(Func<Task> task)
 	{

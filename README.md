@@ -1,0 +1,1 @@
+If developing on linux, ensure that mono-devel and ca-certificates-mono is installed

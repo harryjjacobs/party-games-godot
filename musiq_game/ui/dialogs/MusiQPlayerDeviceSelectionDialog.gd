@@ -5,6 +5,9 @@ signal finished(result)
 
 onready var _device_list_container = $VBoxContainer/DeviceListScrollContainer/DeviceListContainer
 
+func _ready():
+	get_close_button().visible = false
+
 func set_devices(devices):
 	NodeUtils.remove_children(_device_list_container)
 	for device in devices:

@@ -1,12 +1,13 @@
+
 extends "res://core/game_stages/common/GameStage.gd"
 
 onready var _leaderboard = $PlayerIconDisplay
 
 func enter(params):
 	.enter(params)
-	yield(get_tree().create_timer(1.0), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	yield(_show_initial_positions(), "completed")
-	yield(get_tree().create_timer(1.5), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	_show_point_changes()
 	yield(get_tree().create_timer(2.0), "timeout")
 	yield(_rearrange_leaderboard(), "completed")

@@ -9,7 +9,12 @@ signal request_completed(texture)
 func _ready():
 	_http_request.connect("request_completed", self, "_http_request_completed")
 
+func _exit_tree():
+	_http_request.cancel_request()
+
 func request_qr_code(data, size = 512):
+	if not is_inside_tree():
+		return
 	var url = _build_params(_API_URL_BASE, { "size": size, "data": data })
 	var error = _http_request.request(url)
 	var error_msg = ""

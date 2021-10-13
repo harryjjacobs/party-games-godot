@@ -8,6 +8,7 @@ const _MIN_PLAYLISTS = 1
 const _MAX_SEARCH_RESULTS = 10
 
 onready var _play_button = $SetupOptionsContainer/PlayButton
+onready var _play_button_disabled_explanation_label = $SetupOptionsContainer/PlayButtonDisabledExplanationLabel
 onready var _playlist_search_edit = $SetupOptionsContainer/PlaylistsSearch/LineEdit
 onready var _search_results_container = $SetupOptionsContainer/PlaylistsSearch/SearchResultsScrollContainer/SearchResults
 onready var _chosen_playlists_container = $SetupOptionsContainer/ChosenPlaylistsScrollContainer/ChosenPlaylistsContainer
@@ -22,15 +23,17 @@ var _game_duration_profile = MusiQRoundGenerator.GameDurationProfile.MEDIUM
 
 func enter(params):
 	.enter(params)
-	_play_button.visible = false
+	_play_button.disabled = true
+	_play_button_disabled_explanation_label.visible = _play_button.disabled
 	_game_duration_profile_slider.value = _game_duration_profile
 	_selected_playlists = []
 	_track_player = MusiQTrackPlayer.new()
-	_track_player_auth_helper = MusiQPlayerAuthHelper.new(_track_player)
 	_track_player.connect("ready_to_play", self, "_on_track_player_ready")
+	_track_player_auth_helper = MusiQPlayerAuthHelper.new(_track_player)
 
 func exit():
 	.exit()
+	_track_player.disconnect("ready_to_play", self, "_on_track_player_ready")
 
 func _populate_playlist_search_results(results):
 	NodeUtils.remove_children(_search_results_container)
@@ -61,7 +64,8 @@ func _remove_item_from_chosen_playlists(item_node, item):
 
 func _check_play_button_enable():
 	var device_connection = yield(_track_player.CheckDeviceConnection(), "completed")
-	_play_button.visible = (len(_selected_playlists) >= _MIN_PLAYLISTS) and device_connection
+	_play_button.disabled = (len(_selected_playlists) < _MIN_PLAYLISTS) or not device_connection
+	_play_button_disabled_explanation_label.visible = _play_button.disabled
 
 func _cancel_search():
 	if _search_task and _search_task.is_connected("completed", self, "_populate_playlist_search_results"):

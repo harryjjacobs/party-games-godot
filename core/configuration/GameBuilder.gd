@@ -1,12 +1,15 @@
 extends Node
-class_name GameBuilder
 
-func init(_gameplay_controller):
-	pass
-
-func build_stages() -> Array:
-	return Array()
-
+export(Array, NodePath) var _stages 
+export(Array, AudioStreamSample) var _background_music
 
 func build_background_music():
-	pass
+	return _background_music
+
+func build_stages():
+	var stages = []
+	if _stages.empty():
+		Log.debug("Warning: %s stage_stack is empty" % name)
+	for stage in _stages:
+		stages.append(get_node(stage))
+	return stages

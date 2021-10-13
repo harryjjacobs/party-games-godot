@@ -51,7 +51,7 @@ valign = 1
 [node name="PlaylistsSearch" type="VBoxContainer" parent="SetupOptionsContainer" index="1"]
 margin_top = 146.0
 margin_right = 1820.0
-margin_bottom = 756.0
+margin_bottom = 702.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 custom_constants/separation = 10
@@ -68,21 +68,21 @@ caret_blink = true
 [node name="SearchResultsScrollContainer" type="ScrollContainer" parent="SetupOptionsContainer/PlaylistsSearch" index="1"]
 margin_top = 76.0
 margin_right = 1820.0
-margin_bottom = 610.0
+margin_bottom = 556.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SearchResults" type="VBoxContainer" parent="SetupOptionsContainer/PlaylistsSearch/SearchResultsScrollContainer" index="0"]
 margin_right = 1820.0
-margin_bottom = 534.0
+margin_bottom = 480.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
 
 [node name="ChosenPlaylistsScrollContainer" type="ScrollContainer" parent="SetupOptionsContainer" index="2"]
-margin_top = 776.0
+margin_top = 722.0
 margin_right = 1820.0
-margin_bottom = 776.0
+margin_bottom = 722.0
 scroll_vertical_enabled = false
 
 [node name="ChosenPlaylistsContainer" type="HBoxContainer" parent="SetupOptionsContainer/ChosenPlaylistsScrollContainer" index="0"]
@@ -90,9 +90,9 @@ size_flags_vertical = 3
 custom_constants/separation = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SetupOptionsContainer" index="3"]
-margin_top = 796.0
+margin_top = 742.0
 margin_right = 1820.0
-margin_bottom = 868.0
+margin_bottom = 814.0
 
 [node name="Label" type="Label" parent="SetupOptionsContainer/VBoxContainer" index="0"]
 margin_right = 1820.0
@@ -145,8 +145,14 @@ text = "Long"
 align = 2
 valign = 1
 
-[node name="PlayButton" type="Button" parent="SetupOptionsContainer" index="4"]
-margin_top = 888.0
+[node name="PlayButtonDisabledExplanationLabel" type="Label" parent="SetupOptionsContainer" index="4"]
+margin_top = 834.0
+margin_right = 1820.0
+margin_bottom = 876.0
+text = "Add at least 1 playlist or album to play"
+
+[node name="PlayButton" type="Button" parent="SetupOptionsContainer" index="5"]
+margin_top = 896.0
 margin_right = 1820.0
 margin_bottom = 980.0
 size_flags_vertical = 3
