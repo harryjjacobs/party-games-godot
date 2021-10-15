@@ -24,11 +24,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/util/FileUtils.gd"
 }, {
-"base": "Node",
-"class": "GameBuilder",
-"language": "GDScript",
-"path": "res://core/configuration/GameBuilder.gd"
-}, {
 "base": "Reference",
 "class": "GameSelectionOption",
 "language": "GDScript",
@@ -178,7 +173,6 @@ _global_script_class_icons={
 "ColorGenerator": "",
 "ColorPalette": "",
 "FileUtils": "",
-"GameBuilder": "",
 "GameSelectionOption": "",
 "GameplayController": "",
 "LobbyStage": "",

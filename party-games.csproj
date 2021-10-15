@@ -9,5 +9,6 @@
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.2.2" />
     <Content Include="musiq_game\musiq_player\MusiQMusiQPlayer.cs" />
     <Content Include="musiq_game\musiq_player\FunctionStateTask.cs" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 </Project>

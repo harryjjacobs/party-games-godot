@@ -21,6 +21,7 @@ public class MusiQTrackPlayer : Godot.Object
 	private const string CLIENT_ID = "35e4b8f45cac4e6ebd25c503005e847e";
 	private const int PLAYBACK_TRANSFER_DELAY = 300;  // ms
 	private static SpotifyClient _spotifyClient;
+	private static MusiQHTTPClient spotifyClientHttpClient = new MusiQHTTPClient();
 	private static EmbedIOAuthServer _authServer;
 
 	public GenericFunctionStateTask Play(String trackId)
@@ -89,6 +90,7 @@ public class MusiQTrackPlayer : Godot.Object
 		return GenericFunctionStateTask.Create(async () =>
 		{
 			if (!CheckAuth()) return new PlayableItemCollectionSearch();
+			spotifyClientHttpClient.CancelCurrentRequest();
 			var result = (await _spotifyClient.Search.Item(new SearchRequest(SearchRequest.Types.Album | SearchRequest.Types.Playlist, query)));
 			var playlists = result.Playlists.Items.ConvertAll(PlaylistConverter) ?? new List<SimplePlaylist>();
 			var albums = result.Albums.Items.ConvertAll(SimpleAlbumConverter) ?? new List<SimpleAlbum>();
@@ -183,7 +185,6 @@ public class MusiQTrackPlayer : Godot.Object
 	{
 		if (!IsAuthorized)
 		{
-			GD.Print("SPOTIFY NOT AUTHORIZED");
 			EmitSignal(nameof(requires_authorization));
 			return false;
 		}
@@ -222,7 +223,10 @@ public class MusiQTrackPlayer : Godot.Object
 	{
 		await _authServer.Stop();
 		CurrentAccessToken = response.AccessToken;
-		_spotifyClient = new SpotifyClient(CurrentAccessToken);
+		var config = SpotifyClientConfig
+			.CreateDefault(CurrentAccessToken)
+			.WithHTTPClient(spotifyClientHttpClient);
+		_spotifyClient = new SpotifyClient(config);
 		IsAuthorized = true;
 		CallDeferred("emit_signal", nameof(authorization_succeeded));
 		GD.Print("SPOTIFY AUTHORIZED: " + CurrentAccessToken);
