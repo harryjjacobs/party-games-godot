@@ -93,8 +93,8 @@ func _on_request_resume():
 	get_tree().paused = false
 	Events.emit_signal("game_resumed")
 
-func _on_request_main_menu():
+func _on_request_main_menu(error_msg):
 	_end_current_game()
-
+	
 func _on_request_restart(keep_players):
 	_restart_current_game(keep_players)

@@ -10,7 +10,7 @@ signal request_resume
 # warning-ignore:unused_signal
 signal request_restart
 # warning-ignore:unused_signal
-signal request_main_menu
+signal request_main_menu(error_msg)
 # warning-ignore:unused_signal
 signal game_started
 # warning-ignore:unused_signal

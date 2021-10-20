@@ -13,6 +13,7 @@ var _max_players = 1
 
 func _ready():
 	NetworkInterface.on_server(Message.ACCEPT_CREATE_ROOM, self, "_on_accept_create_room")
+	NetworkInterface.on_server(Message.REJECT_CREATE_ROOM, self, "_on_reject_create_room")
 	NetworkInterface.on_player(Message.REQUEST_JOIN, self, "_on_player_request_join")
 	NetworkInterface.on_player(Message.REQUEST_REJOIN, self, "_on_player_request_rejoin")
 
@@ -52,6 +53,10 @@ func _on_accept_create_room(message):
 	_pending_creation = false
 	Events.emit_signal("room_created", code)
 	
+func _on_reject_create_room(message):
+	Log.warn("_on_reject_create_room(): Failed to create room on server. Reason: " + message.data.reason)
+	Events.emit_signal("request_main_menu", "An error occured creating a room on the server. Please try again later.")
+
 func _on_player_request_join(client_id, message):
 	if not _open:
 		_reject_join(client_id, "Room closed (game may have already started)")

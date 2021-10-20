@@ -2,6 +2,7 @@ class_name Message
 
 # from server
 const ACCEPT_CREATE_ROOM = "accept_create_room"
+const REJECT_CREATE_ROOM = "reject_create_room"
 const PLAYER_TO_HOST = "player_to_host"
 const HEARTBEAT_PING = "heartbeat_ping"
 
