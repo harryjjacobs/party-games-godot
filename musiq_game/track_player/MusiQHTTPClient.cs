@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -42,7 +40,7 @@ public class MusiQHTTPClient : Godot.Object, IHTTPClient
             requestsQueue.Enqueue(request);
             while (requestsQueue.Peek() != request)
             {
-                Godot.OS.DelayMsec(200);
+                Godot.OS.DelayMsec(100);
             }
             var response = PerformHttpRequest(request);
             requestsQueue.Dequeue();
@@ -73,7 +71,8 @@ public class MusiQHTTPClient : Godot.Object, IHTTPClient
         Godot.GD.Print("Connecting to host " + request.BaseAddress.Host);
 
         var startTime = DateTime.Now;
-        while (godotHttpClient.GetStatus() == Godot.HTTPClient.Status.Connecting || godotHttpClient.GetStatus() == Godot.HTTPClient.Status.Resolving)
+        while (godotHttpClient.GetStatus() == Godot.HTTPClient.Status.Connecting || 
+                godotHttpClient.GetStatus() == Godot.HTTPClient.Status.Resolving)
         {
             godotHttpClient.Poll();
             Godot.OS.DelayMsec(10);
@@ -94,8 +93,19 @@ public class MusiQHTTPClient : Godot.Object, IHTTPClient
             return response;
         }
 
+        string requestBody = "";
+        if (request.Body != null)
+        {
+            Godot.GD.Print("Request Body: " + request.Body);
+            requestBody = request.Body.ToString();
+        }
+
         // Some headers.
         var requestHeaders = new List<string>(new[] { "User-Agent: Pirulo/1.0 (Godot)", "Accept: */*" });
+        if (requestBody.Length == 0)
+        {
+            requestHeaders.Add("Content-Length: 0");
+        }
         foreach (var header in request.Headers)
         {
             var headerValue = header.Key + ": " + header.Value;
@@ -105,13 +115,6 @@ public class MusiQHTTPClient : Godot.Object, IHTTPClient
 
         var endpointUrl = ApplyParameters(new Uri(request.BaseAddress, request.Endpoint), request.Parameters).PathAndQuery;
 
-        string requestBody = "";
-        if (request.Body != null)
-        {
-            // Godot.GD.Print("Request Body: " + request.Body);
-            requestBody = request.Body.ToString();
-        }
-
         var method = SystemHttpMethodToGodotHttpMethod(request.Method);
         err = godotHttpClient.Request(method, endpointUrl, requestHeaders.ToArray(), requestBody);
         if (err != Godot.Error.Ok)
@@ -120,7 +123,7 @@ public class MusiQHTTPClient : Godot.Object, IHTTPClient
             return response;
         }
 
-        Godot.GD.Print("Requesting endpoint " + endpointUrl);
+        Godot.GD.Print(request.Method.Method + " " + endpointUrl);
 
         // Keep polling for as long as the request is being processed.
         while (godotHttpClient.GetStatus() == Godot.HTTPClient.Status.Requesting)
@@ -198,7 +201,7 @@ public class MusiQHTTPClient : Godot.Object, IHTTPClient
         return response;
     }
 
-    public Uri ApplyParameters(Uri uri, IDictionary<string, string> parameters)
+    private Uri ApplyParameters(Uri uri, IDictionary<string, string> parameters)
     {
         if (parameters == null || parameters.Count == 0)
         {
