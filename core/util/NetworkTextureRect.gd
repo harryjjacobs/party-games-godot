@@ -26,18 +26,19 @@ func _http_request_completed(_result, _response_code, _headers, body):
 	var error
 	# https://stackoverflow.com/a/12451102
 	match Array(body.subarray(0, 3)):
-		[137, 80, 78, 71]:
+		[137, 80, 78, 71]:		# png
 			error = image.load_png_from_buffer(body)
-		[255, 216, 255, 224]:
+		[255, 216, 255, 224]:	# jpg
 			error = image.load_jpg_from_buffer(body)
-		[66, 77, ..]:
+		[66, 77, ..]:			# bmp
 			error = image.load_bmp_from_buffer(body)
 		_:
-			push_error("Unknown image format")
+			printerr("Unknown image format")
 			return
 
 	if error != OK:
-			push_error("Couldn't load the image.")
+		printerr("Failed to load the image")
+		return
 
 	var texture = ImageTexture.new()
 	texture.create_from_image(image)
