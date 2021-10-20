@@ -7,12 +7,14 @@ var _track_player
 var _playlists = []
 var _playlist_tracks = {}
 var _used_tracks = []
+var _playlist_index = 0
 
 func _init(playlists, track_player):
 	if len(playlists) == 0:
 		push_error("playlists is empty")
 	_track_player = track_player
 	_playlists = playlists.duplicate()
+	_playlist_index = 0
 	for playlist in _playlists:
 		var tracks = yield(_track_player.FetchPlayableItemCollectionTracks(playlist), "completed")
 		_playlist_tracks[playlist] = tracks
@@ -37,8 +39,7 @@ func _get_next_track():
 	var MAX_ITER = 1000
 	var iter = 0
 	while not track and iter < MAX_ITER:
-		var playlist_i = randi() % len(_playlists)
-		var playlist = _playlists[playlist_i]
+		var playlist = _playlists[_playlist_index]
 		var tracks = _playlist_tracks[playlist]
 		if tracks.empty():
 			continue
@@ -46,5 +47,7 @@ func _get_next_track():
 		if not tracks[track_i] in _used_tracks:
 			track = tracks[track_i]
 		iter += 1
+		# cycle through each playlist
+		_playlist_index = (_playlist_index + 1) % len(_playlists)
 	_used_tracks.push_back(track)
 	return track
