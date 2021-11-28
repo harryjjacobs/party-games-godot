@@ -8,6 +8,7 @@ func _ready():
 	err = Events.connect("game_started", self, "_on_game_started")
 	err = Events.connect("game_stopped", self, "_on_game_stopped")
 	err = Events.connect("show_dialog", self, "_on_show_dialog")
+	err = Events.connect("hide_dialog", self, "_on_hide_dialog")
 	
 	assert(err == OK)
 
@@ -26,3 +27,6 @@ func _on_show_dialog(dialog):
 	dialog.popup_centered()
 	yield(dialog, "finished")
 	remove_child(dialog)
+
+func _on_hide_dialog(dialog):
+	dialog.emit_signal("finished")

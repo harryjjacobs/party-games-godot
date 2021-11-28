@@ -32,7 +32,6 @@ visible = false
 script = ExtResource( 4 )
 
 [node name="SettingsDialog" parent="." instance=ExtResource( 5 )]
-visible = false
 popup_exclusive = true
 
 [connection signal="pressed" from="PauseButton" to="PauseButton" method="_on_pressed"]

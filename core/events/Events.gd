@@ -24,6 +24,8 @@ signal open_settings
 # warning-ignore:unused_signal
 signal show_dialog
 # warning-ignore:unused_signal
+signal hide_dialog
+# warning-ignore:unused_signal
 signal gamestage_changed(previous_stage, current_stage)
 
 # network interface

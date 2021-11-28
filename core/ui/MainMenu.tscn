@@ -58,6 +58,7 @@ margin_bottom = 237.0
 text = "Exit"
 
 [node name="ConfirmationDialog" parent="." instance=ExtResource( 5 )]
+visible = false
 
 [node name="GameSelectionDialog" parent="." instance=ExtResource( 6 )]
 visible = false

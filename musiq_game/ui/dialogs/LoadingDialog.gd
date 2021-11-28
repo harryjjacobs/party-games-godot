@@ -1,0 +1,3 @@
+extends PopupDialog
+
+signal finished

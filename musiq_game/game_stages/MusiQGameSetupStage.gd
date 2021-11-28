@@ -3,6 +3,7 @@ extends "res://core/game_stages/common/GameStage.gd"
 const MusiQTrackPlayer = preload("res://musiq_game/track_player/MusiQTrackPlayer.cs")
 const PlayableSearchResult = preload("res://musiq_game/game_stages/PlaylistSearchResult.tscn")
 const PlaylistItem = preload("res://musiq_game/game_stages/PlaylistItem.tscn")
+const LoadingDialog = preload("res://musiq_game/ui/dialogs/LoadingDialog.tscn")
 
 const _MIN_PLAYLISTS = 1
 const _MAX_SEARCH_RESULTS = 10
@@ -92,8 +93,11 @@ func _on_remove_chosen_playlist(item_node, item):
 	_remove_item_from_chosen_playlists(item_node, item)
 
 func _on_play_button_pressed():
+	var dialog = LoadingDialog.instance()
+	Events.emit_signal("show_dialog", dialog)
 	var contest_builder = MusiQContestBuilder.new(_selected_playlists, _track_player)
 	yield(contest_builder, "initialized")
+	Events.emit_signal("hide_dialog", dialog)		
 	emit_signal("request_exit", {
 		"round_generator": MusiQRoundGenerator.new(contest_builder, _game_duration_profile),
 		"current_round": null,

@@ -230,6 +230,10 @@ window/stretch/aspect="keep"
 
 enabled=PoolStringArray( "res://addons/meme_template_plugin/plugin.cfg" )
 
+[gdnative]
+
+singletons=[  ]
+
 [network]
 
 limits/debugger_stdout/max_chars_per_second=8192
