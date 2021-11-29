@@ -70,7 +70,7 @@ jobs:
         with:
           path: build/
       - name: Zip export artifacts
-        run: for i in ./build/*/; do zip -r "${i%/}.zip" "$i"; done
+        run: for i in build/*/; do (cd "$i" && zip -r "../../${i%/}.zip" .); done
         shell: bash
       - uses: actions/setup-node@v1
         with:
