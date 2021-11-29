@@ -20,11 +20,11 @@
       {
         "assets": [
           {
-            "path": "build/linux/*.zip",
+            "path": "build/*.zip",
             "label": "Linux release"
           },
           {
-            "path": "build/windows/*.zip",
+            "path": "build/*.zip",
             "label": "Windows release"
           }
         ]

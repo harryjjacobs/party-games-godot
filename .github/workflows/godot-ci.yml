@@ -69,14 +69,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: build/
-      - uses: papeloto/action-zip@v1
-        with:
-          files: build/linux/*
-          dest: $EXPORT_NAME_linux.zip
-      - uses: papeloto/action-zip@v1
-        with:
-          files: build/windows/*
-          dest: $EXPORT_NAME_windows.zip
+      - name: Zip export artifacts
+        run: for i in ./build/*/; do zip -r "${i%/}.zip" "$i"; done
+        shell: bash
       - uses: actions/setup-node@v1
         with:
           node-version: "14.x"
