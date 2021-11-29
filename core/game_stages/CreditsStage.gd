@@ -13,5 +13,5 @@ func _on_play_again_same_players_button_pressed():
 	Events.emit_signal("request_restart", true)
 
 func _on_exit_to_main_menu_button_pressed():
-	Events.emit_signal("request_main_menu")
+	Events.emit_signal("request_main_menu", null)
 

@@ -35,5 +35,5 @@ func _on_exit_button_pressed():
 	var exit = yield(confirmation_dialog, "finished")
 	if exit:
 		hide()
-		Events.emit_signal("request_main_menu")
+		Events.emit_signal("request_main_menu", null)
 

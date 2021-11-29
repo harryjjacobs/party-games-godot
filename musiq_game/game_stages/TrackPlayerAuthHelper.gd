@@ -25,7 +25,7 @@ func _on_requires_authorization():
 	if result:
 		yield(_musiq_player.PerformAuthorization(), "completed")
 	else:
-		Events.emit_signal("request_main_menu")
+		Events.emit_signal("request_main_menu", null)
 
 func _on_track_player_authorization_succeeded():
 	pass
@@ -49,7 +49,7 @@ func _on_requires_device_connection():
 			_musiq_player.CheckDeviceConnection()
 	else:
 		_handling_device_connection = false
-		Events.emit_signal("request_main_menu")
+		Events.emit_signal("request_main_menu", null)
 
 func _on_device_selection_dialog_request_refresh(dialog):
 	var devices = yield(_musiq_player.GetAvailableDevicesForConnection(), "completed")
