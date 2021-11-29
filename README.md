@@ -1,1 +1,1 @@
-If developing on linux, ensure that mono-devel and ca-certificates-mono is installed
+A collection of multiplayer party games inspired by the Jackbox Party Pack created using the Godot engine.
