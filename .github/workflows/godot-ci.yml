@@ -63,6 +63,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Download export artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: build/
       - uses: actions/setup-node@v1
         with:
           node-version: "14.x"
