@@ -1,0 +1,25 @@
+{
+  "branches": [
+    "main",
+    "feature/ci-semantic-release"
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "build/linux/",
+            "label": "Linux release"
+          },
+          {
+            "path": "build/windows/",
+            "label": "Windows release"
+          }
+        ]
+      }
+    ]
+  ]
+}
