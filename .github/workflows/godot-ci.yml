@@ -59,6 +59,8 @@ jobs:
 
   release:
     name: Release
+    if: ${{ always() }}
+    needs: [export-linux, export-windows]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
