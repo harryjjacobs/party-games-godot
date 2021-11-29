@@ -5,8 +5,8 @@ if [ ! -d .git ]; then
     exit 1;
 fi;
 
+echo "Adding git commit-msg hook to .git directory to enforce commit message format"
 GIT_HOOK_FILE=".git/hooks/commit-msg"
-
 curl https://raw.githubusercontent.com/harryjjacobs/enforce-git-message/master/enforce_git_message/git-templates/hooks/commit-msg -o $GIT_HOOK_FILE
 chmod +x $GIT_HOOK_FILE
 
