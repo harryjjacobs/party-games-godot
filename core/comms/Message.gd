@@ -28,4 +28,4 @@ const REJECT_INPUT = "reject_input"
 const HIDE_PROMPT = "hide_prompt"
 
 static func create(type: String, data):
-  return {"type": type, "data": data}
+  return {"type": type, "protocolVersion": "", "data": data}

@@ -39,6 +39,8 @@ signal client_connected(client_id)
 signal client_disconnected(client_id)
 # warning-ignore:unused_signal
 signal client_message_received(message)
+# warning-ignore:unused_signal
+signal outdated_protocol_version
 
 # room
 # warning-ignore:unused_signal
