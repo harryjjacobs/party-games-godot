@@ -3,6 +3,9 @@ extends Node
 # development key - change in production before building
 const API_KEY = "development-key";
 
+# party games communication protocol
+const PROTOCOL_VERSION = 1.0
+
 const WS_PROTOCOL = 'ws'
 const WSS_PROTOCOL = 'wss'
 const HTTP_PROTOCOL = 'http'
@@ -89,6 +92,7 @@ func _process(_delta):
 	if connection_state == ConnectionState.CONNECTED and not _outgoing_message_queue.empty():
 		if not get_tree().paused or _outgoing_message_queue.front().type in _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES:
 			var message = _outgoing_message_queue.pop_front()
+			message["protocolVersion"] = PROTOCOL_VERSION
 			message.data["apiKey"] = API_KEY
 			var message_str = JSON.print(message)
 			Log.info("Sending message: %s" % message_str)
@@ -97,8 +101,19 @@ func _process(_delta):
 func _handle_message(message):
 	if not message.type:
 		Log.info("Invalid message received %s: (type not specified)" % message)
+		return
 	if not "data" in message:
 		Log.info("Invalid message received %s (data not specified)" % message)
+		return
+	if not "protocolVersion" in message:
+		Log.info("Invalid message recieved %s (protocolVersion not specified)" % message)
+		return
+	if message.protocolVersion != PROTOCOL_VERSION:
+		Log.warn("Protocol version mismatch. Received message with protocol version %f but ours is %f" % \
+			[message.protocolVersion, PROTOCOL_VERSION])
+		if message.protocolVersion > PROTOCOL_VERSION:
+			Events.emit_signal("outdated_protocol_version")
+
 	if message.type == Message.PLAYER_TO_HOST:
 		var handlers = _message_handlers.get(message.data.payload.type)
 		if not handlers:
@@ -129,6 +144,7 @@ func send_player(target, message):
 		client_id = target.client_id
 	else:
 		client_id = target
+	message["protocolVersion"] = PROTOCOL_VERSION
 	var host_to_player_message = Message.create(Message.HOST_TO_PLAYER, {
 		"playerClientId": client_id, 
 		"payload": message
