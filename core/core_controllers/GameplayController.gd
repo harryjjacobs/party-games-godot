@@ -13,6 +13,8 @@ func _ready():
 	_err = Events.connect("request_resume", self, "_on_request_resume")
 	_err = Events.connect("request_main_menu", self, "_on_request_main_menu")
 	_err = Events.connect("request_restart", self, "_on_request_restart")
+	_err = Events.connect("outdated_protocol_version", self, "_on_outdated_protocol_version")
+
 	assert(_err == OK)
 
 	_initialise_stage_stack()
@@ -98,3 +100,6 @@ func _on_request_main_menu(_error_msg):
 	
 func _on_request_restart(keep_players):
 	_restart_current_game(keep_players)
+
+func _on_outdated_protocol_version():
+	Events.emit_signal("request_main_menu", "Outdated application version. Please update game to the latest version.")

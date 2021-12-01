@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://core/game_stages/RoundBeginStage.tscn" type="PackedScene" id=1]
 [ext_resource path="res://musiq_game/ui/textures/MusiQBackground.png" type="Texture" id=2]
@@ -14,6 +14,85 @@ font_data = ExtResource( 4 )
 [sub_resource type="DynamicFont" id=2]
 size = 100
 font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("SubtitlePart1:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 549 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SubtitlePart2:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 549 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SubtitlePart3:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 234, 549 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "h2h_entrance"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("SubtitlePart1:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1031.81, 549 ), Vector2( 69.3665, 549 ), Vector2( 0, 549 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SubtitlePart2:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -166.474 ), Vector2( 0, -166.474 ), Vector2( 0, 600 ), Vector2( 0, 549 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SubtitlePart3:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.7, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1405.99, 549 ), Vector2( 1405.99, 549 ), Vector2( 190.617, 549 ), Vector2( 234, 549 ) ]
+}
 
 [node name="MusiQHead2HeadRoundBeginStage" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
@@ -32,20 +111,49 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Subtitle" type="Label" parent="." index="4"]
-margin_top = 535.0
-margin_right = 1918.0
-margin_bottom = 595.0
+[node name="SubtitlePart1" type="Label" parent="." index="4"]
+margin_top = 549.0
+margin_right = 1688.0
+margin_bottom = 669.0
 custom_fonts/font = SubResource( 2 )
-text = "HEAD 2 HEAD"
+text = "HEAD"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerIconDisplay" parent="." index="5" instance=ExtResource( 5 )]
+[node name="SubtitlePart2" type="Label" parent="." index="5"]
+margin_top = 549.0
+margin_right = 1918.0
+margin_bottom = 669.0
+custom_fonts/font = SubResource( 2 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SubtitlePart3" type="Label" parent="." index="6"]
+margin_left = 234.0
+margin_top = 549.0
+margin_right = 1918.0
+margin_bottom = 669.0
+custom_fonts/font = SubResource( 2 )
+text = "HEAD"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerIconDisplay" parent="." index="7" instance=ExtResource( 5 )]
 position = Vector2( 966.163, 830.612 )
 player_icon_scene = ExtResource( 6 )
 margin_x = 0.3
 margin_y = 0.487
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
+anims/RESET = SubResource( 3 )
+anims/h2h_entrance = SubResource( 4 )
