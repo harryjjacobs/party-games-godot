@@ -5,7 +5,7 @@
 [ext_resource path="res://meme_game/contest/MemeContestResponseBubble.gd" type="Script" id=3]
 [ext_resource path="res://meme_game/contest/VotesContainer.gd" type="Script" id=4]
 [ext_resource path="res://core/ui/icons/help.png" type="Texture" id=5]
-[ext_resource path="res://core/player/PlayerIcon.tscn" type="PackedScene" id=6]
+[ext_resource path="res://meme_game/player/MemePlayerIcon.tscn" type="PackedScene" id=6]
 [ext_resource path="res://core/ui/icons/cross.png" type="Texture" id=7]
 [ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=8]
 
@@ -97,8 +97,7 @@ position = Vector2( -830, 410 )
 
 [node name="PlayerIcon" parent="Pivot/PlayerIconContainer" instance=ExtResource( 6 )]
 visible = false
-position = Vector2( 0.0700359, 0.775364 )
-animate_entry = false
+position = Vector2( -4.03963, 4.24481 )
 
 [node name="PlayerIconPlaceholder" type="Sprite" parent="Pivot/PlayerIconContainer"]
 position = Vector2( -2.75775, 42.153 )
