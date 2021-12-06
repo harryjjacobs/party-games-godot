@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://core/player/PlayerIcon.gd" type="Script" id=1]
 [ext_resource path="res://meme_game/audio/pop_1.wav" type="AudioStream" id=2]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [  ]
 
 [sub_resource type="DynamicFontData" id=2]
 font_path = "res://core/ui/fonts/Montserrat-Black.ttf"
@@ -88,9 +91,10 @@ position = Vector2( -4.03963, 4.24479 )
 script = ExtResource( 1 )
 animate_entry = true
 
-[node name="PlayerSprite" type="Sprite" parent="."]
+[node name="PlayerSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 4.80456, -25.3418 )
 scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 1 )
 
 [node name="PointsLabel" type="Label" parent="."]
 visible = false
@@ -103,8 +107,8 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 225, 22 )
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
 custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
 text = "0 Pts"
 align = 1
 valign = 1
@@ -124,8 +128,8 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 225, 22 )
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
 custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
 text = "PLAYER NAME 123"
 align = 1
 valign = 1
@@ -150,8 +154,8 @@ grow_vertical = 2
 rect_rotation = 337.938
 rect_pivot_offset = Vector2( 90, 20 )
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "+5"
 align = 1
 valign = 1

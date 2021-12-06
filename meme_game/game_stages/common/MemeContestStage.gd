@@ -43,8 +43,8 @@ func enter(params):
 	emit_signal("request_exit", params)
 
 func exit():
+	.exit()
 	_hide_all_contest_response_displays()
-	return .exit()
 	
 func _initialise_response_displays():
 	assert(contest_response_display_paths)

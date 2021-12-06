@@ -120,7 +120,7 @@ func _get_displayed_texture_rect():
 	if tex_width > container_size.x:
 		tex_width = container_size.x
 		tex_height = orig_texture_size.y * tex_width / orig_texture_size.x
-		
+
 	rect.position = Vector2((container_size.x - tex_width) / 2, (container_size.y - tex_height) / 2)
 	rect.size = Vector2(tex_width, tex_height)
 	return rect

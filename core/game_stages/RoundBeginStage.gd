@@ -6,3 +6,6 @@ export(float) var duration = 4.0
 
 func enter(params):
 	.enter(params)
+
+func exit():
+	.exit()
