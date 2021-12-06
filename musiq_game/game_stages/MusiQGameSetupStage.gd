@@ -3,7 +3,7 @@ extends "res://core/game_stages/common/GameStage.gd"
 const MusiQTrackPlayer = preload("res://musiq_game/track_player/MusiQTrackPlayer.cs")
 const PlayableSearchResult = preload("res://musiq_game/game_stages/PlaylistSearchResult.tscn")
 const PlaylistItem = preload("res://musiq_game/game_stages/PlaylistItem.tscn")
-const LoadingDialog = preload("res://musiq_game/ui/dialogs/MusiqLoadingDialog.tscn")
+const LoadingDialog = preload("res://musiq_game/ui/dialogs/LoadingDialog.tscn")
 
 const _MIN_PLAYLISTS = 1
 const _MAX_SEARCH_RESULTS = 10
@@ -33,8 +33,8 @@ func enter(params):
 	_track_player_auth_helper = MusiQPlayerAuthHelper.new(_track_player)
 
 func exit():
+	.exit()
 	_track_player.disconnect("ready_to_play", self, "_on_track_player_ready")
-	return .exit()
 
 func _populate_playlist_search_results(results):
 	NodeUtils.remove_children(_search_results_container)
