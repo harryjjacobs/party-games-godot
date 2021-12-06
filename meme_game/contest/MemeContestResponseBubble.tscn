@@ -21,7 +21,6 @@ use_filter = true
 font_data = ExtResource( 8 )
 
 [node name="PlayerContestResponseBubble" type="Node2D"]
-visible = false
 position = Vector2( 960, 540 )
 script = ExtResource( 3 )
 meme_renderer_position = Vector2( -340, -440 )

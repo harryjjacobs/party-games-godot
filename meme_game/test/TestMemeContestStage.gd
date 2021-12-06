@@ -1,7 +1,7 @@
 extends Node
 
 onready var meme_contest_stage = $MemeContestStage
-onready var mock_server = $MockGameServer
+onready var mock_server = $MockMemeGameServer
 
 export(Resource) var meme_template
 

@@ -3,7 +3,8 @@ extends Node
 const _MAX_LOG_LENGTH = 450
 
 func debug(msg):
-	print_debug('[DEBUG] ' + _concat(msg))
+	if OS.is_debug_build(): 
+		print('[DEBUG] ' + _concat(msg))
 
 func info(msg):
 	print('[INFO] ' + _concat(msg))

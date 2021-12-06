@@ -23,11 +23,11 @@ func enter(params):
 	_begin_contest_sending()
 
 func exit():
-	.exit()
 	_countdown_display.stop()
 	NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_player_prompt_response")
 	_player_icon_display.clear()
+	return .exit()
 
 func _begin_contest_sending():
 	_pending_responses = 0
