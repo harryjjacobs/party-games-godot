@@ -108,10 +108,11 @@ func _handle_message(message):
 	if not "protocolVersion" in message:
 		Log.info("Invalid message recieved %s (protocolVersion not specified)" % message)
 		return
-	if message.protocolVersion != PROTOCOL_VERSION:
+	var message_protocol_version = float(message.protocolVersion)
+	if message_protocol_version != PROTOCOL_VERSION:
 		Log.warn("Protocol version mismatch. Received message with protocol version %f but ours is %f" % \
-			[message.protocolVersion, PROTOCOL_VERSION])
-		if message.protocolVersion > PROTOCOL_VERSION:
+			[message_protocol_version, PROTOCOL_VERSION])
+		if message_protocol_version > PROTOCOL_VERSION:
 			Events.emit_signal("outdated_protocol_version")
 
 	if message.type == Message.PLAYER_TO_HOST:

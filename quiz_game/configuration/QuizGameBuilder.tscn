@@ -1,0 +1,31 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://core/configuration/GameBuilder.gd" type="Script" id=1]
+[ext_resource path="res://quiz_game/game_stages/QuizGameLobbyStage.tscn" type="PackedScene" id=2]
+[ext_resource path="res://quiz_game/game_stages/setup_stage/QuizGameSetupStage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://quiz_game/game_stages/QuizGameRoundBeginStage.tscn" type="PackedScene" id=4]
+[ext_resource path="res://quiz_game/game_stages/answer_stage/QuizGameAnswerGameStage.tscn" type="PackedScene" id=5]
+[ext_resource path="res://quiz_game/game_stages/question_stage/QuizGameQuestionGameStage.tscn" type="PackedScene" id=6]
+[ext_resource path="res://quiz_game/game_stages/QuizGameRoundEndStage.tscn" type="PackedScene" id=7]
+[ext_resource path="res://quiz_game/game_stages/QuizGameEndStage.tscn" type="PackedScene" id=8]
+[ext_resource path="res://quiz_game/game_stages/QuizGameCreditsStage.tscn" type="PackedScene" id=9]
+
+[node name="QuizGameBuilder" type="Node2D"]
+script = ExtResource( 1 )
+_stages = [ NodePath("QuizGameSetupStage"), NodePath("QuizGameLobbyStage"), NodePath("QuizGameRoundBeginStage"), NodePath("QuizGameQuestionGameStage"), NodePath("QuizGameAnswerGameStage"), NodePath("QuizGameRoundEndStage"), NodePath("QuizGameEndStage"), NodePath("QuizGameCreditsStage") ]
+
+[node name="QuizGameSetupStage" parent="." instance=ExtResource( 3 )]
+
+[node name="QuizGameLobbyStage" parent="." instance=ExtResource( 2 )]
+
+[node name="QuizGameRoundBeginStage" parent="." instance=ExtResource( 4 )]
+
+[node name="QuizGameQuestionGameStage" parent="." instance=ExtResource( 6 )]
+
+[node name="QuizGameAnswerGameStage" parent="." instance=ExtResource( 5 )]
+
+[node name="QuizGameRoundEndStage" parent="." instance=ExtResource( 7 )]
+
+[node name="QuizGameEndStage" parent="." instance=ExtResource( 8 )]
+
+[node name="QuizGameCreditsStage" parent="." instance=ExtResource( 9 )]

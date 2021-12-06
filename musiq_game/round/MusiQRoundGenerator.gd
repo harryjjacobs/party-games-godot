@@ -14,11 +14,11 @@ const _max_track_count = {
 	},
 	GameDurationProfile.MEDIUM: {
 		MusiQContest.ContestType.ALLVALL: 10,
-		MusiQContest.ContestType.HEAD2HEAD: 3
+		MusiQContest.ContestType.HEAD2HEAD: 2
 	},
 	GameDurationProfile.LONG: {
 		MusiQContest.ContestType.ALLVALL: 15,
-		MusiQContest.ContestType.HEAD2HEAD: 3
+		MusiQContest.ContestType.HEAD2HEAD: 2
 	}
 }
 
