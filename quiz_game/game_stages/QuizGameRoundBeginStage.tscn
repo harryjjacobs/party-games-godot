@@ -1,0 +1,38 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://quiz_game/game_stages/QuizGameRoundBeginStage.gd" type="Script" id=1]
+[ext_resource path="res://core/game_stages/RoundBeginStage.tscn" type="PackedScene" id=2]
+[ext_resource path="res://meme_game/game_stages/SimpleSubtitle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://meme_game/game_stages/SimpleTitle.tscn" type="PackedScene" id=4]
+[ext_resource path="res://quiz_game/textures/wooden-texture-gb10000acb_1920.jpg" type="Texture" id=5]
+[ext_resource path="res://quiz_game/ui/fonts/PermanentMarker-Regular.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 300
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 6 )
+
+[node name="QuizGameRoundBeginStage" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+
+[node name="Background" parent="." index="0"]
+texture = ExtResource( 5 )
+
+[node name="Title" parent="." index="3" instance=ExtResource( 4 )]
+custom_fonts/font = SubResource( 1 )
+text = "Round x"
+
+[node name="Subtitle" parent="." index="4" instance=ExtResource( 3 )]
+margin_left = 8.04187
+margin_top = 678.139
+margin_right = 1913.04
+margin_bottom = 821.139
+custom_fonts/font = SubResource( 2 )
+text = "Complete the prompts on your device"

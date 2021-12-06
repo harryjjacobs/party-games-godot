@@ -3,9 +3,8 @@
 [ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://core/game_stages/common/CountdownDisplay.gd" type="Script" id=2]
 
-
-[sub_resource type="DynamicFont" id=1]
-size = 120
+[sub_resource type="DynamicFont" id=3]
+size = 100
 outline_size = 6
 outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
@@ -34,15 +33,15 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CountdownLabel" type="Label" parent="."]
-margin_right = 162.0
+margin_right = 135.0
 margin_bottom = 148.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "60"
-valign = 2
+valign = 1
 
 [node name="TextLabel" type="Label" parent="."]
-margin_left = 182.0
+margin_left = 155.0
 margin_right = 321.0
 margin_bottom = 148.0
 size_flags_horizontal = 3
@@ -51,4 +50,5 @@ custom_fonts/font = SubResource( 2 )
 text = "seconds
 remaining"
 valign = 1
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

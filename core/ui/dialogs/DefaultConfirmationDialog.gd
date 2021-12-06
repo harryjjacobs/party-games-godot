@@ -1,9 +1,9 @@
 extends PopupDialog
 
-onready var _title = $Title
-onready var _subtitle = $Subtitle
-onready var _yes_btn = $HBoxContainer/Yes
-onready var _no_btn = $HBoxContainer/No
+onready var _title = $VBoxContainer/Title
+onready var _subtitle = $VBoxContainer/Subtitle
+onready var _yes_btn = $VBoxContainer/HBoxContainer/Yes
+onready var _no_btn = $VBoxContainer/HBoxContainer/No
 
 var title = "Are you sure?" setget set_title
 var subtitle = "" setget set_subtitle
@@ -19,9 +19,9 @@ func _ready():
 	set_no_text(no_text)
 
 func _on_about_to_show():
-	_title.add_font_override("font", get_font("large", "Fonts").duplicate())
-	_subtitle.add_font_override("font", get_font("normal", "Fonts").duplicate())
-
+	_title.add_font_override("font", get_font("normal", "Fonts").duplicate())
+	_subtitle.add_font_override("font", get_font("small", "Fonts").duplicate())
+	
 func set_title(title_text):
 	title = title_text
 	if _title:

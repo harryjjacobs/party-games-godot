@@ -40,7 +40,7 @@ func exit():
 	Events.disconnect("game_paused", self, "_on_game_paused")
 	Events.disconnect("game_resumed", self, "_on_game_resumed")
 	_parameters.track_player.disconnect("ready_to_play", self, "_on_player_ready_to_play")
-	.exit()
+	return .exit()
 
 func _do_contest(contest):
 	_player_icon_display.clear()
