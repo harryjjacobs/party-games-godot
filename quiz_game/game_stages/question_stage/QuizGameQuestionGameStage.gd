@@ -44,7 +44,7 @@ func _on_response_received(client_id, message):
 		
 	Log.info("Prompt response received from %s (%s)" % [client_id, player.username])
 	
-	if _current_question.id != message.data.contestId:
+	if _current_question.id != message.data.id:
 		Log.warn("Invalid ID received for current question. Ignoring")
 		return
 		
@@ -66,7 +66,7 @@ func _send_question_prompt_to_players():
 	NetworkInterface.send_players(Room.players, Message.create(Message.REQUEST_INPUT, {
 		"promptType": "multichoice",	# input type
 		"promptData": {	# data that corresponds to input type
-			"contestId": _current_question.id,
+			"id": _current_question.id,
 			"prompt": _current_question.trivia.question,
 			"options": options
 		}

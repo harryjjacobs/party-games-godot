@@ -62,7 +62,7 @@ func _on_mock_server_message_received(conn_id, message):
 		yield(get_tree().create_timer(5 * randf() + 1), "timeout")
 
 		var response_data =	{
-			"contestId": message.data.payload.data.promptData.contestId,
+			"id": message.data.payload.data.promptData.id,
 		}
 
 		var rand = randf()

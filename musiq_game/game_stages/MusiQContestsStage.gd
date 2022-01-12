@@ -56,7 +56,7 @@ func _do_contest(contest):
 		NetworkInterface.send_player(player, Message.create(Message.REQUEST_INPUT, {
 			"promptType": "song_search",	# input type
 			"promptData": {	# data that corresponds to input type
-				"contestId": contest.id,
+				"id": contest.id,
 				"apiAccessToken": _parameters.track_player.CurrentAccessToken,
 			}
 		}))
