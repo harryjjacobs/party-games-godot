@@ -60,7 +60,7 @@ func _server_message_handler(conn_id, message):
 		"payload": {
 			"type": Message.PROMPT_RESPONSE,
 			"data": {
-				"contestId": message.data.payload.data.promptData.id,
+				"id": message.data.payload.data.promptData.id,
 				"captions": captions
 			}
 		}

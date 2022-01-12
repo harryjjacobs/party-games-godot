@@ -17,11 +17,16 @@ func _ready():
 	var player_a = Player.new("0000-0000", "Player a")
 	var player_b = Player.new("1111-1111", "Player b")
 	var player_c = Player.new("2222-2222", "Player c")
-	Room.players = [player_a, player_b, player_c]
+	var player_d = Player.new("3333-3333", "Player d")
+	var player_e = Player.new("4444-4444", "Player e")	
+	Room.players = [player_a, player_b, player_c, player_d, player_e]
 	_test_round = Round.new()
 	_test_round.contests = [
 		_build_contest(player_a, player_b),
-		_build_contest(player_b, player_a)
+		_build_contest(player_a, player_c),
+		_build_contest(player_e, player_d),
+		_build_contest(player_c, player_d),
+		_build_contest(player_e, player_b),
 	]
 
 	meme_contest_stage.connect("request_exit", self, "_on_exit_requested")
@@ -83,7 +88,7 @@ func _server_message_handler(conn_id, message):
 		"payload": {
 			"type": Message.PROMPT_RESPONSE,
 			"data": {
-				"contestId": message.data.payload.data.promptData.contestId,
+				"id": message.data.payload.data.promptData.id,
 				"choice": len(message.data.payload.data.promptData.options) - 1
 			}
 		}

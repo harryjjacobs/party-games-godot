@@ -15,6 +15,8 @@ text_color = Color( 0.976471, 0.956863, 0.980392, 1 )
 background_color = Color( 1, 1, 1, 0 )
 center_h = true
 center_v = false
+uppercase = true
+autosize = true
 outline_text = false
 text = ""
 

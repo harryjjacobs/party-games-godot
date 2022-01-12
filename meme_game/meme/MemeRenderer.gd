@@ -2,8 +2,6 @@ tool
 extends PanelContainer
 class_name MemeRenderer
 
-const text_outline_size = 3
-
 export(bool) var debug_mode = false
 export(float) var alpha = 1.0 setget _set_alpha, _get_alpha
 
@@ -85,7 +83,7 @@ func _create_labels():
 		label.rect_size = scaling_rect.size * Vector2(caption.width, caption.height)
 		label.rect_rotation = caption.rotation
 		var modified_font = label.get_font("font").duplicate()
-		modified_font.outline_size = text_outline_size if caption.outline_text else 0
+		modified_font.outline_size = caption.outline_size if caption.outline_text else 0
 		var outline_color = caption.text_color.inverted()
 		label.add_color_override("font_outline_modulate", outline_color)
 		label.add_font_override("font", modified_font)

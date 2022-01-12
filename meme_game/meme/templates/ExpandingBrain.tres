@@ -15,6 +15,8 @@ text_color = Color( 0, 0, 0, 1 )
 background_color = Color( 1, 1, 1, 0 )
 center_h = false
 center_v = false
+uppercase = true
+autosize = true
 outline_text = false
 text = ""
 
@@ -29,6 +31,8 @@ text_color = Color( 0, 0, 0, 1 )
 background_color = Color( 1, 1, 1, 0 )
 center_h = false
 center_v = false
+uppercase = true
+autosize = true
 outline_text = false
 text = ""
 
@@ -43,6 +47,8 @@ text_color = Color( 0, 0, 0, 1 )
 background_color = Color( 1, 1, 1, 0 )
 center_h = false
 center_v = false
+uppercase = true
+autosize = true
 outline_text = false
 text = ""
 
@@ -57,6 +63,8 @@ text_color = Color( 0, 0, 0, 1 )
 background_color = Color( 1, 1, 1, 0 )
 center_h = false
 center_v = false
+uppercase = true
+autosize = true
 outline_text = false
 text = ""
 

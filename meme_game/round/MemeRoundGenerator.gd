@@ -18,14 +18,13 @@ func next(contest_type, vote_weight = 1):
 			Log.error("Invalid ContestType: %s" % contest_type)
 	var r = Round.new()
 	r.contests = contests
-	_rounds_generated_count += 1
 	return r
 
 # Generate two contests per player per round
 # whereby players are matched against each other
 # in an even manner
 func _generate_two_player_contests(contest_type, vote_weight):
-	var pairs = ._generate_player_pairs(_players)
+	var pairs = ._generate_player_pairs(_players, 1)
 	var contests = Array()
 	var builder_context = _contest_builder.using_context()
 	for pair in pairs:
