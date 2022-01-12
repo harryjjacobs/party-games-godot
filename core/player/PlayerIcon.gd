@@ -13,6 +13,7 @@ onready var sprite = $PlayerSprite
 onready var tween: Tween = $Tween
 onready var point_change_label: Label = $PointChangeLabel
 onready var points_label: Label = $PointsLabel
+onready var animation_player = $AnimationPlayer
 
 var _points_label_text = "%d Pts"
 var _player: Player
@@ -26,13 +27,21 @@ func _initialise():
 		sprite.modulate = _player.color
 	point_change_label.visible = false
 	points_label.visible = false
-	if animate_entry: 
-		_animate_entry()
 
 func init(player: Player):
 	_player = player
 	if is_inside_tree():
 		_initialise()
+
+func show():
+	.show()	
+	if animate_entry:
+		yield(_animate_entry(), "completed")
+	
+func hide():
+	if animate_entry:
+		yield(_animate_exit(), "completed")
+	.hide()
 
 func tween_position_to(new_position: Vector2):
 	var _x = tween.interpolate_property(self, "position",
@@ -49,10 +58,18 @@ func tween_scale_to(new_scale: float):
 	yield(tween, "tween_completed")
 
 func _animate_entry():
-	$AnimationPlayer.play("IconEntrance")
+	if Engine.is_editor_hint():
+		yield(get_tree(), "idle_frame")		
+		return
+	animation_player.play("IconEntrance")
+	yield(animation_player, "animation_finished")
 
 func _animate_exit():
-	$AnimationPlayer.play("IconExit")
+	if Engine.is_editor_hint():
+		yield(get_tree(), "idle_frame")			
+		return
+	animation_player.play("IconExit")
+	yield(animation_player, "animation_finished")	
 
 func show_points(show, points = null):
 	if points != null:

@@ -35,19 +35,23 @@ func open(player: Player, meme_template: MemeTemplate, captions: Array = []):
 	scale = _original_scale
 	_no_captions_display.visible = len(captions) == 0
 	show_votes([])
-	show_player_icon(false)
+	hide_player_icon()
 	_update_positions()
 	if not Engine.editor_hint:
 		_tween_entry()
 
 func close():
 	visible = false
-	show_player_icon(false)
+	hide_player_icon()
 	_update_positions()
 
-func show_player_icon(show: bool):
-	_player_icon.visible = show
-	_player_icon_placeholder.visible = !show
+func hide_player_icon():
+	_player_icon.visible = false
+	_player_icon_placeholder.visible = true
+
+func show_player_icon():
+	_player_icon.show()
+	_player_icon_placeholder.visible = false
 
 func show_votes(players):
 	_votes_container.set_players(players)
@@ -59,6 +63,8 @@ func emphasise(state):
 	_tween_emphasis(state)
 
 func _update_positions():
+	if not _speech_bubble_sprite:
+		return
 	_speech_bubble_sprite.flip_h = flip_h
 	if flip_h:
 		_speech_bubble_sprite.position = Vector2(-1, 1) * speech_bubble_position
