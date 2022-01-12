@@ -68,11 +68,13 @@ func _hide_all_contest_response_displays():
 		display.close()
 
 func _show_voting_results():
+	if current_contest.responses.empty():
+		return
 	for i in len(current_contest.players):
 		var player = current_contest.players[i]
 		var display = _contest_response_displays[i]
 		var response = _find_response_by_player(player, current_contest.responses)
-		display.show_player_icon(true)
+		display.show_player_icon()
 		var voters = Array()
 		for vote in current_contest.votes:
 			if vote.choice == response:
@@ -122,7 +124,9 @@ func _get_winning_responses():
 func _voting_process():
 	yield(get_tree(), "idle_frame")	# so that this function can be yielded
 	Log.info("[%s] Voting begin" % name)
-	if len(current_contest.responses) == 1:	# TODO: also check case where all responses are empty
+	if current_contest.responses.empty():
+		return
+	elif len(current_contest.responses) == 1:	# TODO: also check case where all responses are empty
 		# only one response received. default everyone's votes to this response
 		for player in Room.players:
 			if player in current_contest.players:
@@ -160,7 +164,7 @@ func _send_vote_prompts():
 		var message = Message.create(Message.REQUEST_INPUT, {
 			"promptType": "multichoice",
 			"promptData": {
-				"contestId": current_contest.id,
+				"id": current_contest.id,
 				"prompt": "Vote for your favourite",
 				"options": options
 			}
@@ -168,7 +172,7 @@ func _send_vote_prompts():
 		NetworkInterface.send_player(player.client_id, message)
 
 func _on_vote_received(client_id, message):
-	if current_contest.id == message.data.contestId:
+	if current_contest.id == message.data.id:
 		var result = _check_vote_validity(client_id, message)
 		if result != _VoteValidity.OK:
 			Log.info("Invalid vote received from %s. Reason: %s" % [client_id, _VoteValidity.keys()[result]])
