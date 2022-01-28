@@ -7,7 +7,8 @@ export(int) var width
 export(int) var height
 export(float) var rotation
 export(String) var text
-export(String) var font_family = ''
+export(String) var font_family = 'Anton'
+export(String) var font_weight = 400
 export(bool) var uppercase = true
 export(bool) var autosize = true
 export(int) var font_size

@@ -20,6 +20,8 @@ var _questions_per_round
 
 func enter(params):
 	.enter(params)
+	for player in Room.players:
+		player.reset()
 	_populate_categories()
 	_update_playability()
 	_update_questions_per_round(RoundLength.MEDIUM)

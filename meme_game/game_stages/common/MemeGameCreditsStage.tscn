@@ -104,29 +104,20 @@ size_flags_stretch_ratio = 5.0
 alignment = 1
 
 [node name="Title" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="0"]
-margin_top = 264.0
+margin_top = 295.0
 margin_right = 527.0
-margin_bottom = 365.0
+margin_bottom = 396.0
 custom_fonts/font = SubResource( 4 )
 text = "A Jabobs Production"
 align = 1
 valign = 1
 
 [node name="Credits1" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="1"]
-margin_top = 369.0
+margin_top = 400.0
 margin_right = 527.0
-margin_bottom = 427.0
+margin_bottom = 458.0
 custom_fonts/font = SubResource( 5 )
-text = "Design: Harry Jacobs"
-align = 1
-valign = 1
-
-[node name="Credits2" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="2"]
-margin_top = 431.0
-margin_right = 527.0
-margin_bottom = 489.0
-custom_fonts/font = SubResource( 5 )
-text = "Programming: Harry Jacobs"
+text = "Design & Programming: Harry Jacobs"
 align = 1
 valign = 1
 

@@ -69,6 +69,7 @@ func _hide_all_contest_response_displays():
 
 func _show_voting_results():
 	if current_contest.responses.empty():
+		yield(get_tree(), "idle_frame")
 		return
 	for i in len(current_contest.players):
 		var player = current_contest.players[i]

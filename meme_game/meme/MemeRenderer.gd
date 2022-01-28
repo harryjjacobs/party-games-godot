@@ -10,6 +10,15 @@ onready var captions_parent = $Captions
 
 const label_scene = preload("res://meme_game/meme/MemeCaptionLabel.tscn")
 
+const FONT_LOOKUP = {
+	"Anton": {
+		400: preload("res://core/ui/fonts/Anton-Regular.tres")
+	},
+	"Ubuntu": {
+		700: preload("res://core/ui/fonts/Ubuntu-Bold.tres")
+	}
+}
+
 var _meme_template: MemeTemplate
 var _texture
 var _captions: Array
@@ -82,7 +91,19 @@ func _create_labels():
 		label.rect_position = scaling_rect.position + scaling_rect.size * Vector2(caption.x, caption.y)
 		label.rect_size = scaling_rect.size * Vector2(caption.width, caption.height)
 		label.rect_rotation = caption.rotation
-		var modified_font = label.get_font("font").duplicate()
+		var modified_font
+		if FONT_LOOKUP.has(caption.font_family):
+			var weights = FONT_LOOKUP[caption.font_family]
+			var font
+			if weights.has(caption.font_weight):
+				font = weights[caption.font_weight]
+			elif weights.has(400):
+				font = weights[400]
+			else:
+				font = weights[0]
+			modified_font = font.duplicate()
+		else:
+			modified_font = label.get_font("font").duplicate()
 		modified_font.outline_size = caption.outline_size if caption.outline_text else 0
 		var outline_color = caption.text_color.inverted()
 		label.add_color_override("font_outline_modulate", outline_color)

@@ -61,6 +61,8 @@ func _animate_entry():
 	if Engine.is_editor_hint():
 		yield(get_tree(), "idle_frame")		
 		return
+	if not animation_player:
+		yield(animation_player, "ready")
 	animation_player.play("IconEntrance")
 	yield(animation_player, "animation_finished")
 
