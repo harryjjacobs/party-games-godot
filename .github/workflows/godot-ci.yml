@@ -59,6 +59,7 @@ jobs:
 
   export-windows-installer:
     name: Windows Installer Export
+    needs: [export-windows]
     runs-on: windows-latest
     steps:
       - uses: actions/download-artifact@v2
