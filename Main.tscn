@@ -11,11 +11,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="UI" parent="CanvasLayer" instance=ExtResource( 2 )]
-
 [node name="MainMenu" parent="." instance=ExtResource( 1 )]
 margin_right = 1920.0
 margin_bottom = 1080.0
 theme = ExtResource( 4 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource( 2 )]
