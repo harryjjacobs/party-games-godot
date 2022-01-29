@@ -3,6 +3,9 @@ extends "res://core/game_stages/common/GameStage.gd"
 func enter(params):
 	.enter(params)
 
+func exit():
+	.exit()
+
 func _on_play_again_button_pressed():
 	Events.emit_signal("request_restart", false)
 

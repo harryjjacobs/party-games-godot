@@ -26,7 +26,6 @@ visible = false
 emphasis_scale = Vector2( 1.02, 1.02 )
 
 [node name="ResponseBubbleRight" parent="." index="5" instance=ExtResource( 4 )]
-visible = false
 flip_h = true
 emphasis_scale = Vector2( 1.02, 1.02 )
 

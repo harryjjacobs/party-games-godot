@@ -1,9 +1,9 @@
 extends PopupDialog
 
-onready var _title = $VBoxContainer/Title
-onready var _subtitle = $VBoxContainer/Subtitle
-onready var _yes_btn = $VBoxContainer/HBoxContainer/Yes
-onready var _no_btn = $VBoxContainer/HBoxContainer/No
+onready var _title = $Title
+onready var _subtitle = $Subtitle
+onready var _yes_btn = $HBoxContainer/Yes
+onready var _no_btn = $HBoxContainer/No
 
 var title = "Are you sure?" setget set_title
 var subtitle = "" setget set_subtitle

@@ -14,8 +14,6 @@ export(PackedScene) var player_icon_scene
 export(PackedScene) var ranking_label_scene
 export(float, 0.0, 1.0) var margin_x = 0.1
 export(float, 0.0, 1.0) var margin_y = 0.1
-export(float, 0.0, 1.0) var x_axis_wave
-export(float, 0.0, 1.0) var y_axis_wave
 export(float, 0.0, 10.0) var player_icon_scale = 1.0
 export(float, 0.0, 2.0) var max_ranking_label_scale = 1.0
 export(float, 0.0, 1.0) var min_ranking_label_scale = 0.5
@@ -46,7 +44,7 @@ func _show_editor_preview_icons(quantity):
 		return
 	clear()
 	for i in range(0, quantity):
-		var player = Player.new("", String(i))
+		var player = Player.new("", i)
 		add_player(player)
 
 func add_player(player: Player, animate = true):
@@ -147,24 +145,19 @@ func _calculate_player_position(player_icon: PlayerIcon):
 		return
 	match type:
 		LayoutType.RING:
-			var width = _screen_size.x * (1 - margin_x)
-			var height = _screen_size.y * (1 - margin_y)		
 			var radius_scale = Vector2(1 - margin_x, 1 - margin_y)
 			var angle_increment = (2 * PI) / _player_icon_container.get_child_count()
 			var x = _screen_size.x / 2 * radius_scale.x * sin(angle_increment * index)
-			x += y_axis_wave * width / 2 * ((index % 2) * 2 - 1)
 			var y = _screen_size.y / 2 * radius_scale.y * -cos(angle_increment * index)
-			y += x_axis_wave * height / 2 * ((index % 2) * 2 - 1)
 			return Vector2(x, y)
 		LayoutType.ROW:
 			var count = _player_icon_container.get_child_count()
 			var width = _screen_size.x * (1 - margin_x)
-			var height = _screen_size.y * (1 - margin_y)			
 			var separation = 0
 			if count > 1:
 				separation = width / (count - 1)
 			var x = -((count - 1) * separation) / 2 + separation * index
-			var y = x_axis_wave * height / 2 * ((index % 2) * 2 - 1)
+			var y = 0
 			return Vector2(x, y)
 		LayoutType.LEADERBOARD:
 			var column_count = min(_player_icon_container.get_child_count(), max_leaderboard_columns)
@@ -181,11 +174,9 @@ func _calculate_player_position(player_icon: PlayerIcon):
 			if row_count > 1:
 				spacing_y = min(height / (row_count - 1), spacing_x)
 			var x = -width / 2 + spacing_x * column_index
-			x += y_axis_wave * height / 2 * ((index % 2) * 2 - 1)
 			var y = 0
 			if row_count > 1:
 				y = -((row_count - 1) * spacing_y) / 2 + spacing_y * row_index
-			y += x_axis_wave * height / 2 * ((index % 2) * 2 - 1)
 			return Vector2(x, y)
 
 func emphasise_and_center_player(player: Player):

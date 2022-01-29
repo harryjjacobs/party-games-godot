@@ -31,12 +31,12 @@ func enter(params):
 	BackgroundMusic.play()
 
 func exit():
+	.exit()
 	Room.lock()
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_prompt_response")
 	if Events.is_connected("player_joined_room", self, "_on_player_joined_room"):
 		Events.disconnect("player_joined_room", self, "_on_player_joined_room")
 	BackgroundMusic.skip_track()
-	return .exit()
 
 func _generate_qr_code(url):
 	if qr_code_service.request_qr_code(url, QR_CODE_SIZE):

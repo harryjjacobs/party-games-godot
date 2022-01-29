@@ -2,7 +2,7 @@
 
 [ext_resource path="res://core/player/PlayerIcon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://meme_game/player/doge.png" type="Texture" id=3]
+[ext_resource path="res://meme_game/player/MemePlayerIconSpriteFrames.tres" type="SpriteFrames" id=3]
 
 [sub_resource type="DynamicFont" id=2]
 size = 35

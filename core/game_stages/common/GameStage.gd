@@ -1,9 +1,6 @@
 extends Node2D
-class_name GameStage
 
 signal request_exit
-
-enum StageExitTransition { NEXT_STAGE, REPEAT_STAGE, REPEAT_GROUP }
 
 onready var _timer = $Timer
 onready var _audio_player = $AudioStreamPlayer
@@ -15,15 +12,12 @@ func enter(params):
 	_parameters = params
 
 func exit():
-	return StageExitTransition.NEXT_STAGE
+	pass
 
 func set_timeout(duration, params):
 	if not _timer.is_connected("timeout", self, "_on_timeout"):
 		_timer.connect("timeout", self, "_on_timeout", [params])
 	_timer.start(duration)
-
-func get_group_name():
-	return ""
 
 func _on_timeout(params):
 	_timer.stop()
