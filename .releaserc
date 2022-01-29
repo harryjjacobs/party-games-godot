@@ -26,6 +26,10 @@
           {
             "path": "build/*windows.zip",
             "label": "Windows release"
+          },
+          {
+            "path": "build/*Windows-Installer.exe",
+            "label": "Windows installer release"
           }
         ]
       }

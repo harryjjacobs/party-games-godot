@@ -6,7 +6,7 @@ on:
 
 env:
   GODOT_VERSION: 3.4
-  EXPORT_NAME: jabobs-party-pack
+  EXPORT_NAME: jacobs-party-pack
 
 jobs:
   export-linux:
@@ -28,7 +28,7 @@ jobs:
           mkdir -v -p build/linux
           godot -v --export "Linux/X11" ./build/linux/$EXPORT_NAME.x86_64
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: linux
           path: build/linux
@@ -52,15 +52,38 @@ jobs:
           mkdir -v -p build/windows
           godot -v --export "Windows Desktop" ./build/windows/$EXPORT_NAME.exe
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: windows
           path: build/windows
 
+  export-windows-installer:
+    name: Windows Installer Export
+    needs: [export-windows]
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - uses: actions/download-artifact@v2
+        with:
+          name: windows
+          path: build/windows
+      - name: Setup
+        run: choco install innosetup
+      - name: Windows Installer Creation
+        run: '& "C:\Program Files (x86)\Inno Setup 6\iscc.exe" windows-installer-script.iss'
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-installer
+          path: build/windows-installer
+
   release:
     name: Release
     if: ${{ always() }}
-    needs: [export-linux, export-windows]
+    needs: [export-linux, export-windows, export-windows-installer]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -70,7 +93,9 @@ jobs:
         with:
           path: build/
       - name: Zip export artifacts
-        run: for i in build/*/; do (cd "$i" && zip -r "../../${i%/}.zip" .); done
+        run: |
+          mv build/windows-installer/*.exe build && rm -r build/windows-installer
+          for i in build/*/; do (cd "$i" && zip -r "../../${i%/}.zip" .); done
         shell: bash
       - uses: actions/setup-node@v1
         with:
