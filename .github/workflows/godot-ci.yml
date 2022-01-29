@@ -68,7 +68,7 @@ jobs:
       - name: Setup
         run: choco install innosetup
       - name: Windows Installer Creation
-        run: "C:\Program Files (x86)\Inno Setup 6\iscc.exe" windows-installer-script.iss
+        run: '"C:\Program Files (x86)\Inno Setup 6\iscc.exe" windows-installer-script.iss'
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
