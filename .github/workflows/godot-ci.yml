@@ -62,6 +62,10 @@ jobs:
     needs: [export-windows]
     runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
       - uses: actions/download-artifact@v2
         with:
           name: windows
