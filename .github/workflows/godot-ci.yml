@@ -6,7 +6,7 @@ on:
 
 env:
   GODOT_VERSION: 3.4
-  EXPORT_NAME: jabobs-party-pack
+  EXPORT_NAME: jacobs-party-pack
 
 jobs:
   export-linux:
