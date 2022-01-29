@@ -40,6 +40,10 @@ font_data = ExtResource( 4 )
 [node name="MemeGameCreditsStage" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
+[node name="Background" parent="." index="0"]
+margin_right = 3009.0
+margin_bottom = 1813.0
+
 [node name="HBoxContainer" type="HBoxContainer" parent="." index="3"]
 margin_left = 50.0
 margin_top = 50.0
@@ -55,7 +59,7 @@ __meta__ = {
 
 [node name="MemeRendererContainer" type="VBoxContainer" parent="HBoxContainer" index="0"]
 material = SubResource( 2 )
-margin_right = 1263.0
+margin_right = 1104.0
 margin_bottom = 980.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -65,7 +69,7 @@ size_flags_stretch_ratio = 2.0
 anchor_top = 0.0
 anchor_bottom = 0.0
 margin_top = 0.0
-margin_right = 1263.0
+margin_right = 1104.0
 margin_bottom = 813.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -73,7 +77,7 @@ size_flags_stretch_ratio = 10.0
 
 [node name="MemeInformationPanel" type="VBoxContainer" parent="HBoxContainer/MemeRendererContainer" index="1"]
 margin_top = 817.0
-margin_right = 1263.0
+margin_right = 1104.0
 margin_bottom = 980.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -81,7 +85,7 @@ size_flags_stretch_ratio = 2.0
 
 [node name="PlayerNameLabel" type="Label" parent="HBoxContainer/MemeRendererContainer/MemeInformationPanel" index="0"]
 margin_top = 9.0
-margin_right = 1263.0
+margin_right = 1104.0
 margin_bottom = 153.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -91,39 +95,39 @@ align = 1
 valign = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" index="1"]
-margin_left = 1293.0
+margin_left = 1134.0
 margin_right = 1820.0
 margin_bottom = 980.0
 
 [node name="CreditsContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" index="0"]
-margin_right = 527.0
-margin_bottom = 753.0
+margin_right = 686.0
+margin_bottom = 678.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 alignment = 1
 
 [node name="Title" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="0"]
-margin_top = 295.0
-margin_right = 527.0
-margin_bottom = 396.0
+margin_top = 257.0
+margin_right = 686.0
+margin_bottom = 358.0
 custom_fonts/font = SubResource( 4 )
 text = "A Jabobs Production"
 align = 1
 valign = 1
 
 [node name="Credits1" type="Label" parent="HBoxContainer/VBoxContainer/CreditsContainer" index="1"]
-margin_top = 400.0
-margin_right = 527.0
-margin_bottom = 458.0
+margin_top = 362.0
+margin_right = 686.0
+margin_bottom = 420.0
 custom_fonts/font = SubResource( 5 )
 text = "Design & Programming: Harry Jacobs"
 align = 1
 valign = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" index="1"]
-margin_top = 757.0
-margin_right = 527.0
+margin_top = 682.0
+margin_right = 686.0
 margin_bottom = 980.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -137,8 +141,8 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 527.0
-margin_bottom = 61.0
+margin_right = 686.0
+margin_bottom = 86.0
 text = "Play again with the same players?"
 
 [node name="PlayAgainButton" parent="HBoxContainer/VBoxContainer/VBoxContainer" index="1" instance=ExtResource( 5 )]
@@ -147,9 +151,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 81.0
-margin_right = 527.0
-margin_bottom = 142.0
+margin_top = 106.0
+margin_right = 686.0
+margin_bottom = 192.0
 text = "Start a new game of Untitled Meme Game?"
 
 [node name="ExitToMainMenuButton" parent="HBoxContainer/VBoxContainer/VBoxContainer" index="2" instance=ExtResource( 5 )]
@@ -158,9 +162,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 162.0
-margin_right = 527.0
-margin_bottom = 223.0
+margin_top = 212.0
+margin_right = 686.0
+margin_bottom = 298.0
 text = "Exit"
 
 [node name="Tween" type="Tween" parent="." index="4"]

@@ -56,7 +56,7 @@ func show_player_icon():
 func show_votes(players):
 	_votes_container.set_players(players)
 
-func show_point_change(amount):
+func show_point_award(amount):
 	_player_icon.animate_point_award(amount)
 
 func emphasise(state):

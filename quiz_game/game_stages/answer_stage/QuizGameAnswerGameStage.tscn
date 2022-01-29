@@ -37,7 +37,7 @@ margin_right = 1800.0
 margin_bottom = 558.0
 
 [node name="PlayerIconDisplay" parent="VBoxContainer" index="2" instance=ExtResource( 4 )]
-position = Vector2( 960, 805.538 )
+position = Vector2( 910, 805.538 )
 player_icon_scene = ExtResource( 6 )
 margin_x = 0.191
 x_axis_wave = 0.161
