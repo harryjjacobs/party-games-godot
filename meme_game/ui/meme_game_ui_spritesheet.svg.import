@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ui.png-cbae5c5e22f46c8405998d3704fd8f32.stex"
+path="res://.import/meme_game_ui_spritesheet.svg-3443061709ca4533524c36a9e58008c0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://meme_game/ui/ui.png"
-dest_files=[ "res://.import/ui.png-cbae5c5e22f46c8405998d3704fd8f32.stex" ]
+source_file="res://meme_game/ui/meme_game_ui_spritesheet.svg"
+dest_files=[ "res://.import/meme_game_ui_spritesheet.svg-3443061709ca4533524c36a9e58008c0.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

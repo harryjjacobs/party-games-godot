@@ -50,8 +50,8 @@ anchor_bottom = 0.5
 margin_left = -219.0
 margin_top = -83.0
 margin_right = 220.0
-margin_bottom = 350.0
-custom_constants/separation = 40
+margin_bottom = 284.0
+custom_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -64,7 +64,7 @@ anchor_bottom = 0.0
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 439.0
-margin_bottom = 117.0
+margin_bottom = 115.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Play"
@@ -75,9 +75,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 157.0
+margin_top = 125.0
 margin_right = 439.0
-margin_bottom = 275.0
+margin_bottom = 241.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Settings"
@@ -88,15 +88,14 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 315.0
+margin_top = 251.0
 margin_right = 439.0
-margin_bottom = 433.0
+margin_bottom = 367.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Exit"
 
 [node name="ConfirmationDialog" parent="." instance=ExtResource( 5 )]
-visible = false
 
 [node name="GameSelectionDialog" parent="." instance=ExtResource( 6 )]
 visible = false
