@@ -94,7 +94,7 @@ jobs:
           path: build/
       - name: Zip export artifacts
         run: |
-          mv build/windows-installer/*.exe . && rm -r build/windows-installer
+          mv build/windows-installer/*.exe build && rm -r build/windows-installer
           for i in build/*/; do (cd "$i" && zip -r "../../${i%/}.zip" .); done
         shell: bash
       - uses: actions/setup-node@v1
