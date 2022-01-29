@@ -71,13 +71,14 @@ public class MusiQHTTPClient : Godot.Object, IHTTPClient
         Godot.GD.Print("Connecting to host " + request.BaseAddress.Host);
 
         var startTime = DateTime.Now;
-        while (godotHttpClient.GetStatus() == Godot.HTTPClient.Status.Connecting || 
+        while (godotHttpClient.GetStatus() == Godot.HTTPClient.Status.Connecting ||
                 godotHttpClient.GetStatus() == Godot.HTTPClient.Status.Resolving)
         {
             godotHttpClient.Poll();
             Godot.OS.DelayMsec(10);
             if ((DateTime.Now - startTime) > requestTimeout || cancelRequest)
             {
+                Godot.GD.Print("Timeout or cancel");
                 cancelRequest = false;
                 return response;
             }

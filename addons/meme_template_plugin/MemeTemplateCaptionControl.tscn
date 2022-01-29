@@ -272,4 +272,5 @@ margin_top = 385.0
 margin_right = 501.0
 margin_bottom = 405.0
 text = "Delete"
+
 [connection signal="pressed" from="Fields/DeleteButton" to="." method="_on_delete_button_pressed"]

@@ -40,7 +40,7 @@ func exit():
 	Events.disconnect("game_paused", self, "_on_game_paused")
 	Events.disconnect("game_resumed", self, "_on_game_resumed")
 	_parameters.track_player.disconnect("ready_to_play", self, "_on_player_ready_to_play")
-	.exit()
+	return .exit()
 
 func _do_contest(contest):
 	_player_icon_display.clear()
@@ -56,7 +56,7 @@ func _do_contest(contest):
 		NetworkInterface.send_player(player, Message.create(Message.REQUEST_INPUT, {
 			"promptType": "song_search",	# input type
 			"promptData": {	# data that corresponds to input type
-				"contestId": contest.id,
+				"id": contest.id,
 				"apiAccessToken": _parameters.track_player.CurrentAccessToken,
 			}
 		}))
@@ -172,7 +172,5 @@ func _on_player_ready_to_play():
 		_play_track(_pending_track)
 
 func _calculate_winner_points():
-	var current_time = OS.get_unix_time()
-	var elapsed_time = current_time - _contest_start_time
-	var time_related_points = _current_contest_timeout - elapsed_time + _current_contest.point_weight
+	var time_related_points = _contest_timeout_timer.time_left + _current_contest.point_weight
 	return time_related_points

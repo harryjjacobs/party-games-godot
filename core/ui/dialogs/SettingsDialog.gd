@@ -9,6 +9,11 @@ func _ready():
 	assert(_err == OK)
 	_initialise_values()
 
+func _input(event):
+	if visible and event.is_action_pressed("ui_cancel"):
+		hide()
+		accept_event()	
+
 func _on_request_open_settings_menu():
 	popup_centered()
 

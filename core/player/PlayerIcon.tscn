@@ -3,9 +3,6 @@
 [ext_resource path="res://core/player/PlayerIcon.gd" type="Script" id=1]
 [ext_resource path="res://meme_game/audio/pop_1.wav" type="AudioStream" id=2]
 
-[sub_resource type="SpriteFrames" id=1]
-animations = [  ]
-
 [sub_resource type="DynamicFontData" id=2]
 font_path = "res://core/ui/fonts/Montserrat-Black.ttf"
 
@@ -86,15 +83,29 @@ tracks/0/keys = {
 "values": [ Vector2( 0.7, 0.7 ), Vector2( 1, 1 ), Vector2( 0, 0 ) ]
 }
 
+[sub_resource type="Animation" id=8]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.7, 0.7 ) ]
+}
+
 [node name="PlayerIcon" type="Node2D"]
 position = Vector2( -4.03963, 4.24479 )
 script = ExtResource( 1 )
 animate_entry = true
 
-[node name="PlayerSprite" type="AnimatedSprite" parent="."]
+[node name="PlayerSprite" type="Sprite" parent="."]
 position = Vector2( 4.80456, -25.3418 )
-scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 1 )
+scale = Vector2( 0.7, 0.7 )
 
 [node name="PointsLabel" type="Label" parent="."]
 visible = false
@@ -107,8 +118,8 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 225, 22 )
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
+custom_fonts/font = SubResource( 3 )
 text = "0 Pts"
 align = 1
 valign = 1
@@ -128,8 +139,8 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 225, 22 )
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.956863, 0.952941, 0.952941, 1 )
+custom_fonts/font = SubResource( 4 )
 text = "PLAYER NAME 123"
 align = 1
 valign = 1
@@ -154,8 +165,8 @@ grow_vertical = 2
 rect_rotation = 337.938
 rect_pivot_offset = Vector2( 90, 20 )
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 5 )
 text = "+5"
 align = 1
 valign = 1
@@ -170,6 +181,7 @@ __meta__ = {
 method_call_mode = 1
 anims/IconEntrance = SubResource( 6 )
 anims/IconExit = SubResource( 7 )
+anims/RESET = SubResource( 8 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )

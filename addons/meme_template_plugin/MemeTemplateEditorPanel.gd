@@ -83,6 +83,7 @@ func _update_meme_renderer():
 	var label_border_colors = []
 	for caption_control in captions_container.get_children():
 		label_border_colors.append(caption_control.color)
+		print(caption_control.color)
 	meme_renderer.set_editor_label_border_colors(label_border_colors)
 
 func _on_save_button_pressed():

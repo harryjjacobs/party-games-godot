@@ -11,12 +11,19 @@ y = 300
 width = 900
 height = 190
 rotation = 0.0
-text_color = Color( 1, 1, 1, 1 )
-background_color = Color( 0, 0, 0, 0 )
+text = ""
+font_family = "Anton"
+font_weight = 400
+uppercase = true
+autosize = true
+font_size = 0
 center_h = true
 center_v = true
+text_color = Color( 1, 1, 1, 1 )
+background_color = Color( 0, 0, 0, 0 )
 outline_text = true
-text = ""
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
 
 [resource]
 script = ExtResource( 2 )

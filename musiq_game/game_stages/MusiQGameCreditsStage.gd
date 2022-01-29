@@ -13,10 +13,10 @@ func enter(params):
 	_play_song_previews()
 
 func exit():
-	.exit()
 	Events.disconnect("game_paused", self, "_on_game_paused")
 	Events.disconnect("game_resumed", self, "_on_game_resumed")
 	_parameters.track_player.Pause()
+	return .exit()
 
 func _play_song_previews():
 	while is_inside_tree():

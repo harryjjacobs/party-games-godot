@@ -35,30 +35,36 @@ func open(player: Player, meme_template: MemeTemplate, captions: Array = []):
 	scale = _original_scale
 	_no_captions_display.visible = len(captions) == 0
 	show_votes([])
-	show_player_icon(false)
+	hide_player_icon()
 	_update_positions()
 	if not Engine.editor_hint:
 		_tween_entry()
 
 func close():
 	visible = false
-	show_player_icon(false)
+	hide_player_icon()
 	_update_positions()
 
-func show_player_icon(show: bool):
-	_player_icon.visible = show
-	_player_icon_placeholder.visible = !show
+func hide_player_icon():
+	_player_icon.visible = false
+	_player_icon_placeholder.visible = true
+
+func show_player_icon():
+	_player_icon.show()
+	_player_icon_placeholder.visible = false
 
 func show_votes(players):
 	_votes_container.set_players(players)
 
-func show_point_change(amount):
+func show_point_award(amount):
 	_player_icon.animate_point_award(amount)
 
 func emphasise(state):
 	_tween_emphasis(state)
 
 func _update_positions():
+	if not _speech_bubble_sprite:
+		return
 	_speech_bubble_sprite.flip_h = flip_h
 	if flip_h:
 		_speech_bubble_sprite.position = Vector2(-1, 1) * speech_bubble_position
@@ -72,18 +78,18 @@ func _update_positions():
 
 func _tween_entry():
 	visible = true
-	var duration = 0.2
-	var delay = 0.0
-	var speech_bubble_tween = _speech_bubble_sprite.get_node("Tween")
-	speech_bubble_tween.interpolate_property(_speech_bubble_sprite, "scale", 
-		Vector2(0,0), _speech_bubble_sprite.scale, duration,
-		Tween.TRANS_LINEAR, Tween.EASE_IN, delay)
-	speech_bubble_tween.interpolate_property(_speech_bubble_sprite, "position", 
-		_player_icon.position, _speech_bubble_sprite.position, duration,
-		Tween.TRANS_LINEAR, Tween.EASE_IN, delay)
-	_speech_bubble_sprite.scale = Vector2(0, 0)
-	_speech_bubble_sprite.position = _player_icon.position
-	speech_bubble_tween.start()
+#	var duration = 0.2
+#	var delay = 0.0
+#	var speech_bubble_tween = _speech_bubble_sprite.get_node("Tween")
+#	speech_bubble_tween.interpolate_property(_speech_bubble_sprite, "scale", 
+#		Vector2(0,0), _speech_bubble_sprite.scale, duration,
+#		Tween.TRANS_LINEAR, Tween.EASE_IN, delay)
+#	speech_bubble_tween.interpolate_property(_speech_bubble_sprite, "position", 
+#		_player_icon.position, _speech_bubble_sprite.position, duration,
+#		Tween.TRANS_LINEAR, Tween.EASE_IN, delay)
+#	_speech_bubble_sprite.scale = Vector2(0, 0)
+#	_speech_bubble_sprite.position = _player_icon.position
+#	speech_bubble_tween.start()
 
 func _tween_emphasis(emphasise: bool):
 	var duration = 0.1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://core/configuration/GameBuilder.gd" type="Script" id=1]
 [ext_resource path="res://meme_game/game_stages/common/GameBeginStage.tscn" type="PackedScene" id=2]
@@ -6,23 +6,20 @@
 [ext_resource path="res://meme_game/game_stages/common/MemeContestStage.tscn" type="PackedScene" id=4]
 [ext_resource path="res://meme_game/game_stages/common/MemePromptRequestsStage.tscn" type="PackedScene" id=5]
 [ext_resource path="res://meme_game/game_stages/common/MemeRoundEndStage.tscn" type="PackedScene" id=6]
-[ext_resource path="res://core/game_stages/LobbyStage.tscn" type="PackedScene" id=7]
 [ext_resource path="res://meme_game/game_stages/common/ContestBeginStage.tscn" type="PackedScene" id=8]
 [ext_resource path="res://meme_game/audio/bensound-jazzcomedy.wav" type="AudioStream" id=9]
-[ext_resource path="res://meme_game/player/PlayerColorPalette.tres" type="Resource" id=10]
 [ext_resource path="res://meme_game/game_stages/themed_memes/ThemedMemeRoundBeginStage.tscn" type="PackedScene" id=11]
 [ext_resource path="res://meme_game/game_stages/themed_memes/ThemedMemePromptRequestsStage.tscn" type="PackedScene" id=12]
 [ext_resource path="res://meme_game/game_stages/common/MemeGameEndStage.tscn" type="PackedScene" id=13]
 [ext_resource path="res://meme_game/game_stages/common/MemeGameCreditsStage.tscn" type="PackedScene" id=14]
+[ext_resource path="res://meme_game/game_stages/common/MemeGameLobbyStage.tscn" type="PackedScene" id=15]
 
 [node name="MemeGameBuilder" type="Node"]
 script = ExtResource( 1 )
-_stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage"), NodePath("ThemedMemeRoundBeginStage"), NodePath("ThemedMemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage"), NodePath("MemeGameEndStage"), NodePath("MemeGameCreditsStage") ]
+_stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage"), NodePath("ThemedMemeRoundBeginStage"), NodePath("ThemedMemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("ThemedMemeContestStage"), NodePath("RoundEndStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("MemeContestStage2"), NodePath("MemeGameEndStage"), NodePath("MemeGameCreditsStage") ]
 _background_music = [ ExtResource( 9 ) ]
 
-[node name="LobbyStage" parent="." instance=ExtResource( 7 )]
-min_players = 3
-player_color_palette = ExtResource( 10 )
+[node name="LobbyStage" parent="." instance=ExtResource( 15 )]
 
 [node name="GameBeginStage" parent="." instance=ExtResource( 2 )]
 
@@ -42,6 +39,14 @@ display_contest_result_duration = 6.0
 [node name="ThemedMemeRoundBeginStage" parent="." instance=ExtResource( 11 )]
 
 [node name="ThemedMemePromptRequestsStage" parent="." instance=ExtResource( 12 )]
+
+[node name="ThemedMemeContestStage" parent="." instance=ExtResource( 4 )]
+time_between_contests = 5.0
+display_contest_result_duration = 6.0
+
+[node name="MemeContestStage2" parent="." instance=ExtResource( 4 )]
+time_between_contests = 5.0
+display_contest_result_duration = 6.0
 
 [node name="MemeGameEndStage" parent="." instance=ExtResource( 13 )]
 

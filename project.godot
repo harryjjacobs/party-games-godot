@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/ui/dialogs/GameSelectionOption.gd"
 }, {
+"base": "Node2D",
+"class": "GameStage",
+"language": "GDScript",
+"path": "res://core/game_stages/common/GameStage.gd"
+}, {
 "base": "Node",
 "class": "GameplayController",
 "language": "GDScript",
@@ -154,6 +159,36 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/game_stages/common/PlayerIconDisplay.gd"
 }, {
+"base": "Node2D",
+"class": "QuizGamePlayerAnswer",
+"language": "GDScript",
+"path": "res://quiz_game/game_stages/answer_stage/QuizGamePlayerAnswer.gd"
+}, {
+"base": "Object",
+"class": "QuizQuestion",
+"language": "GDScript",
+"path": "res://quiz_game/round/QuizQuestion.gd"
+}, {
+"base": "Object",
+"class": "QuizQuestionResponse",
+"language": "GDScript",
+"path": "res://quiz_game/round/QuizQuestionResponse.gd"
+}, {
+"base": "Object",
+"class": "QuizRound",
+"language": "GDScript",
+"path": "res://quiz_game/round/QuizRound.gd"
+}, {
+"base": "Object",
+"class": "QuizTrivia",
+"language": "GDScript",
+"path": "res://quiz_game/round/QuizTrivia.gd"
+}, {
+"base": "Object",
+"class": "QuizTriviaCategory",
+"language": "GDScript",
+"path": "res://quiz_game/round/QuizTriviaCategory.gd"
+}, {
 "base": "Object",
 "class": "Round",
 "language": "GDScript",
@@ -163,6 +198,16 @@ _global_script_classes=[ {
 "class": "Time",
 "language": "GDScript",
 "path": "res://core/util/Time.gd"
+}, {
+"base": "Object",
+"class": "TriviaRoundGenerator",
+"language": "GDScript",
+"path": "res://quiz_game/round/TriviaRoundGenerator.gd"
+}, {
+"base": "Node",
+"class": "TriviaService",
+"language": "GDScript",
+"path": "res://quiz_game/trivia_service/TriviaService.gd"
 }, {
 "base": "Control",
 "class": "WordWrapLabel",
@@ -174,6 +219,7 @@ _global_script_class_icons={
 "ColorPalette": "",
 "FileUtils": "",
 "GameSelectionOption": "",
+"GameStage": "",
 "GameplayController": "",
 "LobbyStage": "",
 "MainMenu": "",
@@ -199,8 +245,16 @@ _global_script_class_icons={
 "Player": "",
 "PlayerIcon": "",
 "PlayerIconDisplay": "",
+"QuizGamePlayerAnswer": "",
+"QuizQuestion": "",
+"QuizQuestionResponse": "",
+"QuizRound": "",
+"QuizTrivia": "",
+"QuizTriviaCategory": "",
 "Round": "",
 "Time": "",
+"TriviaRoundGenerator": "",
+"TriviaService": "",
 "WordWrapLabel": ""
 }
 
@@ -233,6 +287,10 @@ enabled=PoolStringArray( "res://addons/meme_template_plugin/plugin.cfg" )
 [gdnative]
 
 singletons=[  ]
+
+[global]
+
+action=false
 
 [network]
 

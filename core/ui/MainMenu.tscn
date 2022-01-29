@@ -42,23 +42,60 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayButton" parent="." instance=ExtResource( 1 )]
-margin_top = -26.0
-margin_bottom = 28.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -219.0
+margin_top = -83.0
+margin_right = 220.0
+margin_bottom = 284.0
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayButton" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 439.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Play"
 
-[node name="SettingsButton" parent="." instance=ExtResource( 1 )]
-margin_top = 79.0
-margin_bottom = 133.0
+[node name="SettingsButton" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 125.0
+margin_right = 439.0
+margin_bottom = 241.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Settings"
 
-[node name="ExitButton" parent="." instance=ExtResource( 1 )]
-margin_top = 183.0
-margin_bottom = 237.0
+[node name="ExitButton" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 251.0
+margin_right = 439.0
+margin_bottom = 367.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Exit"
 
 [node name="ConfirmationDialog" parent="." instance=ExtResource( 5 )]
-visible = false
 
 [node name="GameSelectionDialog" parent="." instance=ExtResource( 6 )]
 visible = false
@@ -72,10 +109,10 @@ margin_right = 457.0
 margin_bottom = 261.0
 
 [node name="crab" type="Sprite" parent="."]
-position = Vector2( 1570.53, 818.62 )
-scale = Vector2( 0.662019, 0.662019 )
+position = Vector2( 1613, 847.88 )
+scale = Vector2( 0.555833, 0.567935 )
 texture = ExtResource( 7 )
 
-[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

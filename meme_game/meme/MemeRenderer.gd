@@ -2,8 +2,6 @@ tool
 extends PanelContainer
 class_name MemeRenderer
 
-const text_outline_size = 3
-
 export(bool) var debug_mode = false
 export(float) var alpha = 1.0 setget _set_alpha, _get_alpha
 
@@ -11,6 +9,15 @@ onready var texture_rect = $TextureRect
 onready var captions_parent = $Captions
 
 const label_scene = preload("res://meme_game/meme/MemeCaptionLabel.tscn")
+
+const FONT_LOOKUP = {
+	"Anton": {
+		400: preload("res://core/ui/fonts/Anton-Regular.tres")
+	},
+	"Ubuntu": {
+		700: preload("res://core/ui/fonts/Ubuntu-Bold.tres")
+	}
+}
 
 var _meme_template: MemeTemplate
 var _texture
@@ -84,8 +91,20 @@ func _create_labels():
 		label.rect_position = scaling_rect.position + scaling_rect.size * Vector2(caption.x, caption.y)
 		label.rect_size = scaling_rect.size * Vector2(caption.width, caption.height)
 		label.rect_rotation = caption.rotation
-		var modified_font = label.get_font("font").duplicate()
-		modified_font.outline_size = text_outline_size if caption.outline_text else 0
+		var modified_font
+		if FONT_LOOKUP.has(caption.font_family):
+			var weights = FONT_LOOKUP[caption.font_family]
+			var font
+			if weights.has(caption.font_weight):
+				font = weights[caption.font_weight]
+			elif weights.has(400):
+				font = weights[400]
+			else:
+				font = weights[0]
+			modified_font = font.duplicate()
+		else:
+			modified_font = label.get_font("font").duplicate()
+		modified_font.outline_size = caption.outline_size if caption.outline_text else 0
 		var outline_color = caption.text_color.inverted()
 		label.add_color_override("font_outline_modulate", outline_color)
 		label.add_font_override("font", modified_font)
@@ -120,7 +139,7 @@ func _get_displayed_texture_rect():
 	if tex_width > container_size.x:
 		tex_width = container_size.x
 		tex_height = orig_texture_size.y * tex_width / orig_texture_size.x
-
+		
 	rect.position = Vector2((container_size.x - tex_width) / 2, (container_size.y - tex_height) / 2)
 	rect.size = Vector2(tex_width, tex_height)
 	return rect

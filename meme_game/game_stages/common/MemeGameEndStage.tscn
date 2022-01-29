@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://core/game_stages/GameEndStage.gd" type="Script" id=1]
 [ext_resource path="res://core/ui/fonts/AnnieUseYourTelescope-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://core/game_stages/common/GameStage.tscn" type="PackedScene" id=3]
-[ext_resource path="res://core/player/PlayerIcon.tscn" type="PackedScene" id=4]
+[ext_resource path="res://meme_game/player/MemePlayerIcon.tscn" type="PackedScene" id=4]
 [ext_resource path="res://meme_game/game_stages/SimpleTitle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://core/game_stages/common/PlayerIconDisplay.tscn" type="PackedScene" id=6]
+[ext_resource path="res://meme_game/audio/applause_1.wav" type="AudioStream" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 80
@@ -13,6 +14,7 @@ font_data = ExtResource( 2 )
 
 [node name="MemeGameEndStage" instance=ExtResource( 3 )]
 script = ExtResource( 1 )
+_celebratory_sound_effect = ExtResource( 7 )
 
 [node name="Title" parent="." index="3" instance=ExtResource( 5 )]
 margin_left = 7.0

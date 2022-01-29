@@ -2,6 +2,7 @@ extends "res://core/game_stages/common/GameStage.gd"
 
 export(float) var vote_timeout = 15
 export(float) var time_between_contests = 0.5
+export(float) var display_empty_contest_result_duration = 2.0
 export(float) var display_contest_result_duration = 5.0
 export(AudioStreamSample) var vote_prompt_audio
 export(AudioStreamSample) var contest_winner_audio
@@ -24,7 +25,14 @@ enum _VoteValidity {
 func enter(params):
 	.enter(params)
 	_initialise_response_displays()
-	for contest in params.current_round.contests:
+	do_contests()
+
+func exit():
+	_hide_all_contest_response_displays()
+	return .exit()
+
+func do_contests():
+	for contest in _parameters.current_round.contests:
 		if not is_inside_tree():
 			return
 		Log.info("[%s] Contest begin" % name)
@@ -32,20 +40,17 @@ func enter(params):
 		_show_contest_response_displays()
 		# record votes
 		yield(_voting_process(), "completed")
-		yield(get_tree().create_timer(1.0), "timeout")
 		yield(_show_voting_results(), "completed")
-		yield(get_tree().create_timer(1.0), "timeout")
 		_update_points()
-		yield(get_tree().create_timer(display_contest_result_duration), "timeout")
+		if current_contest.responses.empty():
+			yield(get_tree().create_timer(display_empty_contest_result_duration), "timeout")
+		else:
+			yield(get_tree().create_timer(display_contest_result_duration), "timeout")
 		_hide_all_contest_response_displays()
-		if contest != params.current_round.contests.back():	# don't delay on last contest
+		if contest != _parameters.current_round.contests.back():	# don't delay on last contest
 			yield(get_tree().create_timer(time_between_contests), "timeout")
-	emit_signal("request_exit", params)
+	emit_signal("request_exit", _parameters)
 
-func exit():
-	.exit()
-	_hide_all_contest_response_displays()
-	
 func _initialise_response_displays():
 	assert(contest_response_display_paths)
 	_contest_response_displays.clear()
@@ -68,17 +73,21 @@ func _hide_all_contest_response_displays():
 		display.close()
 
 func _show_voting_results():
+	if current_contest.responses.empty():
+		yield(get_tree(), "idle_frame")
+		return
 	for i in len(current_contest.players):
 		var player = current_contest.players[i]
 		var display = _contest_response_displays[i]
 		var response = _find_response_by_player(player, current_contest.responses)
-		display.show_player_icon(true)
-		var voters = Array()
+		display.show_player_icon()
+		var voters = []
 		for vote in current_contest.votes:
 			if vote.choice == response:
 				voters.append(vote.voter)
 		display.show_votes(voters)
-	yield(get_tree().create_timer(1.0), "timeout")
+	if current_contest.votes:
+		yield(get_tree().create_timer(1.0), "timeout")
 	var winners = _get_winning_responses()
 	for i in len(current_contest.players):
 		var player = current_contest.players[i]
@@ -88,6 +97,7 @@ func _show_voting_results():
 			display.emphasise(true)
 	if len(winners) > 0:
 		._play_audio(contest_winner_audio)
+	yield(get_tree().create_timer(1.0), "timeout")
 
 func _update_points():
 	var votes_per_player = {}
@@ -102,7 +112,7 @@ func _update_points():
 		var player = current_contest.players[i]
 		var display = _contest_response_displays[i]
 		if player in votes_per_player:
-			display.show_point_change(votes_per_player[player])
+			display.show_point_award(votes_per_player[player])
 
 func _get_winning_responses():
 	var responses = []
@@ -122,7 +132,9 @@ func _get_winning_responses():
 func _voting_process():
 	yield(get_tree(), "idle_frame")	# so that this function can be yielded
 	Log.info("[%s] Voting begin" % name)
-	if len(current_contest.responses) == 1:	# TODO: also check case where all responses are empty
+	if current_contest.responses.empty():
+		return
+	elif len(current_contest.responses) == 1:
 		# only one response received. default everyone's votes to this response
 		for player in Room.players:
 			if player in current_contest.players:
@@ -143,6 +155,7 @@ func _voting_process():
 	NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_vote_received")
 	Log.info("[%s] Voting end" % name)
+	yield(get_tree().create_timer(1.0), "timeout")
 
 func _on_voting_timeout():
 	_waiting_for_votes = false
@@ -160,7 +173,7 @@ func _send_vote_prompts():
 		var message = Message.create(Message.REQUEST_INPUT, {
 			"promptType": "multichoice",
 			"promptData": {
-				"contestId": current_contest.id,
+				"id": current_contest.id,
 				"prompt": "Vote for your favourite",
 				"options": options
 			}
@@ -168,7 +181,7 @@ func _send_vote_prompts():
 		NetworkInterface.send_player(player.client_id, message)
 
 func _on_vote_received(client_id, message):
-	if current_contest.id == message.data.contestId:
+	if current_contest.id == message.data.id:
 		var result = _check_vote_validity(client_id, message)
 		if result != _VoteValidity.OK:
 			Log.info("Invalid vote received from %s. Reason: %s" % [client_id, _VoteValidity.keys()[result]])

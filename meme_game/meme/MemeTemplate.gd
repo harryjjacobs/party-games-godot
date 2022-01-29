@@ -16,4 +16,4 @@ func to_json():
 	}
 
 func _base64_image():
-	return Marshalls.raw_to_base64(image.get_data().save_png_to_buffer())
+	return "data:image/png;base64, " + Marshalls.raw_to_base64(image.get_data().save_png_to_buffer())

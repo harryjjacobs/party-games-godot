@@ -1,20 +1,23 @@
 extends Control
 
-enum Games { UNTITLED_MEME_GAME, MUSIQ }
+enum Games { UNTITLED_MEME_GAME, MUSIQ, QUIZ }
 
 const _GAME_SCENES = {
 	Games.UNTITLED_MEME_GAME: preload("res://meme_game/Memes.tscn"),
-	Games.MUSIQ: preload("res://musiq_game/Musiq.tscn")
+	Games.MUSIQ: preload("res://musiq_game/Musiq.tscn"),
+	Games.QUIZ: preload("res://quiz_game/Quiz.tscn")
 }
 
 const _GAME_NAMES = {
 	Games.UNTITLED_MEME_GAME: "untitled meme game",
-	Games.MUSIQ: "MusiQ"
+	Games.MUSIQ: "MusiQ",
+	Games.QUIZ: "Pub Quiz"
 }
 
 const _GAME_THEMES = {
 	Games.UNTITLED_MEME_GAME: preload("res://meme_game/ui/MemeGameTheme.tres"),
-	Games.MUSIQ: preload("res://musiq_game/ui/MusiQTheme.tres")
+	Games.MUSIQ: preload("res://musiq_game/ui/MusiQTheme.tres"),
+	Games.QUIZ: preload("res://quiz_game/ui/QuizGameTheme.tres")
 }
 
 const _MAIN_THEME = preload("res://core/ui/MainTheme.tres")
@@ -29,7 +32,7 @@ func _ready():
 	_err = _main_menu.connect("play", self, "_on_menu_request_play_game")
 	_err = _main_menu.connect("exit", self, "_on_menu_request_exit")
 	assert(_err == OK)
-
+	_in_game_ui.theme = _MAIN_THEME
 	_in_game_ui.visible = false
 	_init_main_menu()
 

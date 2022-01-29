@@ -14,11 +14,11 @@ const _max_track_count = {
 	},
 	GameDurationProfile.MEDIUM: {
 		MusiQContest.ContestType.ALLVALL: 10,
-		MusiQContest.ContestType.HEAD2HEAD: 3
+		MusiQContest.ContestType.HEAD2HEAD: 2
 	},
 	GameDurationProfile.LONG: {
 		MusiQContest.ContestType.ALLVALL: 15,
-		MusiQContest.ContestType.HEAD2HEAD: 3
+		MusiQContest.ContestType.HEAD2HEAD: 2
 	}
 }
 
@@ -42,7 +42,6 @@ func next(contest_type, p_players, point_weight = 1):
 			Log.error("Invalid ContestType: %s" % contest_type)
 	var r = Round.new()
 	r.contests = contests
-	_rounds_generated_count += 1
 	return r
 
 # Generate contests with all players competing against each other
@@ -55,7 +54,7 @@ func _generate_shared_player_contests(contest_type, players, point_weight):
 	return contests
 
 func _generate_two_player_contests(contest_type, players, point_weight):
-	var pairs = ._generate_player_pairs(players)
+	var pairs = ._generate_player_pairs(players, 1)
 	var contests = Array()
 	for pair in pairs:
 		var contest = _contest_builder.build(
