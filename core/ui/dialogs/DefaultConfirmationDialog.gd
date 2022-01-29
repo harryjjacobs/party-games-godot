@@ -18,9 +18,14 @@ func _ready():
 	set_yes_text(yes_text)
 	set_no_text(no_text)
 
+func _input(event):
+	if visible and event.is_action_pressed("ui_cancel"):
+		accept_event()
+		_on_no_pressed()
+
 func _on_about_to_show():
-	_title.add_font_override("font", get_font("normal", "Fonts").duplicate())
-	_subtitle.add_font_override("font", get_font("small", "Fonts").duplicate())
+	_title.add_font_override("font", get_font("large", "Fonts").duplicate())
+	_subtitle.add_font_override("font", get_font("normal", "Fonts").duplicate())
 	
 func set_title(title_text):
 	title = title_text

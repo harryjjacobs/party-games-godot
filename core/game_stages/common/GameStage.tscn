@@ -14,3 +14,6 @@ margin_bottom = 1080.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 bus = "Stage"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+bus = "Stage"

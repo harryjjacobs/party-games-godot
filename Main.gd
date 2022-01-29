@@ -32,7 +32,7 @@ func _ready():
 	_err = _main_menu.connect("play", self, "_on_menu_request_play_game")
 	_err = _main_menu.connect("exit", self, "_on_menu_request_exit")
 	assert(_err == OK)
-
+	_in_game_ui.theme = _MAIN_THEME
 	_in_game_ui.visible = false
 	_init_main_menu()
 

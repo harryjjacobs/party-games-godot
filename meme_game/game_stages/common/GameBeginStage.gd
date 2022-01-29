@@ -4,6 +4,8 @@ onready var _meme_contest_builder = $MemeContestBuilder
 
 func enter(params):
 	.enter(params)
+	for player in Room.players:
+		player.reset()
 	var round_generator = MemeRoundGenerator.new(Room.players, _meme_contest_builder)
 	BackgroundMusic.play()
 	emit_signal("request_exit", {

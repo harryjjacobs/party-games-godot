@@ -38,7 +38,7 @@ __meta__ = {
 
 [node name="CreditsContainer" type="VBoxContainer" parent="VBoxContainer" index="0"]
 margin_right = 1820.0
-margin_bottom = 156.0
+margin_bottom = 111.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 alignment = 1
@@ -56,21 +56,12 @@ margin_top = 69.0
 margin_right = 1820.0
 margin_bottom = 111.0
 custom_fonts/font = SubResource( 4 )
-text = "Design: Harry Jacobs"
-align = 1
-valign = 1
-
-[node name="Credits2" type="Label" parent="VBoxContainer/CreditsContainer" index="2"]
-margin_top = 114.0
-margin_right = 1820.0
-margin_bottom = 156.0
-custom_fonts/font = SubResource( 4 )
-text = "Programming: Harry Jacobs"
+text = "Design and Programming: Harry Jacobs"
 align = 1
 valign = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" index="1"]
-margin_top = 159.0
+margin_top = 114.0
 margin_right = 1820.0
 margin_bottom = 980.0
 size_flags_horizontal = 3
@@ -84,9 +75,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 655.0
+margin_top = 700.0
 margin_right = 1820.0
-margin_bottom = 697.0
+margin_bottom = 742.0
 text = "Play again with the same players?"
 
 [node name="PlayAgainButton" parent="VBoxContainer/VBoxContainer" index="1" instance=ExtResource( 5 )]
@@ -95,9 +86,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 717.0
+margin_top = 762.0
 margin_right = 1820.0
-margin_bottom = 759.0
+margin_bottom = 804.0
 text = "Start a new game of MusiQ?"
 
 [node name="ExitToMainMenuButton" parent="VBoxContainer/VBoxContainer" index="2" instance=ExtResource( 5 )]
@@ -106,9 +97,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 779.0
+margin_top = 824.0
 margin_right = 1820.0
-margin_bottom = 821.0
+margin_bottom = 866.0
 text = "Exit"
 
 [node name="Tween" type="Tween" parent="." index="6"]

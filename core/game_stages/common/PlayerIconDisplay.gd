@@ -58,6 +58,7 @@ func add_player(player: Player, animate = true):
 	player_icon.init(player)
 	_player_icon_container.add_child(player_icon)
 	_player_icon_lookup[player] = player_icon
+	player_icon.show()	
 	if ranking_label_scene:
 		var ranking_label = ranking_label_scene.instance()
 		ranking_label.set_rank(_player_icon_container.get_child_count())
@@ -71,7 +72,7 @@ func remove_player(player: Player, animate = true):
 		return
 	_player_icon_lookup.erase(player)
 	if animate:
-		player_icon.tween_exit()
+		player_icon.hide()
 		yield(player_icon.get_node("Tween"), "tween_finished")
 	player_icon.queue_free()
 	var from = _ranking_label_container.get_child_count() - 1

@@ -2,24 +2,24 @@
 
 [ext_resource path="res://core/ui/fonts/Montserrat-Black.ttf" type="DynamicFontData" id=1]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0, 0, 0, 1 )
-
 [sub_resource type="DynamicFont" id=2]
-size = 25
+size = 40
 outline_size = 15
 outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 1 )
 
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 1 )
+
 [node name="PlayerLabel" type="Label"]
 margin_right = 403.0
-margin_bottom = 80.0
+margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-custom_styles/normal = SubResource( 1 )
 custom_fonts/font = SubResource( 2 )
+custom_styles/normal = SubResource( 1 )
 text = "testing123"
 align = 1
 valign = 1

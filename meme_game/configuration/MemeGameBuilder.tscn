@@ -16,7 +16,7 @@
 
 [node name="MemeGameBuilder" type="Node"]
 script = ExtResource( 1 )
-_stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage"), NodePath("ThemedMemeRoundBeginStage"), NodePath("ThemedMemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("ThemedMemeContestStage"), NodePath("RoundEndStage"), NodePath("MemeGameEndStage"), NodePath("MemeGameCreditsStage") ]
+_stages = [ NodePath("LobbyStage"), NodePath("GameBeginStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("MemeContestStage"), NodePath("RoundEndStage"), NodePath("ThemedMemeRoundBeginStage"), NodePath("ThemedMemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("ThemedMemeContestStage"), NodePath("RoundEndStage"), NodePath("BasicMemeRoundBeginStage"), NodePath("MemePromptRequestsStage"), NodePath("ContestBeginStage"), NodePath("MemeContestStage2"), NodePath("MemeGameEndStage"), NodePath("MemeGameCreditsStage") ]
 _background_music = [ ExtResource( 9 ) ]
 
 [node name="LobbyStage" parent="." instance=ExtResource( 15 )]
@@ -41,6 +41,10 @@ display_contest_result_duration = 6.0
 [node name="ThemedMemePromptRequestsStage" parent="." instance=ExtResource( 12 )]
 
 [node name="ThemedMemeContestStage" parent="." instance=ExtResource( 4 )]
+time_between_contests = 5.0
+display_contest_result_duration = 6.0
+
+[node name="MemeContestStage2" parent="." instance=ExtResource( 4 )]
 time_between_contests = 5.0
 display_contest_result_duration = 6.0
 

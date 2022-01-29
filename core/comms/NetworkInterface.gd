@@ -87,7 +87,13 @@ func _on_data():
 func _process(_delta):
 	_client.poll()
 	if not _incoming_message_queue.empty():
-		if not get_tree().paused or _incoming_message_queue.front().type in _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES:
+		if get_tree().paused:
+			for message in _incoming_message_queue:
+				if message.type in _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES:
+					_handle_message(message)
+					_incoming_message_queue.remove(_incoming_message_queue.find(message))
+					break
+		else:
 			_handle_message(_incoming_message_queue.pop_front())
 	if connection_state == ConnectionState.CONNECTED and not _outgoing_message_queue.empty():
 		if not get_tree().paused or _outgoing_message_queue.front().type in _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES:

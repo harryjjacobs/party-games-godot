@@ -24,6 +24,8 @@ var _game_duration_profile = MusiQRoundGenerator.GameDurationProfile.MEDIUM
 
 func enter(params):
 	.enter(params)
+	for player in Room.players:
+		player.reset()
 	_play_button.disabled = true
 	_play_button_disabled_explanation_label.visible = _play_button.disabled
 	_game_duration_profile_slider.value = _game_duration_profile

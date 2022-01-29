@@ -47,7 +47,7 @@ func _server_message_handler(conn_id, message):
 	# mock player responses
 	assert(message.data.payload.type == Message.REQUEST_INPUT)
 	assert(message.data.payload.data.promptType == "meme")
-	assert(message.data.payload.data.promptData.template.image == Marshalls.raw_to_base64(
+	assert(message.data.payload.data.promptData.template.image == "data:image/png;base64, " + Marshalls.raw_to_base64(
 		_default_contest_image.get_data().save_png_to_buffer()))
 	_requests_sent += 1
 	# delay before sending responses
@@ -60,7 +60,7 @@ func _server_message_handler(conn_id, message):
 		"payload": {
 			"type": Message.PROMPT_RESPONSE,
 			"data": {
-				"contestId": message.data.payload.data.promptData.id,
+				"id": message.data.payload.data.promptData.id,
 				"captions": captions
 			}
 		}

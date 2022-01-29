@@ -288,6 +288,10 @@ enabled=PoolStringArray( "res://addons/meme_template_plugin/plugin.cfg" )
 
 singletons=[  ]
 
+[global]
+
+action=false
+
 [network]
 
 limits/debugger_stdout/max_chars_per_second=8192

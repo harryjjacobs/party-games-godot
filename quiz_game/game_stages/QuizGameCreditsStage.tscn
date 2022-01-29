@@ -39,9 +39,9 @@ size_flags_stretch_ratio = 5.0
 alignment = 1
 
 [node name="Title" type="Label" parent="VBoxContainer/CreditsContainer" index="0"]
-margin_top = 229.0
+margin_top = 257.0
 margin_right = 1820.0
-margin_bottom = 338.0
+margin_bottom = 366.0
 custom_fonts/font = SubResource( 3076 )
 text = "A Jabobs Production"
 align = 1
@@ -50,18 +50,10 @@ script = ExtResource( 4 )
 font_size = 2
 
 [node name="Credits1" type="Label" parent="VBoxContainer/CreditsContainer" index="1"]
-margin_top = 342.0
+margin_top = 370.0
 margin_right = 1820.0
-margin_bottom = 394.0
-text = "Design: Harry Jacobs"
-align = 1
-valign = 1
-
-[node name="Credits2" type="Label" parent="VBoxContainer/CreditsContainer" index="2"]
-margin_top = 398.0
-margin_right = 1820.0
-margin_bottom = 450.0
-text = "Programming: Harry Jacobs"
+margin_bottom = 422.0
+text = "Design and Programming: Harry Jacobs"
 align = 1
 valign = 1
 

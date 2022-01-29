@@ -1,10 +1,10 @@
 extends "res://core/game_stages/common/GameStage.gd"
 
-const AnswerLabel = preload("res://quiz_game/game_stages/question_stage/AnswerOption.tscn")
+const AnswerLabel = preload("res://quiz_game/game_stages/question_stage/QuizGameAnswerOption.tscn")
 
 export var duration = 20
 
-onready var _question_label = $VBoxContainer/Question
+onready var _question_label = $VBoxContainer/QuizGameQuestion
 onready var _answers_container = $VBoxContainer/AnswersContainer
 onready var _player_icon_display = $VBoxContainer/PlayerIconDisplay
 onready var _countdown_display = $CountdownDisplay
@@ -21,7 +21,8 @@ func enter(params):
 		var answer_label = AnswerLabel.instance()
 		answer_label.text = option
 		_answers_container.add_child(answer_label)
-		yield(get_tree().create_timer(0.5), "timeout")
+		if get_tree():
+			yield(get_tree().create_timer(0.5), "timeout")
 	NetworkInterface.on_player(Message.PROMPT_RESPONSE, self, "_on_response_received")
 	set_timeout(duration, params)
 	_countdown_display.start(duration)
@@ -44,7 +45,7 @@ func _on_response_received(client_id, message):
 		
 	Log.info("Prompt response received from %s (%s)" % [client_id, player.username])
 	
-	if _current_question.id != message.data.contestId:
+	if _current_question.id != message.data.id:
 		Log.warn("Invalid ID received for current question. Ignoring")
 		return
 		
@@ -66,7 +67,7 @@ func _send_question_prompt_to_players():
 	NetworkInterface.send_players(Room.players, Message.create(Message.REQUEST_INPUT, {
 		"promptType": "multichoice",	# input type
 		"promptData": {	# data that corresponds to input type
-			"contestId": _current_question.id,
+			"id": _current_question.id,
 			"prompt": _current_question.trivia.question,
 			"options": options
 		}

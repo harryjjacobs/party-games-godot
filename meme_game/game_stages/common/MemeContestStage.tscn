@@ -16,14 +16,18 @@ contest_response_display_paths = [ NodePath("ResponseBubbleLeft"), NodePath("Res
 [node name="VotingTimer" type="Timer" parent="." index="2"]
 
 [node name="CountdownDisplay" parent="." index="3" instance=ExtResource( 2 )]
+margin_left = 1596.97
+margin_top = 3.54123
+margin_right = 1917.97
+margin_bottom = 151.541
 
 [node name="ResponseBubbleLeft" parent="." index="4" instance=ExtResource( 4 )]
 visible = false
-emphasis_scale = Vector2( 1.05, 1.05 )
+emphasis_scale = Vector2( 1.02, 1.02 )
 
 [node name="ResponseBubbleRight" parent="." index="5" instance=ExtResource( 4 )]
 visible = false
 flip_h = true
-emphasis_scale = Vector2( 1.05, 1.05 )
+emphasis_scale = Vector2( 1.02, 1.02 )
 
 [connection signal="timeout" from="VotingTimer" to="." method="_on_voting_timeout"]
