@@ -7,6 +7,7 @@ enum StageExitTransition { NEXT_STAGE, REPEAT_STAGE, REPEAT_GROUP }
 
 onready var _timer = $Timer
 onready var _audio_player = $AudioStreamPlayer
+onready var _audio_player_2 = $AudioStreamPlayer2
 
 var _parameters
 
@@ -31,5 +32,10 @@ func _on_timeout(params):
 func _play_audio(audio_stream):
 	if not audio_stream:
 		return
-	_audio_player.stream = audio_stream
-	_audio_player.play()
+	var audio_player
+	if _audio_player.is_playing():
+		audio_player = _audio_player_2
+	else:
+		audio_player = _audio_player
+	audio_player.stream = audio_stream
+	audio_player.play()
