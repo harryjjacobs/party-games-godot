@@ -78,16 +78,16 @@ func _on_player_prompt_response(client_id, message):
 			contest.responses.append(contest_response)
 			found = true
 			break
-	if not found:
+	if found:
+		# response accepted, hide input prompt
+		NetworkInterface.send_player(player, Message.create(Message.HIDE_PROMPT, {}))
+		_pending_responses -= 1
+		if _pending_responses <= 0:
+			_pending_responses = 0
+			_countdown_display.stop()
+			set_timeout(2.0, _parameters)
+	else:
 		Log.info("Invalid contest response - no matching contest with id %s found" % message.data.id)
-		return
-	# response accepted, hide input prompt
-	NetworkInterface.send_player(player, Message.create(Message.HIDE_PROMPT, {}))
-	_pending_responses -= 1
-	if _pending_responses <= 0:
-		_pending_responses = 0
-		_countdown_display.stop()
-		set_timeout(2.0, _parameters)
 	# send next contest for this player
 	if player in _pending_requests and not _pending_requests[player].empty():
 		_send_prompt_to_player(player, _pending_requests[player].pop_front())
