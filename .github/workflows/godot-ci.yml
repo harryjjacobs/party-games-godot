@@ -73,7 +73,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: windows
+          name: windows-installer
           path: build/windows-installer
 
   release:
