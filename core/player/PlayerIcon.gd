@@ -99,6 +99,7 @@ func animate_point_award(amount):
 	_err = tween.start()
 	yield(tween, "tween_all_completed")
 	point_change_label.visible = false
+	point_change_label.rect_scale = orig_scale
 
 func _set_points_label_text(points):
 	points_label.text = _points_label_text % int(points)
