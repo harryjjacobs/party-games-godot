@@ -172,7 +172,5 @@ func _on_player_ready_to_play():
 		_play_track(_pending_track)
 
 func _calculate_winner_points():
-	var current_time = OS.get_unix_time()
-	var elapsed_time = current_time - _contest_start_time
-	var time_related_points = _current_contest_timeout - elapsed_time + _current_contest.point_weight
+	var time_related_points = _contest_timeout_timer.time_left + _current_contest.point_weight
 	return time_related_points
