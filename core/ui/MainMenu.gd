@@ -10,6 +10,10 @@ onready var _game_selection_dialog = $GameSelectionDialog
 func init(game_selection_options):
 	_game_selection_dialog.set_game_selection_options(game_selection_options)
 
+func _input(event):
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_exit_button_pressed()
+
 func _on_play_button_pressed():
 	_game_selection_dialog.popup_centered()
 	var game_type = yield(_game_selection_dialog, "selected")

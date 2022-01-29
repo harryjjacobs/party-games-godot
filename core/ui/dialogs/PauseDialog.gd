@@ -6,7 +6,12 @@ func _ready():
 	var _err = Events.connect("game_paused", self, "_on_game_paused")
 	_err = Events.connect("game_resumed", self, "_on_game_resumed")
 	assert(_err == OK)
-	
+
+func _input(event):
+	if visible and event.is_action_pressed("ui_cancel"):
+		accept_event()
+		_on_game_resumed()
+
 func _on_game_paused():
 	popup_centered()
 
