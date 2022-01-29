@@ -59,19 +59,19 @@ func tween_scale_to(new_scale: float):
 
 func _animate_entry():
 	if Engine.is_editor_hint():
-		yield(get_tree(), "idle_frame")		
+		yield(get_tree(), "idle_frame")
 		return
-	if not animation_player:
-		yield(animation_player, "ready")
+	if not is_inside_tree():
+		yield(self, "ready")
 	animation_player.play("IconEntrance")
 	yield(animation_player, "animation_finished")
 
 func _animate_exit():
 	if Engine.is_editor_hint():
-		yield(get_tree(), "idle_frame")			
+		yield(get_tree(), "idle_frame")
 		return
 	animation_player.play("IconExit")
-	yield(animation_player, "animation_finished")	
+	yield(animation_player, "animation_finished")
 
 func show_points(show, points = null):
 	if points != null:

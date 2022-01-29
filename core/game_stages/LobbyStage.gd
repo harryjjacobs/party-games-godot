@@ -33,6 +33,7 @@ func enter(params):
 func exit():
 	Room.lock()
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_prompt_response")
+	Events.disconnect("room_created", self, "_on_room_created")	
 	if Events.is_connected("player_joined_room", self, "_on_player_joined_room"):
 		Events.disconnect("player_joined_room", self, "_on_player_joined_room")
 	BackgroundMusic.skip_track()
