@@ -57,7 +57,7 @@ func _on_request_main_menu(error_msg):
 	_main_menu.visible = true
 	_in_game_ui.visible = false
 	_in_game_ui.theme = _MAIN_THEME
-	if active_game:
+	if active_game and is_instance_valid(active_game):
 		active_game.queue_free()
 	Events.emit_signal("game_stopped")
 	if error_msg:

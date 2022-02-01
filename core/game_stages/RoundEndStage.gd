@@ -1,4 +1,3 @@
-
 extends "res://core/game_stages/common/GameStage.gd"
 
 onready var _leaderboard = $PlayerIconDisplay
@@ -42,6 +41,7 @@ func _show_point_changes():
 		_leaderboard.add_player(player, true)
 		var icon = _leaderboard.get_player_icon(player)
 		icon.animate_points_change(original_points, player.points)
+	# TODO: maybe play point increase sound
 
 func _rearrange_leaderboard():
 	yield(get_tree(), "idle_frame")

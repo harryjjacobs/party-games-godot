@@ -195,8 +195,10 @@ func _off(message_type: String, target: Object, method: String):
 		handlers.erase(handler)
 
 func _update_state(new_state):
+	var changed = new_state != connection_state
 	connection_state = new_state
-	Events.emit_signal("server_connection_state_changed", connection_state)
+	if changed:
+		Events.emit_signal("server_connection_state_changed", connection_state)
 
 func _funcref_wrapper(target: Object, method: String):
 	return {

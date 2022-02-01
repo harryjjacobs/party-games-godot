@@ -28,9 +28,9 @@ outline_color = Color( 0, 0, 0, 1 )
 [sub_resource type="Resource" id=2]
 script = ExtResource( 1 )
 x = 25
-y = 310
+y = 300
 width = 290
-height = 35
+height = 55
 rotation = 0.0
 text = ""
 font_family = "Anton"

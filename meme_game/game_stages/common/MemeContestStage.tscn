@@ -5,7 +5,7 @@
 [ext_resource path="res://meme_game/audio/vote_reverb.wav" type="AudioStream" id=3]
 [ext_resource path="res://meme_game/contest/MemeContestResponseBubble.tscn" type="PackedScene" id=4]
 [ext_resource path="res://meme_game/game_stages/common/MemeContestStage.gd" type="Script" id=5]
-[ext_resource path="res://meme_game/audio/applause_1.wav" type="AudioStream" id=6]
+[ext_resource path="res://core/audio/applause_1.wav" type="AudioStream" id=6]
 
 [node name="MemeContestStage" instance=ExtResource( 1 )]
 script = ExtResource( 5 )
