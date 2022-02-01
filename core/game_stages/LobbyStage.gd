@@ -26,18 +26,26 @@ func enter(params):
 		NetworkInterface.disconnect_from_server()
 	NetworkInterface.connect_to_server()
 	var _err = Events.connect("room_created", self, "_on_room_created")
-	Room.init(max_players)
+	_err = Events.connect("server_connection_state_changed", self, "on_server_connection_state_changed")
+	Room.init(max_players)	# requests the server to create a room
 	Room.unlock()
 	BackgroundMusic.play()
 
 func exit():
 	Room.lock()
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_prompt_response")
-	Events.disconnect("room_created", self, "_on_room_created")	
+	if Events.is_connected("room_created", self, "_on_room_created"):	
+		Events.disconnect("room_created", self, "_on_room_created")
+	if Events.is_connected("server_connection_state_changed", self, "on_server_connection_state_changed"):
+		Events.disconnect("server_connection_state_changed", self, "on_server_connection_state_changed")	
 	if Events.is_connected("player_joined_room", self, "_on_player_joined_room"):
 		Events.disconnect("player_joined_room", self, "_on_player_joined_room")
 	BackgroundMusic.skip_track()
 	return .exit()
+
+func on_server_connection_state_changed(state):
+	if state == NetworkInterface.ConnectionState.DISCONNECTED:
+		Events.emit_signal("request_main_menu", "Disconnected from server")
 
 func _generate_qr_code(url):
 	if qr_code_service.request_qr_code(url, QR_CODE_SIZE):
