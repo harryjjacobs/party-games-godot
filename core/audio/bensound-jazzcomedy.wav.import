@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bensound-jazzcomedy.wav-8920e5ae0219ccf4fbeebd24b96527aa.sample"
+
+[deps]
+
+source_file="res://core/audio/bensound-jazzcomedy.wav"
+dest_files=[ "res://.import/bensound-jazzcomedy.wav-8920e5ae0219ccf4fbeebd24b96527aa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

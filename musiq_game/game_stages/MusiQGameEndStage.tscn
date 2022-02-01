@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://core/game_stages/GameEndStage.gd" type="Script" id=1]
 [ext_resource path="res://musiq_game/ui/fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://meme_game/game_stages/SimpleTitle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://core/game_stages/common/PlayerIconDisplay.tscn" type="PackedScene" id=6]
 [ext_resource path="res://musiq_game/ui/textures/MusiQBackground.png" type="Texture" id=7]
+[ext_resource path="res://core/audio/applause_1.wav" type="AudioStream" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
@@ -14,6 +15,7 @@ font_data = ExtResource( 2 )
 
 [node name="MusiQGameEndStage" instance=ExtResource( 3 )]
 script = ExtResource( 1 )
+_celebratory_sound_effect = ExtResource( 8 )
 
 [node name="Background" parent="." index="0"]
 texture = ExtResource( 7 )

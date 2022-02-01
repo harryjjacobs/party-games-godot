@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/pop_1.wav-5769b2fc1021a3a172d03f87dcdaebf9.sample"
+path="res://.import/pop_4.wav-d2ff4951284fbaf3317bf21e9b97752f.sample"
 
 [deps]
 
-source_file="res://meme_game/audio/pop_1.wav"
-dest_files=[ "res://.import/pop_1.wav-5769b2fc1021a3a172d03f87dcdaebf9.sample" ]
+source_file="res://core/audio/pop_4.wav"
+dest_files=[ "res://.import/pop_4.wav-d2ff4951284fbaf3317bf21e9b97752f.sample" ]
 
 [params]
 

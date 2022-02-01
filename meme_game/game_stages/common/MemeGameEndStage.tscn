@@ -6,7 +6,7 @@
 [ext_resource path="res://meme_game/player/MemePlayerIcon.tscn" type="PackedScene" id=4]
 [ext_resource path="res://meme_game/game_stages/SimpleTitle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://core/game_stages/common/PlayerIconDisplay.tscn" type="PackedScene" id=6]
-[ext_resource path="res://meme_game/audio/applause_1.wav" type="AudioStream" id=7]
+[ext_resource path="res://core/audio/applause_1.wav" type="AudioStream" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 80
