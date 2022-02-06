@@ -102,8 +102,8 @@ func _on_player_request_rejoin(client_id, message):
 			_accept_rejoin(player)
 			accepted = true
 			break
-		if not accepted:
-			NetworkInterface.send_player(client_id, Message.create(Message.REJECT_REJOIN, {}))
+	if not accepted:
+		NetworkInterface.send_player(client_id, Message.create(Message.REJECT_REJOIN, {}))
 
 func _reject_join(client_id, reason):
 	NetworkInterface.send_player(
