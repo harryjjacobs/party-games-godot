@@ -35,7 +35,7 @@ func _on_requires_device_connection():
 	if _handling_device_connection:
 		return
 	_handling_device_connection = true
-	print("Searching for available devices...")
+	Log.info("Searching for available devices...")
 	var devices = yield(_musiq_player.GetAvailableDevicesForConnection(), "completed")
 	var dialog = _device_selection_dialog.instance()
 	dialog.connect("request_refresh", self, "_on_device_selection_dialog_request_refresh")
