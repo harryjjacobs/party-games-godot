@@ -67,7 +67,7 @@ func _on_player_joined_room(player):
 	# display the player
 	player_icon_display.add_player(player)
 	if not _sent_begin_game_prompt and len(Room.players) >= min_players:
-		_begin_game_prompt_id = preload("res://core/util/uuid/uuid.gd").v4()
+		_begin_game_prompt_id = UUID.v4()
 		var message = Message.create(Message.REQUEST_INPUT, {
 			"promptType": "button",
 			"promptData": {
@@ -80,6 +80,9 @@ func _on_player_joined_room(player):
 		_sent_begin_game_prompt = true
 
 func _on_prompt_response(_client_id, message):
+	if not "id" in message.data:
+		Log.error("Invalid prompt response received from %s (missing prompt id)" % _client_id)
+		return
 	if message.data.id == _begin_game_prompt_id:
 		NetworkInterface.send_player(_client_id, Message.create(Message.HIDE_PROMPT, {}))
 		emit_signal("request_exit", _parameters)

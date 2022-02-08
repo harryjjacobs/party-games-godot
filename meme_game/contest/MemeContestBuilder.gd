@@ -8,7 +8,7 @@ export(String) var themes_file = 'res://meme_game/contest/nouns.txt'
 
 var _themes = []
 var _meme_template_pool: Array
-var _theme_pool = []
+var _noun_pool = []
 var _contexts = {}
 
 var meme_types_for_contest = {
@@ -80,9 +80,9 @@ func _next_template(contest_type):
 	assert(false, "No suitable meme template found")
 	
 func _next_theme():
-	if _theme_pool.empty():
-		_theme_pool = _themes.duplicate()
-	return _theme_pool.pop_front()
+	if len(_noun_pool) < 2:
+		_noun_pool = _themes.duplicate()
+	return _noun_pool.pop_front() + " " + _noun_pool.pop_front()
 
 func _load_themes_file():
 	var f = File.new()

@@ -272,6 +272,8 @@ Room="*res://core/core_controllers/Room.gd"
 BackgroundMusic="*res://core/audio/BackgroundMusic.tscn"
 Log="*res://core/util/Log.gd"
 Settings="*res://core/util/Settings.gd"
+UUID="*res://core/util/uuid/uuid.gd"
+GameTypes="*res://core/GameTypes.gd"
 
 [display]
 
