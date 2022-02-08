@@ -14,7 +14,8 @@ func init(track):
 	if track:
 		_title_label.text = track.Title
 		_artists_label.text = PoolStringArray(track.Artists).join(", ")
-		_artwork_image.set_url(track.Image.Url)
+		if track.Image:
+			_artwork_image.set_url(track.Image.Url)
 	else:
 		_title_label.text = ""
 		_artists_label.text = ""

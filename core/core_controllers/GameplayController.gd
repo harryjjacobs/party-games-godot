@@ -58,7 +58,7 @@ func _perform_stage_transition(params):
 			var stages = []
 			var found_group_start = false
 			for stage in _stage_history:	# skip current stage
-				if stage != _current_stage and group in stage.get_group_name():
+				if stage != _current_stage and group == stage.get_group_name():
 					found_group_start = true
 				elif found_group_start:
 					break

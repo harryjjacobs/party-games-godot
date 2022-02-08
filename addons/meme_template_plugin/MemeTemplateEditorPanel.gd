@@ -27,7 +27,6 @@ func _ready():
 	color_pool = item_colors.duplicate()
 
 func edit_template(meme_template):
-	#print("caption width: ", meme_template.captions[0].width)
 	template = meme_template
 	color_pool = item_colors.duplicate()
 	_populate_captions()
@@ -83,7 +82,6 @@ func _update_meme_renderer():
 	var label_border_colors = []
 	for caption_control in captions_container.get_children():
 		label_border_colors.append(caption_control.color)
-		print(caption_control.color)
 	meme_renderer.set_editor_label_border_colors(label_border_colors)
 
 func _on_save_button_pressed():

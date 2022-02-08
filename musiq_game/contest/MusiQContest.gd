@@ -14,4 +14,4 @@ var responses: Array = Array()
 var point_weight = 1
 
 func _init():
-	id = preload("res://core/util/uuid/uuid.gd").v4()
+	id = UUID.v4()

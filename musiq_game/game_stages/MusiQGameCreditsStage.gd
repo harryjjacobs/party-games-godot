@@ -32,12 +32,12 @@ func _play_track(track):
 	var success = yield(_parameters.track_player.Play(track.Id), "completed")
 	_song_playing_spinner.spin(success)
 	if success:
-		print("Playing track: " + track.Id)
+		Log.info("Playing track: " + track.Id)
 	else:
-		print("Failed to play track: " + track.Id)
+		Log.info("Failed to play track: " + track.Id)
 
 func _stop_track():
-	print("Stopping track")
+	Log.info("Stopping track")
 	yield(_parameters.track_player.Pause(), "completed")
 	_song_playing_spinner.spin(false)
 	_song_display.visible = false

@@ -29,7 +29,7 @@ func enter(params):
 	_err = params.track_player.connect("ready_to_play", self, "_on_player_ready_to_play")
 	for contest in params.current_round.contests:
 		yield(_do_contest(contest), "completed")
-	print("Finished all contests in this round. Requesting round exit")
+	Log.info("Finished all contests in this round. Requesting round exit")
 	emit_signal("request_exit", _parameters)
 
 func exit():
@@ -45,7 +45,7 @@ func exit():
 func _do_contest(contest):
 	_player_icon_display.clear()
 	_current_contest = contest
-	print("Attempting to play track: " + contest.track.Id)
+	Log.info("Attempting to play track: " + contest.track.Id)
 	_contest_start_time = OS.get_unix_time()
 	_current_contest_timeout = min(default_contest_timeout, contest.track.DurationMs / 1000)
 	_countdown_display.start(_current_contest_timeout)
@@ -92,14 +92,14 @@ func _play_track(track):
 	_song_playing_spinning_indicator.spin(success)
 	_is_currently_playing_track = success
 	if success:
-		print("Playing track: " + track.Id)
+		Log.info("Playing track: " + track.Id)
 		_pending_track = null
 	else:
-		print("Failed to play track: " + track.Id)
+		Log.info("Failed to play track: " + track.Id)
 		_pending_track = track
 
 func _stop_track():
-	print("Stopping track")
+	Log.info("Stopping track")
 	_parameters.track_player.Pause()
 	_song_playing_spinning_indicator.spin(false)
 	_is_currently_playing_track = false
@@ -141,14 +141,15 @@ func _on_player_prompt_response(client_id, message):
 	var player_icon = _player_icon_display.add_player(player)
 	var song_guess_display = _contest_song_guess_scene.instance()
 	player_icon.add_child(song_guess_display)
-	song_guess_display.init(track)
 	
 	if is_correct_answer:
 		NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
 		emit_signal("_finish_contest", response)
+		track = _current_contest.track
 	elif len(_current_contest.responses) == len(_current_contest.players):
 		emit_signal("_finish_contest", null)
 
+	song_guess_display.init(track)
 	yield(get_tree().create_timer(1.0), "timeout")
 	song_guess_display.show_result(is_correct_answer)
 		
@@ -159,13 +160,34 @@ func is_same_track(track_a, track_b):
 	if not track_a or not track_b:
 		return false
 	if FUZZY_SONG_MATCHING:
-		var track_a_artists = PoolStringArray(track_a.Artists).join(",")
-		var track_b_artists = PoolStringArray(track_b.Artists).join(",")
-		print("Fuzzy song comparison: " + track_a.Title + " == " + track_b.Title + " && " + track_a_artists + " == " + track_b_artists)
-		return track_a.Title.to_upper().strip_edges() == track_b.Title.to_upper().strip_edges() and \
-						track_a_artists.to_upper() == track_b_artists.to_upper()
+		Log.info("Fuzzy song comparison: " + track_a.Title + " == " + track_b.Title)
+		return _sanitise_track_title(track_a.Title) == _sanitise_track_title(track_b.Title) and _is_same_artist(track_a, track_b)
 	else:
 		return track_a.Id == track_b.Id
+
+func _sanitise_track_title(title):
+	var PUNCTUATION_TO_REMOVE = "[](){}-.,"
+	var PATTERNS_TO_REMOVE = [
+		'( -)? Remastered (- )?([0-9]{4})?',
+		' (- )?[0-9]{4} (- )?Remaster',
+		'\\(Remastered( [0-9]{4})?\\)',
+		'Remastered( [0-9]{4})?',
+		'([0-9]{4} )?Remaster',
+		' - Radio Edit',
+		' - Edit',
+		' - Single Version',
+		' - Album Version'
+	]
+	for pattern in PATTERNS_TO_REMOVE:
+		var regex = RegEx.new()
+		regex.compile(pattern)
+		title = regex.sub(title, "")
+	for punc in PUNCTUATION_TO_REMOVE:
+		title = title.replace(punc, "")
+	return title.to_upper().strip_edges()
+
+func _is_same_artist(track_a, track_b):
+	return PoolStringArray(track_a.Artists).join(",") == PoolStringArray(track_b.Artists).join(",")
 
 func _on_player_ready_to_play():
 	if _pending_track:

@@ -17,4 +17,4 @@ var votes: Array = Array()
 var vote_weight = 10
 
 func _init():
-	id = preload("res://core/util/uuid/uuid.gd").v4()
+	id = UUID.v4()

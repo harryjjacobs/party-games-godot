@@ -69,6 +69,10 @@ func _on_player_prompt_response(client_id, message):
 				return
 			var contest_response = MemeContestResponse.new()
 			contest_response.player = player
+			if not message.data.captions:
+				Log.info("Invalid contest response - no captions")
+				_send_response_rejection_to_player(player, "Invalid response received")
+				return
 			contest_response.captions = _sanitise_captions(message.data.captions)
 			if _same_response_exists(contest, contest_response):
 				Log.info("Invalid contest response - non-unique response")
