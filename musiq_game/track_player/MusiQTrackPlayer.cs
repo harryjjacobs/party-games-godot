@@ -22,7 +22,7 @@ public class MusiQTrackPlayer : Godot.Object
   private const int PLAYBACK_TRANSFER_DELAY = 300;  // ms
   private static SpotifyClient _spotifyClient;
   private static MusiQHTTPClient spotifyClientHttpClient = new MusiQHTTPClient();
-  private static EmbedIOAuthServer _authServer;
+  private static MusiQPKCEAuthServer _authServer;
 
   public GenericFunctionStateTask Play(String trackId)
   {
@@ -165,19 +165,31 @@ public class MusiQTrackPlayer : Godot.Object
     return new FunctionStateTask(async () =>
     {
       IsAuthorized = false;
-      _authServer = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
+
+      var (verifier, challenge) = PKCEUtil.GenerateCodes();
+      var callbackUri = new Uri("http://localhost:5000/callback");
+
+      _authServer = new MusiQPKCEAuthServer(CLIENT_ID, callbackUri, verifier);
       await _authServer.Start();
 
-      _authServer.ImplictGrantReceived += OnImplicitGrantReceived;
-      _authServer.ErrorReceived += OnErrorReceived;
-
-      var request = new LoginRequest(_authServer.BaseUri, CLIENT_ID, LoginRequest.ResponseType.Token)
+      var loginRequest = new LoginRequest(
+         callbackUri,
+         CLIENT_ID,
+         LoginRequest.ResponseType.Code
+       )
       {
-        Scope = new[]{ Scopes.UserLibraryRead, Scopes.UserTopRead, Scopes.PlaylistReadPrivate, Scopes.PlaylistReadCollaborative,
-                Scopes.AppRemoteControl, Scopes.UserReadCurrentlyPlaying, Scopes.UserReadPlaybackPosition }
+        CodeChallengeMethod = "S256",
+        CodeChallenge = challenge,
+        Scope = new[] { Scopes.UserLibraryRead, Scopes.UserTopRead, Scopes.PlaylistReadPrivate, Scopes.PlaylistReadCollaborative,
+                        Scopes.UserModifyPlaybackState, Scopes.AppRemoteControl, Scopes.UserReadPlaybackState,
+                        Scopes.UserReadCurrentlyPlaying, Scopes.UserReadPlaybackPosition }
       };
 
-      BrowserUtil.Open(request.ToUri());
+
+      _authServer.PKCEGrantReceived += OnPKCEGrantReceived;
+      _authServer.ErrorReceived += OnErrorReceived;
+
+      BrowserUtil.Open(loginRequest.ToUri());
     });
   }
 
@@ -212,6 +224,7 @@ public class MusiQTrackPlayer : Godot.Object
     {
       if (device.IsActive)
       {
+        GD.Print("Active device: " + device.Name);
         return true;
       }
     }
@@ -219,17 +232,23 @@ public class MusiQTrackPlayer : Godot.Object
     return false;
   }
 
-  private async Task OnImplicitGrantReceived(object sender, ImplictGrantResponse response)
+  private async Task OnPKCEGrantReceived(PKCETokenResponse response)
   {
     await _authServer.Stop();
     CurrentAccessToken = response.AccessToken;
-    var config = SpotifyClientConfig
-      .CreateDefault(CurrentAccessToken)
+
+    var authenticator = new PKCEAuthenticator(CLIENT_ID, response);
+
+    var config = SpotifyClientConfig.CreateDefault()
+      .WithAuthenticator(authenticator)
       .WithHTTPClient(spotifyClientHttpClient);
+
     _spotifyClient = new SpotifyClient(config);
     IsAuthorized = true;
+
     CallDeferred("emit_signal", nameof(authorization_succeeded));
     GD.Print("SPOTIFY AUTHORIZED: " + CurrentAccessToken);
+
     await CheckDeviceConnectionAsync().ContinueWith((task) =>
     {
       if (task.Result)
@@ -239,9 +258,9 @@ public class MusiQTrackPlayer : Godot.Object
     });
   }
 
-  private async Task OnErrorReceived(object sender, string error, string state)
+  private async Task OnErrorReceived(string error, string state)
   {
-    Console.WriteLine($"Aborting authorization, error received: {error}");
+    Console.WriteLine($"Aborting authorization, error received: {error}. State: {state}");
     IsAuthorized = false;
     await _authServer.Stop();
     CallDeferred("emit_signal", nameof(authorization_failed));
