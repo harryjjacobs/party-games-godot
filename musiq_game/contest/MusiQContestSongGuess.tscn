@@ -2,7 +2,7 @@
 
 [ext_resource path="res://musiq_game/ui/fonts/BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://musiq_game/ui/textures/cross.png" type="Texture" id=2]
-[ext_resource path="res://core/textures/EmptyBackground.png" type="Texture" id=3]
+[ext_resource path="res://musiq_game/ui/textures/track-artwork-placeholder.png" type="Texture" id=3]
 [ext_resource path="res://core/util/NetworkTextureRect.gd" type="Script" id=4]
 [ext_resource path="res://musiq_game/ui/textures/speech_bubble.png" type="Texture" id=5]
 [ext_resource path="res://musiq_game/contest/MusiQContestSongGuess.gd" type="Script" id=6]
@@ -14,10 +14,14 @@
 
 [sub_resource type="DynamicFont" id=2]
 size = 25
+use_mipmaps = true
+use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 20
+use_mipmaps = true
+use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="Animation" id=4]
@@ -205,4 +209,5 @@ anims/IncorrectAnswer = SubResource( 5 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+volume_db = -44.191
 bus = "Stage"

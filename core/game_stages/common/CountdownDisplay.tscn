@@ -24,7 +24,9 @@ margin_left = 29.0
 margin_top = 11.0
 margin_right = 350.0
 margin_bottom = 159.0
+grow_horizontal = 0
 custom_constants/separation = 20
+alignment = 2
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -33,16 +35,16 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CountdownLabel" type="Label" parent="."]
-margin_right = 135.0
+margin_right = 172.0
 margin_bottom = 148.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
-text = "60"
+text = "120"
 valign = 1
 
 [node name="TextLabel" type="Label" parent="."]
-margin_left = 155.0
-margin_right = 321.0
+margin_left = 192.0
+margin_right = 331.0
 margin_bottom = 148.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -22,8 +22,14 @@ func _play_song_previews():
 	while is_inside_tree():
 		for r in _parameters.round_history:
 			for contest in r.contests:
+				if not is_inside_tree():
+					return
 				yield(_play_track(contest.track), "completed")
+				if not is_inside_tree():
+					return
 				yield(get_tree().create_timer(TRACK_PREVIEW_TIME), "timeout")
+				if not is_inside_tree():
+					return
 				yield(_stop_track(), "completed")
 
 func _play_track(track):
