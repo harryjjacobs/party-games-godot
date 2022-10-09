@@ -108,6 +108,7 @@ func _exit_stage(stage):
 	return exit_transition
 
 func _restart_current_game(preserve_room):
+	Log.info("Restarting current game")
 	_end_current_game(preserve_room)
 	_initialise_stage_stack()
 	if preserve_room:
@@ -121,14 +122,17 @@ func _on_stage_request_exit(params):
 	_perform_stage_transition(params)
 
 func _on_request_pause():
+	Log.info("Pausing game")
 	Events.emit_signal("game_paused")
 	get_tree().paused = true
 
 func _on_request_resume():
+	Log.info("Resuming game")
 	get_tree().paused = false
 	Events.emit_signal("game_resumed")
 
 func _on_request_main_menu(_error_msg):
+	Log.info("Main menu requested")
 	_end_current_game()
 	
 func _on_request_restart(keep_players):

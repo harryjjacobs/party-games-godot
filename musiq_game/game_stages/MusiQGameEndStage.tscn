@@ -33,4 +33,4 @@ position = Vector2( 960, 540 )
 player_icon_scene = ExtResource( 4 )
 margin_x = 0.448
 margin_y = 0.125
-player_icon_scale = 1.5
+player_icon_scale = 1.3

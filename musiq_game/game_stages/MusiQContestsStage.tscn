@@ -22,13 +22,13 @@ position = Vector2( 965.437, 579.53 )
 [node name="PlayerIconDisplay" parent="." index="5" instance=ExtResource( 3 )]
 position = Vector2( 966.163, 579.612 )
 player_icon_scene = ExtResource( 4 )
-margin_x = 0.21
+margin_x = 0.3
 margin_y = 0.33
 icon_emphasis_scale = 1.0
 type = 0
 
 [node name="CountdownDisplay" parent="." index="6" instance=ExtResource( 7 )]
-margin_left = 44.0
-margin_top = 28.0
-margin_right = 365.0
-margin_bottom = 176.0
+margin_left = 1542.0
+margin_top = 20.0
+margin_right = 1873.0
+margin_bottom = 168.0

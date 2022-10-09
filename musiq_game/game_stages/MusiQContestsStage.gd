@@ -45,11 +45,11 @@ func exit():
 func _do_contest(contest):
 	_player_icon_display.clear()
 	_current_contest = contest
-	Log.info("Attempting to play track: " + contest.track.Id)
 	_contest_start_time = OS.get_unix_time()
 	_current_contest_timeout = min(default_contest_timeout, contest.track.DurationMs / 1000)
 	_countdown_display.start(_current_contest_timeout)
 	_contest_timeout_timer.start(_current_contest_timeout)
+	Log.info("Attempting to play track: " + contest.track.Id)
 	yield(_play_track(contest.track), "completed")
 	# send prompts
 	for player in contest.players:
@@ -125,6 +125,9 @@ func _on_player_prompt_response(client_id, message):
 	var track
 	if "trackId" in message.data and message.data.trackId:
 		track = yield(_parameters.track_player.GetTrack(message.data.trackId), "completed")
+		if not track.Title:
+			Log.warn("Something went wrong then fetching track: " + message.data.trackId)
+			return
 		if not _accepting_guesses:	# another player may have submitted a correct answer while we fetched the track
 			return
 
@@ -160,7 +163,7 @@ func is_same_track(track_a, track_b):
 	if not track_a or not track_b:
 		return false
 	if FUZZY_SONG_MATCHING:
-		Log.info("Fuzzy song comparison: " + track_a.Title + " == " + track_b.Title)
+		Log.info("Doing fuzzy song comparison: " + track_a.Title + " == " + track_b.Title)
 		return _sanitise_track_title(track_a.Title) == _sanitise_track_title(track_b.Title) and _is_same_artist(track_a, track_b)
 	else:
 		return track_a.Id == track_b.Id

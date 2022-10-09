@@ -26,6 +26,7 @@ var _initial_texture
 
 func _ready():
 	_initial_texture = texture_rect.texture
+	alpha = 1
 
 func render(meme_template: MemeTemplate, captions: Array):
 	assert(meme_template.image)

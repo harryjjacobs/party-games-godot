@@ -10,9 +10,9 @@
 script = ExtResource( 3 )
 
 [node name="CountdownDisplay" parent="." index="2" instance=ExtResource( 2 )]
-margin_left = 1597.0
+margin_left = 1541.0
 margin_top = 3.0
-margin_right = 1918.0
+margin_right = 1900.0
 margin_bottom = 151.0
 
 [node name="PlayerIconDisplay" parent="." index="3" instance=ExtResource( 5 )]
