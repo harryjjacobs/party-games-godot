@@ -189,6 +189,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://quiz_game/round/QuizTriviaCategory.gd"
 }, {
+"base": "Reference",
+"class": "RandUtils",
+"language": "GDScript",
+"path": "res://core/util/RandUtils.gd"
+}, {
 "base": "Object",
 "class": "Round",
 "language": "GDScript",
@@ -251,6 +256,7 @@ _global_script_class_icons={
 "QuizRound": "",
 "QuizTrivia": "",
 "QuizTriviaCategory": "",
+"RandUtils": "",
 "Round": "",
 "Time": "",
 "TriviaRoundGenerator": "",
@@ -281,6 +287,10 @@ window/size/width=1920
 window/size/height=1080
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[editor]
+
+main_run_args="--run-simulation=pub_quiz"
 
 [editor_plugins]
 
