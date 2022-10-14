@@ -295,6 +295,10 @@ singletons=[  ]
 action=false
 args=false
 
+[mono]
+
+project/assembly_name="party-games"
+
 [network]
 
 limits/debugger_stdout/max_chars_per_second=8192
