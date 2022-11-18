@@ -15,7 +15,6 @@ const HEARTBEAT_PONG = "heartbeat_pong"
 
 # from player
 const REQUEST_JOIN = "request_join"
-const REQUEST_REJOIN = "request_rejoin"
 const PROMPT_RESPONSE = "prompt_response"
 
 # to player

@@ -9,13 +9,13 @@ var players = []
 var code
 var _pending_creation = true
 var _open = false
+var _allow_rejoin = false
 var _max_players = 1
 
 func _ready():
 	NetworkInterface.on_server(Message.ACCEPT_CREATE_ROOM, self, "_on_accept_create_room")
 	NetworkInterface.on_server(Message.REJECT_CREATE_ROOM, self, "_on_reject_create_room")
 	NetworkInterface.on_player(Message.REQUEST_JOIN, self, "_on_player_request_join")
-	NetworkInterface.on_player(Message.REQUEST_REJOIN, self, "_on_player_request_rejoin")
 
 func init(max_players):
 	_max_players = max_players
@@ -23,7 +23,8 @@ func init(max_players):
 	_pending_creation = true
 	NetworkInterface.send_server(Message.create(Message.REQUEST_CREATE_ROOM, {"gameType": "memes"}))
 
-func lock():
+func lock(allow_rejoin = true):
+	_allow_rejoin = allow_rejoin
 	_open = false
 
 func unlock():
@@ -58,52 +59,44 @@ func _on_reject_create_room(message):
 	Events.emit_signal("request_main_menu", "An error occured creating a room on the server. Please try again later.")
 
 func _on_player_request_join(client_id, message):
-	if not _open:
+	if (not _open and not _allow_rejoin) or (not _open and _allow_rejoin and not message.data.oldClientId):
 		_reject_join(client_id, "Room closed (game may have already started)")
 		return
-	if not "username" in message.data:
-		_reject_join(client_id, "Invalid username")
-		return
-	if not message.data.username:
-		_reject_join(client_id, "Invalid username")
-		return
-	var username = message.data.username.strip_edges().strip_escapes().to_upper()
-	if not username:
-		_reject_join(client_id, "Invalid username")
-		return
-	if len(username) > MAX_USERNAME_LENGTH:
-		_reject_join(client_id, "Username too long")
-		return
-	if _is_existing_username(username):
-		_reject_join(client_id, "Username taken")
-		return
-	var player = Player.new(client_id, username)
-	players.push_back(player)
-	NetworkInterface.send_server(Message.create(Message.ADD_PLAYER, {
-		"roomCode": code,
-		"clientId": player.client_id,
-		"username": player.username
-	}))
-	_accept_join(player)
-	Events.emit_signal("player_joined_room", player)
-
-func _on_player_request_rejoin(client_id, message):
-	if not message.data.oldClientId:
-		Log.info("_on_player_request_rejoin() oldClientId not specified")
-	var accepted = false
-	for player in players:
-		if player.client_id == message.data.oldClientId:
-			player.client_id = client_id
-			NetworkInterface.send_server(Message.create(Message.UPDATE_PLAYER_INFO, {
-				"clientId": message.data.oldClientId,
-				"newClientId": player.client_id,
-				"newName": player.username
-			}))
-			_accept_rejoin(player)
-			accepted = true
-			break
-	if not accepted:
-		NetworkInterface.send_player(client_id, Message.create(Message.REJECT_REJOIN, {}))
+	var existing_player = find_player_by_id(message.data.oldClientId)
+	if message.data.oldClientId and existing_player:
+		existing_player.client_id = client_id
+		NetworkInterface.send_server(Message.create(Message.UPDATE_PLAYER_INFO, {
+			"clientId": message.data.oldClientId,
+			"newClientId": existing_player.client_id,
+			"newName": existing_player.username
+		}))
+		_accept_join(existing_player)
+	else:
+		if not "username" in message.data:
+			_reject_join(client_id, "Invalid username")
+			return
+		if not message.data.username:
+			_reject_join(client_id, "Invalid username")
+			return
+		var username = message.data.username.strip_edges().strip_escapes().to_upper()
+		if not username:
+			_reject_join(client_id, "Invalid username")
+			return
+		if len(username) > MAX_USERNAME_LENGTH:
+			_reject_join(client_id, "Username too long")
+			return
+		if _is_existing_username(username):
+			_reject_join(client_id, "Username taken")
+			return
+		var player = Player.new(client_id, username)
+		players.push_back(player)
+		NetworkInterface.send_server(Message.create(Message.ADD_PLAYER, {
+			"roomCode": code,
+			"clientId": player.client_id,
+			"username": player.username
+		}))
+		_accept_join(player)
+		Events.emit_signal("player_joined_room", player)
 
 func _reject_join(client_id, reason):
 	NetworkInterface.send_player(
@@ -117,12 +110,6 @@ func _accept_join(player: Player):
 		"roomCode": code
 	}))
 
-func _accept_rejoin(player: Player):
-	NetworkInterface.send_player(player.client_id, Message.create(Message.ACCEPT_REJOIN, {
-		"clientId": player.client_id,
-		"roomCode": code
-	}))
-	
 func _is_existing_username(username: String):
 	for player in players:
 		if player.username == username:
