@@ -77,7 +77,8 @@ func send_message(message):
 	message.data["apiKey"] = NetworkInterface.API_KEY
 	
 	var message_str = JSON.print(message)
-	Log.info("Simulation player (%s) sending message: %s" % [username, message_str])
+	if message["type"] != Message.HEARTBEAT_PONG:
+		Log.info("Simulation player (%s) sending message: %s" % [username, message_str])
 	_client.get_peer(1).put_packet(message_str.to_utf8())
 
 func _on_message_receieved(message):

@@ -70,20 +70,24 @@ func _do_contest(contest):
 		var points_group_id = str(len(_parameters.round_history))
 		var points = _calculate_winner_points()
 		winning_response.player.update_points(points, points_group_id)
-		yield(get_tree().create_timer(1.0), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(1.0), "timeout")
 		_player_icon_display.emphasise_and_center_player(winning_response.player)
 		var player_icon = _player_icon_display.get_player_icon(winning_response.player)
 		player_icon.animate_point_award(points)
 		# delay before next contest or exit
-		yield(get_tree().create_timer(5.0), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(5.0), "timeout")
 	else:
 		# show correct answer
-		yield(get_tree().create_timer(2), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(2), "timeout")
 		_play_track(contest.track)
 		var song_guess_display = _contest_song_guess_scene.instance()
 		_player_icon_display.add_child(song_guess_display)
 		song_guess_display.init(_current_contest.track)
-		yield(get_tree().create_timer(5.0), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(5.0), "timeout")
 		_stop_track()
 		_player_icon_display.remove_child(song_guess_display)
 
@@ -153,7 +157,8 @@ func _on_player_prompt_response(client_id, message):
 		emit_signal("_finish_contest", null)
 
 	song_guess_display.init(track)
-	yield(get_tree().create_timer(1.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(1.0), "timeout")
 	song_guess_display.show_result(is_correct_answer)
 		
 func _on_contest_timeout():

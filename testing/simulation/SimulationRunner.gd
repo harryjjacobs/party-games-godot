@@ -23,14 +23,18 @@ func run(game_type, game_scene):
 		_runner = _MemeGameSimulationRunner.new(self)
 	elif game_type == GameTypes.Types.MUSIQ:
 		_runner = _MusiQGameSimulationRunner.new(self)
+	elif _game_type == GameTypes.Types.QUIZ:
+		_runner = _QuizGameSimulationRunner.new(self)
 	_runner.run()
 
 class _SimulationRunner:
 	var current_game_stage setget _current_game_stage_setter
 	var players = []
 	var _simulation_node
-	
+	var rng = RandomNumberGenerator.new()
+
 	func _init(node):
+		rng.randomize()
 		_simulation_node = node
 	
 	func run():
@@ -41,7 +45,8 @@ class _SimulationRunner:
 
 	func _current_game_stage_setter(stage):
 		current_game_stage = stage
-		_on_current_game_stage_changed()
+		if current_game_stage:
+			_on_current_game_stage_changed()
 
 	func _on_player_receieved_message(_message, _player):
 		pass
@@ -58,7 +63,7 @@ class _SimulationRunner:
 			players.push_back(player)
 			_simulation_node.add_child(player)
 			var _err = player.connect("message_received", self, "_on_player_receieved_message", [player])
-			yield(delay(0.5), "completed")		
+			yield(delay(0.5), "completed")
 
 	func _do_lobby():
 		for player in players:
@@ -111,16 +116,16 @@ class _MemeGameSimulationRunner extends _SimulationRunner:
 	
 	func _handle_meme_prompt_request(player, prompt_data):
 		randomize()		
-		yield(.delay(rand_range(1, 5)), "completed")
+		yield(.delay(rng.randi_range(1, 5)), "completed")
 		var contest_id = prompt_data.id
 		var max_caption_length = prompt_data.maxInputLength
 		var template = prompt_data.template
 		var caption_responses = []
 		for caption in template.captions:
 			var caption_response = ""
-			var caption_length = rand_range(max_caption_length / 3, max_caption_length)
+			var caption_length = rng.randi_range(max_caption_length / 3, max_caption_length)
 			while len(caption_response) < caption_length:
-				caption_response += _words[rand_range(0, len(_words))] + " "
+				caption_response += RandUtils.choose(_words) + " "
 			caption_response.strip_edges()
 			caption_responses.push_back(caption_response)
 		player.send_message(Message.create(Message.PROMPT_RESPONSE, {
@@ -132,10 +137,10 @@ class _MemeGameSimulationRunner extends _SimulationRunner:
 	func _handle_vote_request(player, prompt_data):
 		randomize()
 		yield(.delay(rand_range(1, 6)), "completed")
-		if rand_range(0, 100) < 20: # don't vote n% of the time
+		if rng.randi_range(0, 100) < 20: # don't vote n% of the time
 			return
 		var contest_id = prompt_data.id
-		var choice = rand_range(0, len(prompt_data.options))
+		var choice = RandUtils.choose(prompt_data.options)
 		player.send_message(Message.create(Message.PROMPT_RESPONSE, {
 			"id": contest_id,
 			"choice": choice,
@@ -162,25 +167,25 @@ class _MusiQGameSimulationRunner extends _SimulationRunner:
 					print(get_class() + ": Authorization succeeded")
 				# print(get_class() + ": Launching spotify")
 				# var _exit_code = OS.execute("spotify", [], false)
-				yield(_simulation_node.get_tree().create_timer(5), "timeout")
+				yield(_simulation_node.get_tree().create_timer( 5), "timeout")
 				var devices = []
 				while not devices:
 					devices = yield(current_game_stage._track_player.GetAvailableDevicesForConnection(), "completed")
 				var connected = yield(current_game_stage._track_player.PerformDeviceConnection(devices[0].Id), "completed")
 				assert(connected)
 				current_game_stage.get_node("SetupOptionsContainer/PlaylistsSearch/LineEdit").emit_signal("text_changed", "indie rock")
-				yield(_simulation_node.get_tree().create_timer(5), "timeout")
+				yield(_simulation_node.get_tree().create_timer( 5), "timeout")
 				var results_button = current_game_stage.get_node("SetupOptionsContainer/PlaylistsSearch/SearchResultsScrollContainer/SearchResults").get_children()
 				for i in range(5):
 					results_button[i].emit_signal("pressed")
-				yield(_simulation_node.get_tree().create_timer(1), "timeout")
+				yield(_simulation_node.get_tree().create_timer( 1), "timeout")
 				current_game_stage.get_node("SetupOptionsContainer/PlayButton").emit_signal("pressed")
 			elif current_game_stage.get_name() == "MusiQLobbyStage":
 				yield(._create_simulation_players(), "completed")
 				yield(._do_lobby(), "completed")
 				yield(._do_start_game(_start_game_prompt_input_id), "completed")
 			elif current_game_stage.get_name() == "MusiQGameCreditsStage":
-				yield(_simulation_node.get_tree().create_timer(1), "timeout")
+				yield(_simulation_node.get_tree().create_timer( 1), "timeout")
 				current_game_stage.get_node("Container/ActionsContainer/PlayAgainSamePlayersButton").emit_signal("pressed")
 
 		func _on_player_receieved_message(message, player):
@@ -192,11 +197,11 @@ class _MusiQGameSimulationRunner extends _SimulationRunner:
 		
 		func _handle_musiq_prompt_request(player, prompt_data):
 			randomize()
-			yield(.delay(rand_range(2, 8)), "completed")
+			yield(.delay(rng.randi_range(2, 8)), "completed")
 			var contest_id = prompt_data.id
 			var track_id
-			if rand_range(0, 100) > 50: # players skip n % of the time
-				if rand_range(0, 100) < 30: # players correct n % of the time when they guess
+			if rng.randi_range(0, 100) > 50: # players skip n % of the time
+				if rng.randi_range(0, 100) < 30: # players correct n % of the time when they guess
 					track_id = current_game_stage._current_contest.track.Id
 				else:
 					track_id = "4cOdK2wGLETKBW3PvgPWqT"
@@ -205,3 +210,57 @@ class _MusiQGameSimulationRunner extends _SimulationRunner:
 				"roomCode": Room.code,
 				"trackId": track_id
 			}))
+
+class _QuizGameSimulationRunner extends _SimulationRunner:
+	var _start_game_prompt_input_id
+
+	const NUM_CATEGORIES = 3
+	
+	func _init(node).(node):
+		pass
+	
+	func run():
+		.run()
+		yield(Events, "room_created")
+		yield(._create_simulation_players(), "completed")
+		yield(._do_lobby(), "completed")
+		yield(._do_start_game(_start_game_prompt_input_id), "completed")
+	
+	func _on_current_game_stage_changed():
+		if current_game_stage.get_name() == "QuizGameSetupStage":
+			# wait for categories to be loaded
+			yield(_simulation_node.get_tree().create_timer( 3), "timeout")
+			print(get_class() + ": Selecting categories")
+			var buttons = current_game_stage.get_node("SetupOptionsContainer/QuizCategoriesSelection/ScrollContainer/CategoryList").get_children()
+			var used = []
+			for _i in range(NUM_CATEGORIES):
+				var index = rng.randi_range(0, buttons.size() - 1)
+				while index in used:
+					index = rng.randi_range(0, buttons.size() - 1)
+				buttons[index].emit_signal("pressed")
+				used.append(index)
+			yield(_simulation_node.get_tree().create_timer( 1), "timeout")
+			current_game_stage.get_node("SetupOptionsContainer/PlayButton").emit_signal("pressed")
+		elif "CreditsStage" in current_game_stage.get_name():
+			current_game_stage.get_node("Container/ActionsContainer/PlayAgainSamePlayersButton").emit_signal("pressed")
+
+	func _on_player_receieved_message(message, player):
+		if "LobbyStage" in current_game_stage.get_name():
+			if message.type == "request_input":
+				_start_game_prompt_input_id = message.data.promptData.id
+		elif "QuizGameQuestionGameStage" in current_game_stage.get_name():
+			if message.type == "request_input" and message.data.promptType == "multichoice":
+				_handle_quiz_prompt_request(player, message.data.promptData)
+
+	func _handle_quiz_prompt_request(player, prompt_data):
+		yield(.delay(rng.randi_range(1, 5)), "completed")
+		var id = prompt_data.id
+		var options = prompt_data.options
+		if randf() < 0.02:
+			# just don't answer 2% of the time
+			return
+		player.send_message(Message.create(Message.PROMPT_RESPONSE, {
+			"id": id,
+			"choice": rng.randi_range(0, options.size() - 1),
+			"roomCode": Room.code
+		}))

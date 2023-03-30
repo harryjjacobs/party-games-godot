@@ -4,14 +4,14 @@
 [ext_resource path="res://quiz_game/game_stages/setup_stage/QuizRoundCategoryButton.gd" type="Script" id=2]
 
 [sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.0855474, 0.0855474, 0.0855474, 1 )
+bg_color = Color( 0.0862745, 0.0862745, 0.0862745, 1 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0, 0, 0, 1 )
+bg_color = Color( 0, 0, 0, 0.52549 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10

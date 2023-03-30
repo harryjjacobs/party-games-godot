@@ -9,7 +9,7 @@
 [ext_resource path="res://quiz_game/textures/wooden-texture-gb10000acb_1920.jpg" type="Texture" id=7]
 
 [sub_resource type="DynamicFont" id=3076]
-size = 70
+size = 50
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 6 )
@@ -20,7 +20,7 @@ script = ExtResource( 2 )
 [node name="Background" parent="." index="0"]
 texture = ExtResource( 7 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." index="3"]
+[node name="Container" type="VBoxContainer" parent="." index="3"]
 margin_left = 50.0
 margin_top = 149.0
 margin_right = 1870.0
@@ -30,7 +30,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CreditsContainer" type="VBoxContainer" parent="VBoxContainer" index="0"]
+[node name="CreditsContainer" type="VBoxContainer" parent="Container" index="0"]
 margin_right = 1820.0
 margin_bottom = 679.0
 size_flags_horizontal = 3
@@ -38,10 +38,10 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 alignment = 1
 
-[node name="Title" type="Label" parent="VBoxContainer/CreditsContainer" index="0"]
-margin_top = 257.0
+[node name="Title" type="Label" parent="Container/CreditsContainer" index="0"]
+margin_top = 271.0
 margin_right = 1820.0
-margin_bottom = 366.0
+margin_bottom = 351.0
 custom_fonts/font = SubResource( 3076 )
 text = "A Jabobs Production"
 align = 1
@@ -49,15 +49,15 @@ valign = 1
 script = ExtResource( 4 )
 font_size = 2
 
-[node name="Credits1" type="Label" parent="VBoxContainer/CreditsContainer" index="1"]
-margin_top = 370.0
+[node name="Credits1" type="Label" parent="Container/CreditsContainer" index="1"]
+margin_top = 355.0
 margin_right = 1820.0
-margin_bottom = 422.0
+margin_bottom = 407.0
 text = "Design and Programming: Harry Jacobs"
 align = 1
 valign = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" index="1"]
+[node name="ActionsContainer" type="VBoxContainer" parent="Container" index="1"]
 margin_top = 683.0
 margin_right = 1820.0
 margin_bottom = 879.0
@@ -66,7 +66,7 @@ size_flags_vertical = 3
 custom_constants/separation = 20
 alignment = 2
 
-[node name="PlayAgainSamePlayersButton" parent="VBoxContainer/VBoxContainer" index="0" instance=ExtResource( 5 )]
+[node name="PlayAgainSamePlayersButton" parent="Container/ActionsContainer" index="0" instance=ExtResource( 5 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -77,7 +77,7 @@ margin_right = 1820.0
 margin_bottom = 52.0
 text = "Play again with the same players?"
 
-[node name="PlayAgainButton" parent="VBoxContainer/VBoxContainer" index="1" instance=ExtResource( 5 )]
+[node name="PlayAgainButton" parent="Container/ActionsContainer" index="1" instance=ExtResource( 5 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -88,7 +88,7 @@ margin_right = 1820.0
 margin_bottom = 124.0
 text = "Start a new game of Pub Quiz?"
 
-[node name="ExitToMainMenuButton" parent="VBoxContainer/VBoxContainer" index="2" instance=ExtResource( 5 )]
+[node name="ExitToMainMenuButton" parent="Container/ActionsContainer" index="2" instance=ExtResource( 5 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -99,6 +99,6 @@ margin_right = 1820.0
 margin_bottom = 196.0
 text = "Exit"
 
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/PlayAgainSamePlayersButton" to="." method="_on_play_again_same_players_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/ExitToMainMenuButton" to="." method="_on_exit_to_main_menu_button_pressed"]
+[connection signal="pressed" from="Container/ActionsContainer/PlayAgainSamePlayersButton" to="." method="_on_play_again_same_players_button_pressed"]
+[connection signal="pressed" from="Container/ActionsContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="Container/ActionsContainer/ExitToMainMenuButton" to="." method="_on_exit_to_main_menu_button_pressed"]

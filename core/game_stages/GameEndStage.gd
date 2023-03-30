@@ -33,7 +33,8 @@ func _show_winners(winners):
 	else:
 		_title.text = _winners_title_singular
 	_icon_display.add_players(winners)
-	yield(get_tree().create_timer(_celebration_delay), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(_celebration_delay), "timeout")
 	_play_audio(_celebratory_sound_effect)
 
 static func _sort_descending_by_points(a, b):

@@ -13,11 +13,13 @@ var _exit_requested = false
 func _ready():
 	_default_contest_image = load("res://meme_game/meme/textures/Change-My-Mind.jpg")
 	mock_server.connect("message_received", self, "_server_message_handler")
-	yield(get_tree().create_timer(0.1), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(0.1), "timeout")
 	NetworkInterface.reconnect = false
 	NetworkInterface.server_url = 'ws://localhost:%d' % mock_server.PORT
 	NetworkInterface.connect_to_server()
-	yield(get_tree().create_timer(1.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(1.0), "timeout")
 	var player_a = Player.new("0000-0000", "Player a")
 	var player_b = Player.new("1111-1111", "Player b")
 	Room.players = [player_a, player_b]
@@ -37,9 +39,11 @@ func _ready():
 	for contest in _test_round.contests:
 		expected_requests += len(contest.players)
 		Log.info("delaying for %s s" % _response_delay_time)
-		yield(get_tree().create_timer(_response_delay_time), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(_response_delay_time), "timeout")
 		assert(_requests_sent == expected_requests)
-	yield(get_tree().create_timer(5.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(5.0), "timeout")
 	assert(_exit_requested == true)
 	for contest in _test_round.contests:
 		assert(len(contest.responses) == len(contest.players))
@@ -53,7 +57,8 @@ func _server_message_handler(conn_id, message):
 		_default_contest_image.get_data().save_png_to_buffer()))
 	_requests_sent += 1
 	# delay before sending responses
-	yield(get_tree().create_timer(_response_delay_time), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(_response_delay_time), "timeout")
 	var captions = Array()
 	for _i in message.data.payload.data.promptData.template.captions:
 		captions.append("example caption")

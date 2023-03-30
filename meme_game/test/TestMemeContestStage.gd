@@ -44,14 +44,17 @@ func _ready():
 		"round_generator": null
 	})
 	for i in len(_test_round.contests):
-		yield(get_tree().create_timer(5.0), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(5.0), "timeout")
 		assert(_vote_prompts_sent == (i + 1) * (len(Room.players) - 2))
-		yield(get_tree().create_timer(meme_contest_stage.vote_timeout), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(meme_contest_stage.vote_timeout), "timeout")
 	for contest in _test_round.contests:
 		assert(len(contest.responses) == len(contest.players))
 	meme_contest_stage.exit()
 
-	yield(get_tree().create_timer(2.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(2.0), "timeout")
 
 	# TEST UNANSWERED PROMPTS ARE HANDLED PROPERLY
 	_vote_prompts_sent = 0
@@ -65,9 +68,11 @@ func _ready():
 		"round_generator": null
 	})
 	for i in len(_test_round.contests):
-		yield(get_tree().create_timer(5.0), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(5.0), "timeout")
 		assert(_vote_prompts_sent == 0)
-		yield(get_tree().create_timer(meme_contest_stage.vote_timeout), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(meme_contest_stage.vote_timeout), "timeout")
 	for contest in _test_round.contests:
 		assert(len(contest.responses) == len(contest.players) - 1)
 	Log.info("TEST PASSED")
@@ -82,7 +87,8 @@ func _server_message_handler(conn_id, message):
 	assert(message.data.payload.data.promptData.options)
 	_vote_prompts_sent += 1
 	# delay before sending vote responses
-	yield(get_tree().create_timer(2.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(2.0), "timeout")
 	mock_server.send_message(conn_id, Message.create(Message.PLAYER_TO_HOST, {
 		"clientId": message.data.playerClientId,
 		"payload": {

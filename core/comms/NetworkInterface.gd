@@ -21,9 +21,9 @@ enum ConnectionState { CONNECTING, CONNECTED, DISCONNECTED }
 const _GAMEPLAY_INDEPENDENT_MESSAGE_TYPES = [
 	Message.HEARTBEAT_PING, 
 	Message.HEARTBEAT_PONG,
-	Message.REQUEST_REJOIN,
-	Message.ACCEPT_REJOIN,
-	Message.REJECT_REJOIN
+	Message.REQUEST_JOIN,
+	Message.ACCEPT_JOIN,
+	Message.REJECT_JOIN
 ]
 
 export var reconnect = true

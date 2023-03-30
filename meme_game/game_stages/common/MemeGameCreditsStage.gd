@@ -28,7 +28,8 @@ func _highlight_reel():
 			if not highlight in _saved_to_disk: 
 				_save_meme_to_disk(_meme_renderer, highlight.response.player)
 				_saved_to_disk.push_back(highlight)
-			yield(get_tree().create_timer(HIGHLIGHTS_REEL_DURATION), "timeout")
+			if is_inside_tree():
+				yield(get_tree().create_timer(HIGHLIGHTS_REEL_DURATION), "timeout")
 			$Tween.interpolate_method(self, "_set_highlights_reel_alpha", 1.0, 0.0, HIGHLIGHTS_REEL_FADE_DURATION / 2)
 			$Tween.start()
 			yield($Tween, "tween_completed")
