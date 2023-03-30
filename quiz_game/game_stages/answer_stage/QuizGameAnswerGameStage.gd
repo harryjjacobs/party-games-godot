@@ -15,15 +15,20 @@ func enter(params):
 	_options = QuizTrivia.get_answers_as_options(_current_question.trivia.answers)
 	
 	_question_label.text = _current_question.trivia.question
-	yield(get_tree().create_timer(2.0), "timeout")
 	
-	_display_player_answers()
-	yield(get_tree().create_timer(2.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(2.0), "timeout")
+		_display_player_answers()
 	
-	var correct_option = _options[_current_question.trivia.correct_answer_index]	
-	_answer_label.text = correct_option
-	_display_player_results()
-	yield(get_tree().create_timer(4), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(2.0), "timeout")
+		_display_correct_answer()
+	
+	if is_inside_tree():
+		yield(_display_player_results(), "completed")
+	
+	if is_inside_tree():
+		yield(get_tree().create_timer(4), "timeout")
 	
 	params.question_index += 1
 	emit_signal("request_exit", params)
@@ -47,8 +52,12 @@ func _display_player_answers():
 		var player_answer_display = PlayerAnswerScene.instance()
 		player_icon.add_child(player_answer_display)
 		var response = _find_response_by_player(player)
-		if response:		
+		if response:
 			player_answer_display.init(_options[response.choice])
+
+func _display_correct_answer():
+	var correct_option = _options[_current_question.trivia.correct_answer_index]
+	_answer_label.text = correct_option
 
 func _display_player_results():
 	for player in Room.players:
@@ -62,7 +71,10 @@ func _display_player_results():
 			player.update_points(_current_question.points, points_group)
 			player_icon.animate_point_award(_current_question.points)
 		player_answer_display.show_result(is_correct)
-		yield(get_tree().create_timer(0.5), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(0.5), "timeout")
+		else:
+			return
 
 func _find_response_by_player(player):
 	for response in _current_question.responses:

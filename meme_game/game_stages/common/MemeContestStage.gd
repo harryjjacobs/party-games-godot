@@ -43,12 +43,15 @@ func do_contests():
 		yield(_show_voting_results(), "completed")
 		_update_points()
 		if current_contest.responses.empty():
-			yield(get_tree().create_timer(display_empty_contest_result_duration), "timeout")
+			if is_inside_tree():
+				yield(get_tree().create_timer(display_empty_contest_result_duration), "timeout")
 		else:
-			yield(get_tree().create_timer(display_contest_result_duration), "timeout")
+			if is_inside_tree():
+				yield(get_tree().create_timer(display_contest_result_duration), "timeout")
 		_hide_all_contest_response_displays()
 		if contest != _parameters.current_round.contests.back():	# don't delay on last contest
-			yield(get_tree().create_timer(time_between_contests), "timeout")
+			if is_inside_tree():
+				yield(get_tree().create_timer(time_between_contests), "timeout")
 	emit_signal("request_exit", _parameters)
 
 func _initialise_response_displays():
@@ -87,7 +90,8 @@ func _show_voting_results():
 				voters.append(vote.voter)
 		display.show_votes(voters)
 	if current_contest.votes:
-		yield(get_tree().create_timer(1.0), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(1.0), "timeout")
 	var winners = _get_winning_responses()
 	for i in len(current_contest.players):
 		var player = current_contest.players[i]
@@ -97,7 +101,8 @@ func _show_voting_results():
 			display.emphasise(true)
 	if len(winners) > 0:
 		._play_audio(contest_winner_audio)
-	yield(get_tree().create_timer(1.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(1.0), "timeout")
 
 func _update_points():
 	var votes_per_player = {}
@@ -155,7 +160,8 @@ func _voting_process():
 	NetworkInterface.send_players(Room.players, Message.create(Message.HIDE_PROMPT, {}))
 	NetworkInterface.off_player(Message.PROMPT_RESPONSE, self, "_on_vote_received")
 	Log.info("[%s] Voting end" % name)
-	yield(get_tree().create_timer(1.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(1.0), "timeout")
 
 func _on_voting_timeout():
 	_waiting_for_votes = false

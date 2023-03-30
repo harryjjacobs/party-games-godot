@@ -12,7 +12,8 @@ var _input_prompts_sent = 0
 func _ready():
 	mock_game_server.connect("message_received", self, "_on_mock_server_message_received")
 	mock_game_server.configure_network_interface_to_use_mocked_server()
-	yield(get_tree().create_timer(1.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(1.0), "timeout")
 	
 	Room.players = [
 		Player.new("0", "Player 1"),
@@ -42,7 +43,8 @@ func _ready():
 	}
 	stage.connect("request_exit", self, "_on_stage_exit")
 	stage.enter(params)
-	yield(get_tree().create_timer(5), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(5), "timeout")
 	assert(_input_prompts_sent == len(Room.players))
 
 func _on_stage_exit(params):
@@ -59,7 +61,8 @@ func _on_mock_server_message_received(conn_id, message):
 		assert(message.data.payload.data.promptType == "song_search")
 		assert(message.data.payload.data.promptData.apiAccessToken)
 		_input_prompts_sent += 1
-		yield(get_tree().create_timer(5 * randf() + 1), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(5 * randf() + 1), "timeout")
 
 		var response_data =	{
 			"id": message.data.payload.data.promptData.id,

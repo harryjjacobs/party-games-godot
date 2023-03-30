@@ -146,4 +146,4 @@ func _print_stage_stack():
 	for stage in _stage_stack:
 		stack.append(stage.name)
 	return stack.join(", ")
-		
+

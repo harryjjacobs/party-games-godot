@@ -167,25 +167,25 @@ class _MusiQGameSimulationRunner extends _SimulationRunner:
 					print(get_class() + ": Authorization succeeded")
 				# print(get_class() + ": Launching spotify")
 				# var _exit_code = OS.execute("spotify", [], false)
-				yield(_simulation_node.get_tree().create_timer(5), "timeout")
+				yield(_simulation_node.get_tree().create_timer( 5), "timeout")
 				var devices = []
 				while not devices:
 					devices = yield(current_game_stage._track_player.GetAvailableDevicesForConnection(), "completed")
 				var connected = yield(current_game_stage._track_player.PerformDeviceConnection(devices[0].Id), "completed")
 				assert(connected)
 				current_game_stage.get_node("SetupOptionsContainer/PlaylistsSearch/LineEdit").emit_signal("text_changed", "indie rock")
-				yield(_simulation_node.get_tree().create_timer(5), "timeout")
+				yield(_simulation_node.get_tree().create_timer( 5), "timeout")
 				var results_button = current_game_stage.get_node("SetupOptionsContainer/PlaylistsSearch/SearchResultsScrollContainer/SearchResults").get_children()
 				for i in range(5):
 					results_button[i].emit_signal("pressed")
-				yield(_simulation_node.get_tree().create_timer(1), "timeout")
+				yield(_simulation_node.get_tree().create_timer( 1), "timeout")
 				current_game_stage.get_node("SetupOptionsContainer/PlayButton").emit_signal("pressed")
 			elif current_game_stage.get_name() == "MusiQLobbyStage":
 				yield(._create_simulation_players(), "completed")
 				yield(._do_lobby(), "completed")
 				yield(._do_start_game(_start_game_prompt_input_id), "completed")
 			elif current_game_stage.get_name() == "MusiQGameCreditsStage":
-				yield(_simulation_node.get_tree().create_timer(1), "timeout")
+				yield(_simulation_node.get_tree().create_timer( 1), "timeout")
 				current_game_stage.get_node("Container/ActionsContainer/PlayAgainSamePlayersButton").emit_signal("pressed")
 
 		func _on_player_receieved_message(message, player):
@@ -229,7 +229,7 @@ class _QuizGameSimulationRunner extends _SimulationRunner:
 	func _on_current_game_stage_changed():
 		if current_game_stage.get_name() == "QuizGameSetupStage":
 			# wait for categories to be loaded
-			yield(_simulation_node.get_tree().create_timer(3), "timeout")
+			yield(_simulation_node.get_tree().create_timer( 3), "timeout")
 			print(get_class() + ": Selecting categories")
 			var buttons = current_game_stage.get_node("SetupOptionsContainer/QuizCategoriesSelection/ScrollContainer/CategoryList").get_children()
 			var used = []
@@ -239,7 +239,7 @@ class _QuizGameSimulationRunner extends _SimulationRunner:
 					index = rng.randi_range(0, buttons.size() - 1)
 				buttons[index].emit_signal("pressed")
 				used.append(index)
-			yield(_simulation_node.get_tree().create_timer(1), "timeout")
+			yield(_simulation_node.get_tree().create_timer( 1), "timeout")
 			current_game_stage.get_node("SetupOptionsContainer/PlayButton").emit_signal("pressed")
 		elif "CreditsStage" in current_game_stage.get_name():
 			current_game_stage.get_node("Container/ActionsContainer/PlayAgainSamePlayersButton").emit_signal("pressed")
@@ -264,4 +264,3 @@ class _QuizGameSimulationRunner extends _SimulationRunner:
 			"choice": rng.randi_range(0, options.size() - 1),
 			"roomCode": Room.code
 		}))
-	

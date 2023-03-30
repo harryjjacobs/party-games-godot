@@ -4,11 +4,14 @@ onready var _leaderboard = $PlayerIconDisplay
 
 func enter(params):
 	.enter(params)
-	yield(get_tree().create_timer(0.5), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(0.5), "timeout")
 	yield(_show_initial_positions(), "completed")
-	yield(get_tree().create_timer(0.5), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(0.5), "timeout")
 	_show_point_changes()
-	yield(get_tree().create_timer(2.0), "timeout")
+	if is_inside_tree():
+		yield(get_tree().create_timer(2.0), "timeout")
 	yield(_rearrange_leaderboard(), "completed")
 	# new parameters for next round
 	_parameters.round_history.append(_parameters.current_round)
@@ -30,7 +33,8 @@ func _show_initial_positions():
 		_leaderboard.add_player(snapshot.player, true)
 		var icon = _leaderboard.get_player_icon(snapshot.player)
 		icon.show_points(true, snapshot.points)
-		yield(get_tree().create_timer(0.4), "timeout")
+		if is_inside_tree():
+			yield(get_tree().create_timer(0.4), "timeout")
 
 func _show_point_changes():
 	# show the points gained in this round

@@ -27,7 +27,8 @@ func _play_song_previews():
 				yield(_play_track(contest.track), "completed")
 				if not is_inside_tree():
 					return
-				yield(get_tree().create_timer(TRACK_PREVIEW_TIME), "timeout")
+				if is_inside_tree():
+					yield(get_tree().create_timer(TRACK_PREVIEW_TIME), "timeout")
 				if not is_inside_tree():
 					return
 				yield(_stop_track(), "completed")
