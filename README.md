@@ -4,7 +4,7 @@ A collection of multiplayer party games inspired by the Jackbox Party Pack creat
 
 ## Requirements
 
-- Godot (with mono) 3.4
+- Godot 3.4
 
 ## Setting up
 
